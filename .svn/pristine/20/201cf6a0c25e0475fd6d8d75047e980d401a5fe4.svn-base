@@ -1,0 +1,437 @@
+<app-header [section]="'home'"></app-header>
+<!-- banner-section start -->
+<section class="banner-section banner-style-two">
+  <div class="banner-image-area">
+    <img [src]="base_url+'uploads/content_image/'+contents[0].content_image" alt="blogs" class="imgs">
+    <!-- <img src="./assets/images/banner.png" alt="image"> -->
+  </div>
+  <div class="banner-elemet-one"><img src="./assets/images/banner-line-el.png" alt="image"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="banner-content">
+          <h2 class="banner-title">
+            {{contents[0].title}}
+          </h2>
+          <span class="sub-title">Receive your reward into your Remco token and withdraw to any bank or debit
+            card</span>
+          <p>{{contents[0].description}}</p>
+          <div class="btn-area">
+            <a href="javascript:void(0);" class="btn btn-gradient btn-radius">learn more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- banner-section end -->
+<!-- Start Products-->
+<section class="team-section pt-120 pb-120 bg_img secondary-overlay" style="background-image: url(./assets/images/bg-01.jpg)">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="section-header text-center text-white">
+          <h2 class="section-title text-capitalize border-bottom-bottom">{{contents[1].title}}</h2>
+          <p>{{contents[1].description}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="team-slider">
+      <owl-carousel-o [options]="productOptions">
+        <ng-container *ngFor="let item of products">
+          <ng-template carouselSlide [id]="item.web_id">
+            <div class="team-item">
+              <div class="thumb">
+                
+                <img [src]="base_url +'uploads/products/'+ item.product_image" alt="image">
+              </div>
+              <div class="content text-center">
+                <h4 class="name">{{item.product_title}}</h4>
+                <span class="designation height">{{item.product_description}}</span>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+    <!-- <div class="team-slider owl-carousel">
+      <div class="team-item">
+        <div class="thumb">
+          <img src="./assets/images/contests.jpg" alt="image">
+        </div>
+        <div class="content text-center">
+          <h4 class="name">Contests</h4>
+          <span class="designation">Collect UGC, Grow email & SMS lists, Unlock new audiences...</span>
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb">
+          <img src="./assets/images/emailforms.jpg" alt="image">
+        </div>
+        <div class="content text-center">
+          <h4 class="name">Email Forms</h4>
+          <span class="designation">Grow email & SMS lists, Integrate into any ESP, Generate...</span>
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb">
+          <img src="./assets/images/earn.jpg" alt="image">
+        </div>
+        <div class="content text-center">
+          <h4 class="name">Learn And Earn</h4>
+          <span class="designation">Accumulate crypto ./assets risk free while having fun by...</span>
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb">
+          <img src="./assets/images/comments.jpg" alt="image">
+        </div>
+        <div class="content text-center">
+          <h4 class="name">Social Comments</h4>
+          <span class="designation">Create beautiful social comments request, allowing web...</span>
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb">
+          <img src="./assets/images/sweep.jpg" alt="image">
+        </div>
+        <div class="content text-center">
+          <h4 class="name">Sweepstakes</h4>
+          <span class="designation">Increase engagement and reward fans instantly with... </span>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</section>
+<!-- End Products-->
+<!-- Start Welcome -->
+<section class="choose-section pt-120 pb-120">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="choose-thumb">
+          <img [src]="base_url+'uploads/content_image/'+contents[2].content_image" alt="blogs" class="imgs">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="choose-content">
+          <h2 class="section-title text-capitalize border-bottom-right">{{contents[2].title}}</h2>
+          <p>{{contents[2].description}}
+          </p>
+          <h4><br />Video Resources <br /></h4>
+          <ul class="video-resources">
+            <li>
+              <b>Step 1:</b>Planning your Learn and Earn, Social comments,
+              Contest, Sweepstakes,
+            </li>
+            <li>
+              <b>Step 2:</b> Set up your Learn and Earn, Social comments, Contest,
+              Sweepstakes
+            </li>
+          </ul>
+          <p><a [routerLink]="['/video-resources']" class="btn btn-gradient btn-radius">View more</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Welcome -->
+<!-- Start Counder -->
+<div class="counter-section gradient-one">
+  <div class="container">
+    <div class="row mb-none-30">
+      <div class="col-lg-3 col-md-3 col-6">
+        <div class="counter-item text-center mb-30">
+          <div class="counter-item-header">
+            <div class="counter-num">
+              <span class="counter">100</span>
+              <span>+</span>
+            </div>
+          </div>
+          <div class="content">
+            <span class="caption">Organizations</span>
+          </div>
+        </div>
+      </div><!-- counter-item end -->
+      <div class="col-lg-3 col-md-3 col-6">
+        <div class="counter-item text-center mb-30">
+          <div class="counter-item-header">
+            <div class="counter-num">
+              <span class="counter">500</span>
+              <span>K</span>
+            </div>
+          </div>
+          <div class="content">
+            <span class="caption">Participants</span>
+          </div>
+        </div>
+      </div><!-- counter-item end -->
+      <div class="col-lg-3 col-md-3 col-6">
+        <div class="counter-item text-center mb-30">
+          <div class="counter-item-header">
+            <div class="counter-num">
+              <span class="counter">250</span>
+            </div>
+          </div>
+          <div class="content">
+            <span class="caption">Events</span>
+          </div>
+        </div>
+      </div><!-- counter-item end -->
+      <div class="col-lg-3 col-md-3 col-6">
+        <div class="counter-item text-center mb-30">
+          <div class="counter-item-header">
+            <div class="counter-num">
+              <span class="counter">650</span>
+              <span>+</span>
+            </div>
+          </div>
+          <div class="content">
+            <span class="caption">Rewards</span>
+          </div>
+        </div>
+      </div><!-- counter-item end -->
+    </div>
+  </div>
+</div>
+<!-- End Counder -->
+<!-- Start Testimonials -->
+<section class="testimonial-section pt-120 pb-120">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="section-header text-center">
+          <h2 class="section-title text-capitalize border-bottom-bottom">{{contents[3].title}}</h2>
+          <p>{{contents[3].description}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-slider">
+      <owl-carousel-o [options]="testimonialOptions">
+        <ng-container *ngFor="let item of testimonials">
+          <ng-template carouselSlide [id]="item.web_id">
+            <div class="testimonial-item">
+              <div class="testimonial-header">
+                <div class="thumb">
+                  <img *ngIf="item.testimonial_image" [src]="base_url + 'uploads/testimonials/' + item.testimonial_image" alt="image" style="border-radius: 50px;">
+                  <img *ngIf="!item.testimonial_image" src="./assets/images/testi.png" alt="image">
+                </div>
+                <div class="details">
+                  <h4 class="name">{{item.testimonial_name}}</h4>
+                  <span class="designation">{{item.testimonial_designation}}</span>
+                </div>
+              </div>
+              <div class="testimonial-content height">
+                <p>
+                  <b>{{item.testimonial_title}}</b><br />
+                 {{item.testimonial_message}}
+                </p>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+    <!-- <div class="testimonial-slider owl-carousel">
+
+      <div class="testimonial-item">
+        <div class="testimonial-header">
+          <div class="thumb">
+            <img src="./assets/images/testi.png" alt="image">
+          </div>
+          <div class="details">
+            <h5 class="name">John Rasking</h5>
+            <span class="degisnation">Co-Founder, Blocknomi</span>
+          </div>
+        </div>
+        <div class="testimonial-content">
+          <p>
+            <b>1000% ROI.</b><br />
+            Remco has been a key tool in growing our social following and our email lists. We've seen ROI's of over
+            1000%
+            from revenue generated directly from our Remco managed giveaways.
+          </p>
+        </div>
+      </div>
+
+      <div class="testimonial-item">
+        <div class="testimonial-header">
+          <div class="thumb">
+            <img src="./assets/images/testi.png" alt="image">
+          </div>
+          <div class="details">
+            <h5 class="name">Faith Johnson</h5>
+            <span class="degisnation">CEO, Softhook</span>
+          </div>
+        </div>
+        <div class="testimonial-content">
+          <p>
+            <b>Build and execute.</b><br />
+            There is no better way to build and execute promotions than Remco. Period. I’m consistently amazed at the
+            ease
+            with which they make complicated processes a breeze.
+          </p>
+        </div>
+      </div>
+
+      <div class="testimonial-item">
+        <div class="testimonial-header">
+          <div class="thumb">
+            <img src="./assets/images/testi.png" alt="image">
+          </div>
+          <div class="details">
+            <h5 class="name">Brian Lakey</h5>
+            <span class="degisnation">vp, vtnglobal</span>
+          </div>
+        </div>
+        <div class="testimonial-content">
+          <p>
+            <b>Easy to use.</b><br />
+            Remco is easy-to-use and the fastest, most cost-effective way to set up a full-service, compliant promotion.
+            The team are incredibly responsive and helpful when working through custom requests.
+          </p>
+        </div>
+      </div>
+
+      <div class="testimonial-item">
+        <div class="testimonial-header">
+          <div class="thumb">
+            <img src="./assets/images/testi.png" alt="image">
+          </div>
+          <div class="details">
+            <h5 class="name">Brian Lucas</h5>
+            <span class="degisnation">CEO, Sweetaccessories</span>
+          </div>
+        </div>
+        <div class="testimonial-content">
+          <p>
+            <b>Above the rest.</b><br />
+            As an agency, we tried several sweepstakes applications for our clients. Remco is head and shoulders above
+            the
+            rest.
+          </p>
+        </div>
+      </div>
+
+      <div class="testimonial-item">
+        <div class="testimonial-header">
+          <div class="thumb">
+            <img src="./assets/images/testi.png" alt="image">
+          </div>
+          <div class="details">
+            <h5 class="name">Martha Viera</h5>
+            <span class="degisnation">Project Director, Humanim</span>
+          </div>
+        </div>
+        <div class="testimonial-content">
+          <p>
+            <b>One of the best.</b><br />
+            Remco is one of the best tools we use for running sweepstakes and giveaways.
+          </p>
+        </div>
+      </div>
+
+    </div> -->
+  </div>
+</section>
+<!-- End Testimonials -->
+<!-- Start Blackchein Logo -->
+<section class="team-section pt-120 pb-120" style="background-color:#e8f8ff;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="section-header text-center">
+          <h2 class="section-title text-capitalize border-bottom-bottom">{{contents[4].title}}</h2>
+          <p>{{contents[4].description}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="blocklogos">
+      <owl-carousel-o [options]="blockChainOptions">
+        <ng-container *ngFor="let item of block_chain">
+          <ng-template carouselSlide [id]="item">
+            <div class="team-item" >
+              <div class="thumb logoborder">
+                <img [src]="base_url+'uploads/block-chain/'+item" alt="block_chain" width=153px height=92px>
+                <!-- <img [src]="'./assets/images/logos/'+ item.image" alt="image"> -->
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+     <!--<div class="blocklogos owl-carousel">
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img [src]="base_url+'uploads/block-chain/'+item.block_images" alt="block_chain" width=153px height=92px>
+          <img src="./assets/images/logos/binancecoin.jpg" alt="image">
+        </div> 
+      </div>
+    </div>
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img src="./assets/images/logos/bitcoin.jpg" alt="image">
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img src="./assets/images/logos/bitcoincash.jpg" alt="image">
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img src="./assets/images/logos/cardano.jpg" alt="image">
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img src="./assets/images/logos/chainlink.jpg" alt="image">
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img src="./assets/images/logos/dogecoin.jpg" alt="image">
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img src="./assets/images/logos/ethereum.jpg" alt="image">
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img src="./assets/images/logos/litecoin.jpg" alt="image">
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img src="./assets/images/logos/polkadot.jpg" alt="image">
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img src="./assets/images/logos/shishiswap.jpg" alt="image">
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img src="./assets/images/logos/solana.jpg" alt="image">
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img src="./assets/images/logos/stellar.jpg" alt="image">
+        </div>
+      </div>
+      <div class="team-item">
+        <div class="thumb logoborder">
+          <img src="./assets/images/logos/uniswap.jpg" alt="image">
+        </div>
+      </div>
+    </div> -->
+  </div>
+</section>
+<!-- End Blackchein Logo -->
+<app-footer></app-footer>

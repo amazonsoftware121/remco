@@ -1,0 +1,26 @@
+.dashboard {
+  // box-shadow: 0 0 17.85px 3.15px rgb(0 0 0 / 17%);
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #F2F2F2;
+  margin-bottom: 40px;
+}
+
+.sidebar-categories {
+  list-style: outside none none;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+
+  & > li {
+    padding-bottom: 15px;
+    font-size: 15px;
+    font-weight: 400;
+    color: black
+  }
+}
+
+i {
+  color: #E56119;
+}

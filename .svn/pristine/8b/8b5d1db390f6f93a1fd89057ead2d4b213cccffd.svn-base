@@ -1,0 +1,14 @@
+.btn {
+  font-weight: 600;
+  color: #fff;
+  background-color: #00aeef;
+  border: 0;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .3s;
+  width: 100%;
+  
+  &:hover {
+    background-color: #006991
+  }
+}

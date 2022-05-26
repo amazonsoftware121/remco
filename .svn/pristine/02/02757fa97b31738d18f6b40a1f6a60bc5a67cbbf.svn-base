@@ -1,0 +1,16 @@
+import { Component } from '@angular/core';
+
+import { LoaderService } from '../../providers/loader.service';
+
+@Component({
+  selector: 'app-learn-and-earn',
+  templateUrl: './learn-and-earn.component.html',
+  styleUrls: ['./learn-and-earn.component.scss']
+})
+export class LearnAndEarnComponent {
+
+  constructor(private loaderService: LoaderService) {
+    this.loaderService.stopLoader();
+  }
+
+}

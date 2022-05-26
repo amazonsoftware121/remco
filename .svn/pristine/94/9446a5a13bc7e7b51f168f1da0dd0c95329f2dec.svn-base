@@ -1,0 +1,18 @@
+<div class="dashboard">
+  
+  <hr>
+  <ul class="sidebar-categories">
+    <li><i class="fa fa-id-card"></i> &nbsp; <a [ngStyle]="{'color': selectedMenu=='my-profile' ? '#E56119' : ''}" class="cursor-pointer" (click)="changeSideMenu('my-profile')">My Profile</a></li>
+    <li><i class="fa fa-unlock"></i> &nbsp; <a [ngStyle]="{'color': selectedMenu=='change-password' ? '#E56119' : ''}" class="cursor-pointer" (click)="changeSideMenu('change-password')">Change Password</a></li>
+  </ul>
+</div>
+
+<!-- <div class="form-container">
+  <div class="nav flex-column">
+    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fa fa-id-card"><span>My profile</span></i></a>
+    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fa fa-university" aria-hidden="true"><span>Bank details</span></i></a>
+    <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"> <i class="fa fa-key" aria-hidden="true"><span>Change Password</span></i></a>
+    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false"><i class="fa fa-envelope" aria-hidden="true"><span>My Messages</span></i></a>
+    <a class="nav-link" id="v-pills-wallet-tab" data-toggle="pill" href="#v-pills-wallet" role="tab" aria-controls="v-pills-wallet" aria-selected="false"><i class="fas fa-wallet"><span>Wallet </span></i></a>
+  </div>
+</div> -->

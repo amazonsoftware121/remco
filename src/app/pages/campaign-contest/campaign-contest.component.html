@@ -1,0 +1,115 @@
+<app-header></app-header>
+
+<!-- inner-banner-section start -->
+<section class="inner-banner-section">
+  <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-banner-content text-center">
+          <h2 class="page-title">Contest</h2>
+          <ol class="page-list">
+            <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
+            <li><a [routerLink]="['/campaign']">Campaign</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- inner-banner-section start -->
+<!-- blog-section start -->
+<section class="features-section pb-120" *ngIf="Companies">
+  <!-- <form>
+    <input class="search" type="text" name="search" placeholder="Search.."></form> -->
+    <div class="container" *ngIf="Companies">
+        <div class="row text-center">
+            <div class="col-md-12">
+                <div class="section-header">
+                <h2 class="section-title text-capitalize">Contest</h2>
+                </div>
+                
+            </div>
+        </div>
+        <hr class="new4">
+        <div class="form-row">
+            <div class="col-md-12">
+                <div class="search-box-area">
+                    <input type="text" name="" [(ngModel)]="playerName" placeholder="Search your question here. For faster results only type the first 10  words of your question." class="search-box-input"
+                    />
+                    <button (click)="search()"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+            <div class="col-md-12 closes" *ngIf="close">
+              <i (click)="closes()" class="fa fa-times" aria-hidden="true"></i>
+            </div>
+          <div class="col-xl-4 col-lg-6 col-md-6 margin" *ngFor="let item of contest">
+              <div class="icon-item text-center mb-30 border">
+                  <div class="item-header zoom popup" (click)="openPageView(item)">
+                    <!-- <span class="popuptext" id="myPopup">click to open</span> -->
+                  <img *ngIf="item.profile" [src]="base_url +'uploads/Profile/'+ item.profile" alt="image" class="imagee">
+                  <img src="./assets/images/download.jpg" alt="image" *ngIf="!item.profile">
+                  <!-- <img src="./assets/images/blog/1.jpg" alt="image" class="image"> -->
+                  <h5 class="title text-capitalize font-weight-semibold">{{item.company_name}}</h5>
+               
+                  <div class="content">
+                  <p class="height">{{item.company_description}}</p>
+                  </div>
+                </div>
+                <div class="viewProfile">
+                  <button class="btn btn-gradient btn-radius" (click)="openPageView(item)">Participate</button>
+                </div>
+
+                  <div class="bottom_contest"><div class="viewProfile">
+                  <button class="view" (click)="openDialog(item)">View Profile</button>
+                  <!-- <div class="text1"><i class="fa fa-clock-o"></i>&nbsp;<span class="textsize">346D 16H 41M 36S</span></div> -->
+              </div>
+              <div class="entry">
+                <div class="CALLUS"><i class="fa fa-trophy" style="font-size: 25px;color: #f7941e;" aria-hidden="true"></i><a class="CALLUS"><mark class="reward">{{item.company_reward_price}}</mark>Reward/Credit</a></div>
+              </div>
+            </div>
+              </div>
+              
+          </div><!-- icon-item end -->
+      </div>
+        <div class="top">
+          <i (click)="onPaginateChangeDecrease($event)" class="arrow fa fa-angle-left" aria-hidden="true"></i>
+          <!-- <p>{{total_count}}</p> -->
+          <i (click)="onPaginateChange($event)" class="arrow fa fa-angle-right" aria-hidden="true"></i>
+          <!-- <mat-paginator 
+            [length]="length"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            (page)="onPaginateChange($event)">
+          </mat-paginator> -->
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-lg-12">
+          <nav class="d-pagination" aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li class="page-item"><a class="page-link" href="#">"<<"</a></li>
+              <li class="page-item active"><a class="page-link" href="#">01</a></li>
+              <li class="page-item"><a class="page-link" href="#">02</a></li>
+              <li class="page-item"><a class="page-link" href="#">03</a></li>
+              <li class="page-item"><a class="page-link" href="#">04</a></li>
+              <li class="page-item"><a class="page-link" href="#">05</a></li>
+              <li class="page-item"><a class="page-link" href="#">>></a></li>
+            </ul>
+          </nav>
+        </div>
+      </div> -->
+</section>
+<section class="features-section pb-120" *ngIf="!Companies">
+  <div class="row text-center">
+    <div class="col-md-12">
+        <div class="section-mascot">
+          <img class="mascot" src="./assets/images/mascot/remco character dezine-14.jpg" alt="image">
+        <h2 class="section-title text-capitalize text_color">no events found</h2>
+        </div>
+    </div>
+</div>
+</section>
+<!-- blog-section end -->
+
+<app-footer></app-footer>

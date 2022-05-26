@@ -1,0 +1,55 @@
+<app-header></app-header>
+
+<!-- inner-banner-section start -->
+<section class="inner-banner-section">
+  <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-banner-content text-center">
+          <h2 class="page-title">Faq</h2>
+          <ol class="page-list">
+            <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
+            <li>Getting started and Faq’s</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- inner-banner-section start -->
+<!-- faq-section start -->
+<section class="faq-section pt-120 pb-120">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="faq-thumb">
+          <img src="./assets/images/faq.png" alt="image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="faq-content">
+          <div class="accordion mt-30" id="marever-accordio-one">
+            <div class="card" *ngFor="let item of faqs">
+              <div class="card-header">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  (click)="openAnswerBox(item.web_id)">
+                  <span class="caption">{{item.faq_question}}</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div *ngIf="showAns && quesId === item.web_id">
+                <div class="card-body">
+                  <p>{{item.faq_answer}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- faq-section end -->
+
+<app-footer></app-footer>

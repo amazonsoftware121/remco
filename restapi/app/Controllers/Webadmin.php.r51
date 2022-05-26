@@ -1,0 +1,1708 @@
+<?php namespace App\Controllers;
+use App\Models\Webmodel;
+use CodeIgniter\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
+//define('webmodel', 'adf');
+class Webadmin extends Controller
+{
+    protected $token_expire_time = 3600; //3600
+    private $webmodel;
+    function __construct()
+    {
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+        header("Content-Type: application/json");
+        header("X-XSS-Protection: 0");
+        header('X-Content-Type-Options: nosniff');
+        $this->webmodel = new Webmodel();
+        $this->checkEntryLevel();
+    }
+    public function index()
+    {
+        echo 'Web Services.!' . '<br>';
+    }
+	
+	
+    private function checkEntryLevel() {
+        $uri = current_url(true);
+        //echo $uri.'hii its a url';
+        $listOfChkJWT=[
+            'changepassword',
+            'getAllCompanies',
+            'getAllParticipants',
+            'getAllPlan',
+            'getAllContest',
+            'addparticipant',
+            'editparticipant',
+            'deleteparticipants',
+            'addcompany',
+            'addcontest',
+            'editcompany',
+            'deletecompany',
+            'editplan',
+            'addplan',
+            'editcontest',
+            'deletecontest'
+        ];
+        //print_r($listOfChkJWT);
+       
+        $currReqAction=$uri->getSegment(2);
+        if (array_key_exists('HTTP_AUTHORIZATION', $_SERVER)) {
+            $header = $_SERVER["HTTP_AUTHORIZATION"];
+        } else {
+            $header = '';
+        }
+        
+        if (in_array($currReqAction,$listOfChkJWT) && in_array(strtolower($_SERVER["REQUEST_METHOD"]),["post","get"])) {
+            
+            // if exist, should check
+            try {
+                require __DIR__ . './../Libraries/Authorization_Token.php';
+            } catch (Exception $e) {
+                print_r($e);
+                exit;
+            }
+            $auth = new \Authorization_Token();
+            if (isset($header) && $header!="") {
+                $validatedResult = $auth->validateToken(true);
+            }
+            else {
+                http_response_code(401);
+                header('Content-Type: application/json');
+                $data_insert=array(
+                    "status" => "authentication_error",
+                    "message" => "Unauthorized request."
+                );
+                echo json_encode($data_insert);
+                die();
+            }
+        }
+    }	
+    public function adminLogin()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $userName = $request->user_name;
+            $password = $request->user_password;
+            $retryAvailable = true;
+            $throttle = \Config\Services::throttler();
+            $allow = $throttle->check( $this->request->getIPAddress(), 40, 300);
+            if(!$allow['status']){
+                $minutes = floor(($allow['time'] / 60) % 60);
+                $seconds = $allow['time'] % 60;
+                if($minutes<1){
+                    $minutes = '';
+                }else if($minutes==1){
+                    $minutes = '1 minute';
+                }else{
+                    $minutes = "$minutes minutes";
+                }
+                if($seconds<1){
+                    $seconds = '';
+                }else if($seconds==1){
+                    $seconds = '1 second';
+                }else{
+                    $seconds = "$seconds seconds";
+                }
+                $retrialMessage =  "Too many failed attempts, Please wait for few mins to try again.";
+                $this->webmodel->commonThrow(400, $retrialMessage);
+            }else{
+                $retryAvailable = (int) $allow['value'];
+                $retryAvailable--;
+            }
+            $where = "(`web_id`=1 OR `web_id`=2) AND (`user_name`=" . $this->webmodel->removeEscape($userName). " AND `user_password`='" . hash('sha256', $password)."')";
+            //echo $where;
+            $result = $this->webmodel->commonLISTWHERE('remco_admin', $where, false);
+            if ($result) {
+                try {
+                    require __DIR__ . './../Libraries/Authorization_Token.php';
+                } catch (Exception $e) {
+                    print_r($e);
+                    exit;
+                }
+                $auth = new \Authorization_Token();
+                $iat = time(); // time of token issued at
+                $nbf = $iat + 0; //not before in seconds
+                $exp = $iat + $this->token_expire_time; // expire time of token in seconds
+                $token = array(
+                    "iss" => "https://remco.zerosoft.in/",
+                    "aud" => "https://remco.zerosoft.in/",
+                    "iat" => $iat,
+                    "nbf" => $nbf,
+                    "exp" => $exp,
+                    "data" => array(
+                        "id" => $result[0]->web_id,
+                        "username" => $result[0]->user_name
+                    )
+                );
+                $token = $auth->generateToken($token);
+                //print_r($auth->userData());
+                $response['token'] = $token;
+                unset($result[0]->user_password);
+                unset($result[0]->user_original);
+                $response['status'] = '200';
+                $response['data'] = $result[0];
+                $response['error'] = 'Login successfully';
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '400';
+                $response['error'] = "Wrong username/password/role, you have $retryAvailable attempts left.";
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+    public function changepassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $oldpassword = $request->oldpassword;
+            //echo $oldpassword;
+            $newpassword = hash('sha256',$request->newpassword);
+            //echo $newpassword;
+            
+            $where = "`user_password`=" .$this->webmodel->removeEscape( hash('sha256', $oldpassword)) . " AND `web_id`=1";  //. hash('sha256'
+            //echo $where;
+            $result = $this->webmodel->commonLISTWHERE('remco_admin', $where, false);
+            
+            $id = $result[0]->web_id;
+            //echo $id;
+            //exit();
+            if ($result) {
+                $data = array(
+                    'user_password' => $newpassword
+                );
+                $result = $this->webmodel->commonEDIT('remco_admin', $data, $id);
+                //echo $result;
+            }
+            if ($result) {
+                $response['status'] = '200';
+                $response['data'] = $result[0];
+                $response['error'] = 'Password changed successfully';
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '400';
+                $response['error'] = 'Wrong password';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+
+  public function getAllCompanies(){
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+      $result = $this->webmodel->commonLIST('remco_companies');
+      if($result){
+        $response['status'] = '200';
+        $response['data'] = $result;
+        echo json_encode($response);
+        exit;
+      }else{
+        $this->webmodel->commonThrow();
+      }
+    }
+  }
+
+  public function getAllContactUs(){
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+      $result = $this->webmodel->commonLIST('remco_contact');
+      if($result){
+        $response['status'] = '200';
+        $response['data'] = $result;
+        echo json_encode($response);
+        exit;
+      }else{
+        $this->webmodel->commonThrow();
+      }
+    }
+  }
+  
+   public function getAllParticipants(){
+     
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+      $result = $this->webmodel->commonLIST('remco_participants');
+      if($result){
+        $response['status'] = '200';
+        $response['data'] = $result;
+        echo json_encode($response);
+        exit;
+      }else{
+        $this->webmodel->commonThrow();
+      }
+    }
+  }
+  public function getAllPlan(){
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+      $result = $this->webmodel->commonLIST('remco_subscription');
+      if($result){
+        $response['status'] = '200';
+        $response['data'] = $result;
+        echo json_encode($response);
+        exit;
+      }else{
+        $this->webmodel->commonThrow();
+      }
+    }
+  }
+  public function getAllContest(){
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+      $result = $this->webmodel->commonLIST('remco_contest');
+      if($result){
+        $response['status'] = '200';
+        $response['data'] = $result;
+        echo json_encode($response);
+        exit;
+      }else{
+        $this->webmodel->commonThrow();
+      }
+    }
+  }
+  public function getAllLearn(){
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+      $result = $this->webmodel->commonLIST('remco_learn');
+      //print_r($result);
+      if($result){
+        $response['status'] = '200';
+        $response['data'] = $result;
+        echo json_encode($response);
+        exit;
+      }else{
+        $this->webmodel->commonThrow();
+      }
+    }
+  }
+   public function getAllSweep(){
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+      $result = $this->webmodel->commonLIST('remco_sweepstakes');
+      if($result){
+        $response['status'] = '200';
+        $response['data'] = $result;
+        echo json_encode($response);
+        exit;
+      }else{
+        $this->webmodel->commonThrow();
+      }
+    }
+  }
+   public function getAllSocial(){
+    if($_SERVER['REQUEST_METHOD'] == 'GET'){
+      $result = $this->webmodel->commonLIST('remco_social_comments');
+      if($result){
+        $response['status'] = '200';
+        $response['data'] = $result;
+        echo json_encode($response);
+        exit;
+      }else{
+        $this->webmodel->commonThrow();
+      }
+    }
+  }
+    public function deleteParticipant(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $userid = $this->webmodel->removeEscape($request->web_id);
+            
+            $result = $this->webmodel->commonDELETE('remco_participants',"`web_id` = ".$userid);
+             //$result = $this->webmodel->commonLISTWHERE('remco_parcipants', $where);
+             
+            if($result){
+                $response['status'] = "200";
+                $response['data'] = $result;
+                $response['error'] = 'Participant deleted successfully';
+                echo json_encode($response);
+                exit;
+            }
+            else{
+                $response['status'] = "500";
+                $response['error'] = 'Participant cannot be deleted';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+    
+    public function addparticipant(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);;
+             
+            $data = array(
+                'participant_fname' => $request->participant_fname,
+                'participant_lname' => $request->participant_lname,
+                'participant_email' => $request->participant_email,
+                'participant_password' => hash('sha256', $request->participant_password),
+                'participant_country_code' => $request->participant_country_code,
+                'participant_phone' => $request->participant_phone,
+                'participant_register_type' => 'website',
+                'participant_subscription_status' => $request->participant_subscription_status,
+                'participant_status' => $request->participant_status,
+                'participant_created' => time(),
+            );
+            $email = $request->participant_email;
+            $name = $request->participant_fname;
+            $resultExist = $this->webmodel->commonLISTWHERE('remco_participants', "`participant_email`=" . $this->webmodel->removeEscape($email) , false);
+            if ($resultExist) {
+                $response['status'] = '300';
+                $response['error'] = 'Email id already exist.';
+                echo  json_encode($response);
+                exit;
+            }
+            
+            $resultcompExist = $this->webmodel->commonLISTWHERE('remco_companies', "`company_email`=" . $this->webmodel->removeEscape($email) , false);
+            if ($resultcompExist) {
+                $response['status'] = '300';
+                $response['error'] = 'Email id already exist.';
+                echo  json_encode($response);
+                exit;
+            }
+           
+            $result = $this->webmodel->commonADD('remco_participants', $data);
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Participant added successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Can not be registered';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+  public function editparticipant(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);;
+             
+            $data = array(
+                'participant_fname' => $request->participant_fname,
+                'participant_lname' => $request->participant_lname,
+                'participant_email' => $request->participant_email,
+                //'participant_password' => hash('sha256', $request->participant_password),
+                'participant_country_code' => $request->participant_country_code,
+                'participant_phone' => $request->participant_phone,
+                'participant_register_type' => 'website',
+                'participant_subscription_status' => $request->participant_subscription_status,
+                'participant_status' => $request->participant_status,
+                //'participant_created' => time(),
+            );
+            $email = $request->participant_email;
+            $name = $request->participant_fname;
+            $resultExist = $this->webmodel->commonLISTWHERE('remco_participants', "`participant_email`=" . $this->webmodel->removeEscape($email) ." AND `web_id` != ".$userid  , false);
+            if ($resultExist) {
+                $response['status'] = '300';
+                $response['error'] = 'Email id already exist.';
+                echo  json_encode($response);
+                exit;
+            }
+            
+            $resultcompExist = $this->webmodel->commonLISTWHERE('remco_companies', "`company_email`=" . $this->webmodel->removeEscape($email) , false);
+            if ($resultcompExist) {
+                $response['status'] = '300';
+                $response['error'] = 'Email id already exist.';
+                echo  json_encode($response);
+                exit;
+            }
+           
+            $result = $this->webmodel->commonEDITWHERE('remco_participants', $data, "`web_id`=" . $userid);
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Participant Updated successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to update participant';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+  public function addcompany(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);;
+             
+            $data = array(
+                'company_name' => $request->company_name,
+                'company_description' => $request->company_description,
+                'company_country_code' => $request->company_country_code,
+                'company_phone' => $request->company_phone,
+                'company_website' => $request->company_website,
+                'company_email' => $request->company_email,
+                'company_password' => hash('sha256', $request->company_password),
+                'company_status' => $request->company_status,
+                'company_subscription_status' => $request->company_subscription_status,
+                'company_created' => time(),
+            );
+            $email = $request->company_email;
+            $name = $request->company_name;
+            $resultExist = $this->webmodel->commonLISTWHERE('remco_participants', "`participant_email`=" . $this->webmodel->removeEscape($email) , false);
+            if ($resultExist) {
+                $response['status'] = '300';
+                $response['error'] = 'Email id already exist.';
+                echo  json_encode($response);
+                exit;
+            }
+            
+            $resultcompExist = $this->webmodel->commonLISTWHERE('remco_companies', "`company_email`=" . $this->webmodel->removeEscape($email) , false);
+            if ($resultcompExist) {
+                $response['status'] = '300';
+                $response['error'] = 'Email id already exist.';
+                echo  json_encode($response);
+                exit;
+            }
+           
+            $result = $this->webmodel->commonADD('remco_companies', $data);
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Company details added successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Can not be registered';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+  public function editcompany(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);;
+             
+            $data = array(
+                'company_name' => $request->company_name,
+                'company_description' => $request->company_description,
+                'company_country_code' => $request->company_country_code,
+                'company_phone' => $request->company_phone,
+                'company_website' => $request->company_website,
+                'company_email' => $request->company_email,
+                'company_status' => $request->company_status,
+                'company_subscription_status' => $request->company_subscription_status,
+                'company_created' => time(),
+            );
+            $email = $request->company_email;
+            $name = $request->company_name;
+            $resultExist = $this->webmodel->commonLISTWHERE('remco_companies', "`company_email`=" . $this->webmodel->removeEscape($email) ." AND `web_id` != ".$userid  , false);
+            if ($resultExist) {
+                $response['status'] = '300';
+                $response['error'] = 'Email id already exist.';
+                echo  json_encode($response);
+                exit;
+            }
+            
+            $resultcompExist = $this->webmodel->commonLISTWHERE('remco_participants', "`participant_email`=" . $this->webmodel->removeEscape($email) , false);
+            if ($resultcompExist) {
+                $response['status'] = '300';
+                $response['error'] = 'Email id already exist.';
+                echo  json_encode($response);
+                exit;
+            }
+           
+            $result = $this->webmodel->commonEDITWHERE('remco_companies', $data, "`web_id`=" . $userid);
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Company details Updated successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to update company details';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+  public function deletecompany(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        
+        $result = $this->webmodel->commonDELETE('remco_companies',"`web_id` = ".$userid);
+         //$result = $this->webmodel->commonLISTWHERE('remco_parcipants', $where);
+         
+        if($result){
+            $response['status'] = "200";
+            $response['data'] = $result;
+            $response['error'] = 'Company details deleted successfully';
+            echo json_encode($response);
+            exit;
+        }
+        else{
+            $response['status'] = "500";
+            $response['error'] = 'Company details cannot be deleted';
+            echo json_encode($response);
+            exit;
+        }
+    }
+}
+public function editplan(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+             
+            $data = array(
+                'plan_name' => $request->plan_name,
+                'plan_amount' => $request->plan_amount,
+                'plan_description' => $request->plan_description,
+                'plan_campaign_limit' => $request->plan_campaign_limit,
+            );
+    
+            $result = $this->webmodel->commonEDITWHERE('remco_subscription', $data, "`web_id`=" . $userid);
+           
+            
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Plan details Updated successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to update plan details';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+  public function addplan(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);;
+             
+            $data = array(
+				'plan_name' => $request->plan_name,
+                'plan_amount' => $request->plan_amount,
+                'plan_description' => $request->plan_description,
+                'plan_campaign_limit' => $request->plan_campaign_limit,
+            );
+           
+            $result = $this->webmodel->commonADD('remco_subscription', $data);
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Plan details added successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Can not be registered';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+  public function deleteplan(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        
+        $result = $this->webmodel->commonDELETE('remco_subscription',"`web_id` = ".$userid);
+         //$result = $this->webmodel->commonLISTWHERE('remco_parcipants', $where);
+         
+        if($result){
+            $response['status'] = "200";
+            $response['data'] = $result;
+            $response['error'] = 'Plan details deleted successfully';
+            echo json_encode($response);
+            exit;
+        }
+        else{
+            $response['status'] = "500";
+            $response['error'] = 'Plan details cannot be deleted';
+            echo json_encode($response);
+            exit;
+        }
+    }
+}
+public function addcontest(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        $start = strtotime($request->contest_start_date);
+        $end = strtotime($request->contest_end_date);
+        //print_r($start);
+        //print_r($end);
+             
+            $data = array(
+				'contest_title' => $request->contest_title,
+                'contest_description' => $request->contest_description,
+                'contest_start_date'  => $start,
+                'contest_end_date'  => $end,
+                'contest_start_time'  => $request->contest_start_time,
+                'contest_end_time'  => $request->contest_end_time,
+                'contest_time_zone' => $request->contest_time_zone,
+                'contest_date_format' => $request->contest_date_format,
+                'contest_winners_number' => $request->contest_winners_number,
+                'contest_page_url' => $request->contest_page_url,
+                'contest_entry_frequency' => $request->contest_entry_frequency,
+                'contest_gallery_logo' => $request->contest_gallery_logo,
+                'contest_gallery_entry_form' => $request->contest_gallery_entry_form,
+                'contest_gallery_label' => $request->contest_gallery_label,
+                'contest_content_approval' => $request->contest_content_approval,
+                'contest_gallery_sorting' => $request->contest_gallery_sorting,
+                'contest_no_of_images_displayed' => $request->contest_no_of_images_displayed,
+                'contest_caption_preview' => $request->contest_caption_preview,
+                'contest_allow_sharing' => $request->contest_allow_sharing,
+                'contest_custom_caption' => $request->contest_custom_caption,
+                'contest_user_voting' => $request->contest_user_voting,
+                'contest_has_images' => $request->contest_has_images,
+                'contest_product_images' => $request->contest_product_images,
+                'contest_background_images' => $request->contest_background_images,
+                'contest_official_rules' => $request->contest_official_rules,
+            );
+           //print_r($start);
+            //print_r(contest_end_date);
+           
+            $result = $this->webmodel->commonADD('remco_contest', $data);
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Contest details added successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Can not be registered';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+  public function editcontest(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        $start = strtotime($request->contest_start_date);
+        $end = strtotime($request->contest_end_date);
+        //print_r($start);
+        //print_r($end);
+             
+            $data = array(
+                'contest_title' => $request->contest_title,
+                'contest_description' => $request->contest_description,
+                'contest_start_time'  => $request->contest_start_time ,
+                'contest_end_time'  => $request->contest_end_time,
+                'contest_start_date'  =>$start,
+                'contest_end_date'  => $end,
+                'contest_time_zone' => $request->contest_time_zone,
+                'contest_date_format' => $request->contest_date_format,
+                'contest_winners_number' => $request->contest_winners_number,
+                'contest_page_url' => $request->contest_page_url,
+                'contest_entry_frequency' => $request->contest_entry_frequency,
+                'contest_gallery_logo' => $request->contest_gallery_logo,
+                'contest_gallery_entry_form' => $request->contest_gallery_entry_form,
+                'contest_gallery_label' => $request->contest_gallery_label,
+                'contest_content_approval' => $request->contest_content_approval,
+                'contest_gallery_sorting' => $request->contest_gallery_sorting,
+                'contest_no_of_images_displayed' => $request->contest_no_of_images_displayed,
+                'contest_caption_preview' => $request->contest_caption_preview,
+                'contest_allow_sharing' => $request->contest_allow_sharing,
+                'contest_custom_caption' => $request->contest_custom_caption,
+                'contest_user_voting' => $request->contest_user_voting,
+                'contest_has_images' => $request->contest_has_images,
+                'contest_product_images' => $request->contest_product_images,
+                'contest_background_images' => $request->contest_background_images,
+                'contest_official_rules' => $request->contest_official_rules,
+            );
+            //print_r ($data);
+    
+            $result = $this->webmodel->commonEDITWHERE('remco_contest', $data, "`web_id`=" . $userid);
+           
+            
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Contest details Updated successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to update contest details';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+  public function deletecontest(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        
+        $result = $this->webmodel->commonDELETE('remco_contest',"`web_id` = ".$userid);
+         //$result = $this->webmodel->commonLISTWHERE('remco_parcipants', $where);
+         
+        if($result){
+            $response['status'] = "200";
+            $response['data'] = $result;
+            $response['error'] = 'Contest details deleted successfully';
+            echo json_encode($response);
+            exit;
+        }
+        else{
+            $response['status'] = "500";
+            $response['error'] = 'Contest details cannot be deleted';
+            echo json_encode($response);
+            exit;
+        }
+    }
+    }
+	public function editlearn(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        $start = strtotime($request->learn_start_date);
+        $end = strtotime($request->learn_end_date);
+        //print_r($start);
+        //print_r($end);
+             
+            $data = array(
+                'learn_title' => $request->learn_title,
+                'learn_description' => $request->learn_description,
+                'learn_start_date'  => $start,
+                'learn_end_date'  => $end,
+                'learn_start_time' => $request->learn_start_time,
+                'learn_end_time' => $request->learn_end_time,
+                'learn_time_zone' => $request->learn_time_zone,
+                'learn_date_format' => $request->learn_date_format,
+                'learn_add_questions' => $request->learn_add_questions,
+                'learn_landing_url' => $request->learn_landing_url,
+                'learn_logo' => $request->learn_logo,
+                'learn_background_image' => $request->learn_background_image,
+                'learn_official_rules' => $request->learn_official_rules,
+            );
+            //print_r($data);
+            $result = $this->webmodel->commonEDITWHERE('remco_learn', $data, "`web_id`=" . $userid);
+           
+            
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Learn&earn details Updated successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to update learn&earn details';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+   public function addlearn(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        //print_r($splittedstring,'efeufgieufgiue');
+        $start = strtotime($request->learn_start_date);
+        $end = strtotime($request->learn_end_date);
+        //print_r($start);
+        //print_r($end);
+             
+            $data = array(
+				'learn_title' => $request->learn_title,
+                'learn_description' => $request->learn_description,
+                'learn_start_date'  => $start,
+                'learn_end_date'  => $end,
+                'learn_start_time' => $request->learn_start_time,
+                'learn_end_time' => $request->learn_end_time,
+                'learn_time_zone' => $request->learn_time_zone,
+                'learn_date_format' => $request->learn_date_format,
+                'learn_add_questions' => $request->learn_add_questions,
+                'learn_landing_url' => $request->learn_landing_url,
+                'learn_logo' => $request->learn_logo,
+                'learn_background_image' => $request->learn_background_image,
+                'learn_official_rules' => $request->learn_official_rules,
+            );
+           
+            $result = $this->webmodel->commonADD('remco_learn', $data);
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Learn&earn details added successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Can not be registered';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+    public function deletelearn(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        
+        $result = $this->webmodel->commonDELETE('remco_learn',"`web_id` = ".$userid);
+         //$result = $this->webmodel->commonLISTWHERE('remco_learn', $where);
+         
+        if($result){
+            $response['status'] = "200";
+            $response['data'] = $result;
+            $response['error'] = 'Learn&earn details deleted successfully';
+            echo json_encode($response);
+            exit;
+        }
+        else{
+            $response['status'] = "500";
+            $response['error'] = 'Learn&earn details cannot be deleted';
+            echo json_encode($response);
+            exit;
+        }
+    }
+  }
+
+  public function addEmailForms() {
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $postdata = file_get_contents("php://input");
+      $request = json_decode($postdata);
+      $start = strtotime($request->email_start_date);
+      $end = strtotime($request->email_end_date);
+        
+      $data = array(
+        'email_title' => $request->email_title,
+        'email_description' => $request->email_description,
+        'email_start_date' => $start,
+        'email_end_date' => $end,
+        'email_start_time' => $request->email_start_time,
+        'email_end_time' => $request->email_end_time,
+        'email_time_zone' => $request->email_time_zone,
+        'email_date_format' => $request->email_date_format,
+        'email_landing_url' => $request->email_landing_url,
+        'email_logo' => $request->email_logo,
+        'email_product_img' => $request->email_product_img,
+        'email_background_img' => $request->email_background_img,
+        'email_official_rules' => $request->email_official_rules
+      );
+         
+      $result = $this->webmodel->commonADD('remco_email', $data);
+      if ($result) {
+        $response['status'] = '200';
+        $response['error'] = 'Email Forms Added Successfully';
+        $response['data'] = $result;
+        echo json_encode($response);
+        exit;
+      } else {
+        $response['status'] = '500';
+        $response['error'] = 'Failed to Add Email Forms';
+        echo json_encode($response);
+        exit;
+      }
+    }
+  }
+
+  public function editEmailForms() {
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $postdata = file_get_contents("php://input");
+      $request = json_decode($postdata);
+      $userid = $this->webmodel->removeEscape($request->web_id);
+      $start = strtotime($request->email_start_date);
+      $end = strtotime($request->email_end_date);
+           
+      $data = array(
+        'email_title' => $request->email_title,
+        'email_description' => $request->email_description,
+        'email_start_date' => $start,
+        'email_end_date' => $end,
+        'email_start_time' => $request->email_start_time,
+        'email_end_time' => $request->email_end_time,
+        'email_time_zone' => $request->email_time_zone,
+        'email_date_format' => $request->email_date_format,
+        'email_landing_url' => $request->email_landing_url,
+        'email_logo' => $request->email_logo,
+        'email_product_img' => $request->email_product_img,
+        'email_background_img' => $request->email_background_img,
+        'email_official_rules' => $request->email_official_rules
+      );
+      
+      $result = $this->webmodel->commonEDITWHERE('remco_email', $data, "`web_id`=" . $userid);
+            
+      if ($result) {
+        $response['status'] = '200';
+        $response['error'] = 'Email Forms Updated Successfully';
+        $response['data'] = $result;
+        echo json_encode($response);
+        exit;
+      } else {
+        $response['status'] = '500';
+        $response['error'] = 'Failed to Update Email Forms';
+        echo json_encode($response);
+        exit;
+      }
+    }
+  }
+   
+  public function deleteEmailForms() {
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+      $postdata = file_get_contents("php://input");
+      $request = json_decode($postdata);
+      $userid = $this->webmodel->removeEscape($request->web_id);
+      
+      $result = $this->webmodel->commonDELETE('remco_email',"`web_id` = ".$userid);
+        
+      if ($result) {
+        $response['status'] = "200";
+        $response['data'] = $result;
+        $response['error'] = 'Email Forms deleted successfully';
+        echo json_encode($response);
+        exit;
+      }
+      else {
+        $response['status'] = "500";
+        $response['error'] = 'Failed to Delete Email Forms';
+        echo json_encode($response);
+        exit;
+      }
+    }
+  }
+  
+  public function addsweep(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        $start = strtotime($request->sweepstakes_start_date);
+        $end = strtotime($request->sweepstakes_end_date);
+        //print_r($start);
+        //print_r($end);
+             
+            $data = array(
+				'sweepstakes_title' => $request->sweepstakes_title,
+                'sweepstakes_description' => $request->sweepstakes_description,
+                'sweepstakes_start_date'  => $start,
+                'sweepstakes_end_date'  => $end,
+                'sweepstakes_start_time'  => $request->sweepstakes_start_time,
+                'sweepstakes_end_time'  => $request->sweepstakes_end_time,
+                'sweepstakes_time_zone' => $request->sweepstakes_time_zone,
+                'sweepstakes_date_format' => $request->sweepstakes_date_format,
+                'sweepstakes_winners' => $request->sweepstakes_winners,
+                'sweepstakes_page_url' => $request->sweepstakes_page_url,
+                'sweepstakes_entry_frequency' => $request->sweepstakes_entry_frequency,
+                'sweepstakes_logo' => $request->sweepstakes_logo,
+                'sweepstakes_product' => $request->sweepstakes_product,
+                'sweepstakes_background' => $request->sweepstakes_background,
+                'sweepstakes_official_rules' => $request->sweepstakes_official_rules,
+            );
+           //print_r($start);
+            //print_r(contest_end_date);
+           
+            $result = $this->webmodel->commonADD('remco_sweepstakes', $data);
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Sweepstakes details added successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Can not be registered';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+  
+    public function editsweep(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        $start = strtotime($request->sweepstakes_start_date);
+        $end = strtotime($request->sweepstakes_end_date);
+        //print_r($start);
+        //print_r($end);
+             
+            $data = array(
+                'sweepstakes_title' => $request->sweepstakes_title,
+                'sweepstakes_description' => $request->sweepstakes_description,
+                'sweepstakes_start_date'  => $start,
+                'sweepstakes_end_date'  => $end,
+                'sweepstakes_start_time'  => $request->sweepstakes_start_time,
+                'sweepstakes_end_time'  => $request->sweepstakes_end_time,
+                'sweepstakes_time_zone' => $request->sweepstakes_time_zone,
+                'sweepstakes_date_format' => $request->sweepstakes_date_format,
+                'sweepstakes_winners' => $request->sweepstakes_winners,
+                'sweepstakes_page_url' => $request->sweepstakes_page_url,
+                'sweepstakes_entry_frequency' => $request->sweepstakes_entry_frequency,
+                'sweepstakes_logo' => $request->sweepstakes_logo,
+                'sweepstakes_product' => $request->sweepstakes_product,
+                'sweepstakes_background' => $request->sweepstakes_background,
+                'sweepstakes_official_rules' => $request->sweepstakes_official_rules,
+            );
+            //print_r ($data);
+    
+            $result = $this->webmodel->commonEDITWHERE('remco_sweepstakes', $data, "`web_id`=" . $userid);
+           
+            
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Sweepstakes details Updated successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to update sweepstakes details';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+  public function deletesweep(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        
+        $result = $this->webmodel->commonDELETE('remco_sweepstakes',"`web_id` = ".$userid);
+         //$result = $this->webmodel->commonLISTWHERE('remco_parcipants', $where);
+         
+        if($result){
+            $response['status'] = "200";
+            $response['data'] = $result;
+            $response['error'] = 'Sweepstakes details deleted successfully';
+            echo json_encode($response);
+            exit;
+        }
+        else{
+            $response['status'] = "500";
+            $response['error'] = 'Sweepstakes details cannot be deleted';
+            echo json_encode($response);
+            exit;
+        }
+    }
+    }
+
+  public function getAllEmailForms() {
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+      $result = $this->webmodel->commonLIST('remco_email');
+      if ($result) {
+        $response['status'] = '200';
+        $response['data'] = $result;
+        echo json_encode($response);
+        exit;
+      } else {
+        $this->webmodel->commonThrow();
+      }
+    }
+  }
+
+  public function addsocial(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        $start = strtotime($request->social_comments_start_date);
+        $end = strtotime($request->social_comments_end_date);
+        //print_r($start);
+        //print_r($end);
+             
+            $data = array(
+				'social_comments_connectfrom' => $request->social_comments_connectfrom,
+                'social_comments_start_date'  => $start,
+                'social_comments_end_date'  => $end,
+                'social_comments_start_time'  => $request->social_comments_start_time,
+                'social_comments_end_time'  => $request->social_comments_end_time,
+                'social_comments_time_zone' => $request->social_comments_time_zone,
+                'social_comments_winners' => $request->social_comments_winners,
+                'social_comments_new_entry' => $request->social_comments_new_entry,
+            );
+           //print_r($start);
+            //print_r(contest_end_date);
+           
+            $result = $this->webmodel->commonADD('remco_social_comments', $data);
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Social comments details added successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Can not be registered';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+  public function editsocial(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        $start = strtotime($request->social_comments_start_date);
+        $end = strtotime($request->social_comments_end_date);
+        //print_r($start);
+        //print_r($end);
+             
+            $data = array(
+                'social_comments_connectfrom' => $request->social_comments_connectfrom,
+                'social_comments_start_date'  => $start,
+                'social_comments_end_date'  => $end,
+                'social_comments_start_time'  => $request->social_comments_start_time,
+                'social_comments_end_time'  => $request->social_comments_end_time,
+                'social_comments_time_zone' => $request->social_comments_time_zone,
+                'social_comments_winners' => $request->social_comments_winners,
+                'social_comments_new_entry' => $request->social_comments_new_entry,
+            );
+            //print_r ($data);
+    
+            $result = $this->webmodel->commonEDITWHERE('remco_social_comments', $data, "`web_id`=" . $userid);
+           
+            
+            if ($result) {
+                //$mail = sendemail($sendEmail);
+                $response['status'] = '200';
+                $response['error'] = 'Social comments details Updated successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to update social comments details';
+                echo json_encode($response);
+                exit;
+            }
+        }
+  }
+  public function deletesocial(){
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $postdata = file_get_contents("php://input");
+        $request = json_decode($postdata);
+        $userid = $this->webmodel->removeEscape($request->web_id);
+        
+        $result = $this->webmodel->commonDELETE('remco_social_comments',"`web_id` = ".$userid);
+         
+        if($result){
+            $response['status'] = "200";
+            $response['data'] = $result;
+            $response['error'] = 'Social comments details deleted successfully';
+            echo json_encode($response);
+            exit;
+        }
+        else{
+            $response['status'] = "500";
+            $response['error'] = 'Social comments details cannot be deleted';
+            echo json_encode($response);
+            exit;
+        }
+    }
+    }
+
+    public function addProduct() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            
+            $data = array(
+            'product_title' => $request->product_title,
+            'product_description' => $request->product_description,
+            'product_image' => $request->product_image,
+            );
+                
+            $result = $this->webmodel->commonADD('remco_products', $data);
+            if ($result) {
+                $response['status'] = '200';
+                $response['error'] = 'Product Added Successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to Add Product';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+    
+    public function editProduct() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $userid = $this->webmodel->removeEscape($request->web_id);
+                
+            $data = array(
+            'product_title' => $request->product_title,
+            'product_description' => $request->product_description,
+            'product_image' => $request->product_image,
+            );
+            
+            $result = $this->webmodel->commonEDITWHERE('remco_products', $data, "`web_id`=" . $userid);
+                
+            if ($result) {
+                $response['status'] = '200';
+                $response['error'] = 'Product Updated Successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to Update Product';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+       
+    public function deleteProduct() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $userid = $this->webmodel->removeEscape($request->web_id);
+            
+            $result = $this->webmodel->commonDELETE('remco_products',"`web_id` = ".$userid);
+            
+            if ($result) {
+                $response['status'] = "200";
+                $response['data'] = $result;
+                $response['error'] = 'Produt deleted successfully';
+                echo json_encode($response);
+                exit;
+            }
+            else {
+                $response['status'] = "500";
+                $response['error'] = 'Failed to Delete Product';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+
+    public function getAllProducts() {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $result = $this->webmodel->commonLIST('remco_products');
+            if ($result) {
+                $response['status'] = '200';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $this->webmodel->commonThrow();
+            }
+        }
+    }
+
+    public function addTestimonial() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            
+            $data = array(
+                'testimonial_name' => $request->testimonial_name,
+                'testimonial_designation' => $request->testimonial_designation,
+                'testimonial_title' => $request->testimonial_title,
+                'testimonial_message' => $request->testimonial_message,
+                'testimonial_image' => $request->testimonial_image,
+            );
+                
+            $result = $this->webmodel->commonADD('remco_testimonials', $data);
+            if ($result) {
+                $response['status'] = '200';
+                $response['error'] = 'Testimonial Added Successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to Add Testimonial';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+    
+    public function editTestimonial() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $userid = $this->webmodel->removeEscape($request->web_id);
+                
+            $data = array(
+                'testimonial_name' => $request->testimonial_name,
+                'testimonial_designation' => $request->testimonial_designation,
+                'testimonial_title' => $request->testimonial_title,
+                'testimonial_message' => $request->testimonial_message,
+                'testimonial_image' => $request->testimonial_image,
+            );
+            
+            $result = $this->webmodel->commonEDITWHERE('remco_testimonials', $data, "`web_id`=" . $userid);
+                
+            if ($result) {
+                $response['status'] = '200';
+                $response['error'] = 'Testimonial Updated Successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to Update Testimonial';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+       
+    public function deleteTestimonial() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $userid = $this->webmodel->removeEscape($request->web_id);
+            
+            $result = $this->webmodel->commonDELETE('remco_testimonials',"`web_id` = ".$userid);
+            
+            if ($result) {
+                $response['status'] = "200";
+                $response['data'] = $result;
+                $response['error'] = 'Testimonial deleted successfully';
+                echo json_encode($response);
+                exit;
+            }
+            else {
+                $response['status'] = "500";
+                $response['error'] = 'Failed to Delete Testimonial';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+
+    public function getAllTestimonials() {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $result = $this->webmodel->commonLIST('remco_testimonials');
+            if ($result) {
+                $response['status'] = '200';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $this->webmodel->commonThrow();
+            }
+        }
+    }
+
+    public function addBlogs() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            
+            $data = array(
+            'blog_title' => $request->blog_title,
+            'blog_description' => $request->blog_description,
+            'blog_image' => $request->blog_image,
+            'blog_created_time' => time()
+            );
+                
+            $result = $this->webmodel->commonADD('remco_blogs', $data);
+            if ($result) {
+                $response['status'] = '200';
+                $response['error'] = 'Blog Added Successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to Add Blog';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+    
+    public function editBlogs() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $userid = $this->webmodel->removeEscape($request->web_id);
+                
+            $data = array(
+            'blog_title' => $request->blog_title,
+            'blog_description' => $request->blog_description,
+            'blog_image' => $request->blog_image,
+            'blog_created_time' => time()
+            );
+            
+            $result = $this->webmodel->commonEDITWHERE('remco_blogs', $data, "`web_id`=" . $userid);
+                
+            if ($result) {
+                $response['status'] = '200';
+                $response['error'] = 'Blog Updated Successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to Update Blog';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+       
+    public function deleteBlogs() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $userid = $this->webmodel->removeEscape($request->web_id);
+            
+            $result = $this->webmodel->commonDELETE('remco_blogs',"`web_id` = ".$userid);
+            
+            if ($result) {
+                $response['status'] = "200";
+                $response['data'] = $result;
+                $response['error'] = 'Blog deleted successfully';
+                echo json_encode($response);
+                exit;
+            }
+            else {
+                $response['status'] = "500";
+                $response['error'] = 'Failed to Delete Blog';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+
+    public function getAllBlogs() {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $result = $this->webmodel->commonLIST('remco_blogs');
+            if ($result) {
+                $response['status'] = '200';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $this->webmodel->commonThrow();
+            }
+        }
+    }
+
+    public function addFaq() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            
+            $data = array(
+            'faq_question' => $request->faq_question,
+            'faq_answer' => $request->faq_answer,
+            );
+                
+            $result = $this->webmodel->commonADD('remco_faq', $data);
+            if ($result) {
+                $response['status'] = '200';
+                $response['error'] = 'Faq Added Successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to Add Faq';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+    
+    public function editFaq() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $userid = $this->webmodel->removeEscape($request->web_id);
+                
+            $data = array(
+            'faq_question' => $request->faq_question,
+            'faq_answer' => $request->faq_answer,
+            );
+            
+            $result = $this->webmodel->commonEDITWHERE('remco_faq', $data, "`web_id`=" . $userid);
+                
+            if ($result) {
+                $response['status'] = '200';
+                $response['error'] = 'Faq Updated Successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to Update Faq';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+       
+    public function deleteFaq() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $userid = $this->webmodel->removeEscape($request->web_id);
+            
+            $result = $this->webmodel->commonDELETE('remco_faq',"`web_id` = ".$userid);
+            
+            if ($result) {
+                $response['status'] = "200";
+                $response['data'] = $result;
+                $response['error'] = 'Faq deleted successfully';
+                echo json_encode($response);
+                exit;
+            }
+            else {
+                $response['status'] = "500";
+                $response['error'] = 'Failed to Delete Faq';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+
+    public function getAllFaq() {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $result = $this->webmodel->commonLIST('remco_faq');
+            if ($result) {
+                $response['status'] = '200';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $this->webmodel->commonThrow();
+            }
+        }
+    }
+
+    public function addBlockChain() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            
+            $data = array(
+                'block_title' => $request->block_title,
+                'block_description' => $request->block_description,
+                'block_images' => $request->block_images,
+            );
+                
+            $result = $this->webmodel->commonADD('remco_block_chain', $data);
+            if ($result) {
+                $response['status'] = '200';
+                $response['error'] = 'Block Chain Added Successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to Add Block Chain';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+    
+    public function editBlockChain() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $userid = $this->webmodel->removeEscape($request->web_id);
+                
+            $data = array(
+                'block_title' => $request->block_title,
+                'block_description' => $request->block_description,
+                'block_images' => $request->block_images,
+            );
+            
+            $result = $this->webmodel->commonEDITWHERE('remco_block_chain', $data, "`web_id`=" . $userid);
+                
+            if ($result) {
+                $response['status'] = '200';
+                $response['error'] = 'Block Chain Updated Successfully';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $response['status'] = '500';
+                $response['error'] = 'Failed to Update Block Chain';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+       
+    public function deleteBlockChain() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $postdata = file_get_contents("php://input");
+            $request = json_decode($postdata);
+            $userid = $this->webmodel->removeEscape($request->web_id);
+            
+            $result = $this->webmodel->commonDELETE('remco_block_chain',"`web_id` = ".$userid);
+            
+            if ($result) {
+                $response['status'] = "200";
+                $response['data'] = $result;
+                $response['error'] = 'Block Chain deleted successfully';
+                echo json_encode($response);
+                exit;
+            }
+            else {
+                $response['status'] = "500";
+                $response['error'] = 'Failed to Delete Block Chain';
+                echo json_encode($response);
+                exit;
+            }
+        }
+    }
+
+    public function getAllBlockChains() {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $result = $this->webmodel->commonLIST('remco_block_chain');
+            if ($result) {
+                $response['status'] = '200';
+                $response['data'] = $result;
+                echo json_encode($response);
+                exit;
+            } else {
+                $this->webmodel->commonThrow();
+            }
+        }
+    }
+
+}

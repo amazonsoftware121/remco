@@ -1,0 +1,107 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  {
+    path: '',
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule)
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./pages/password/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () => import('./pages/password/reset-password/reset-password.module').then(m => m.ResetPasswordModule)
+  },
+  {
+    path: 'pricing',
+    loadChildren: () => import('./pages/pricing/pricing.module').then(m => m.PricingModule)
+  },
+  {
+    path: 'video-resources',
+    loadChildren: () => import('./pages/video-resources/video-resources.module').then(m => m.VideoResourcesModule)
+  },
+  {
+    path: 'faq',
+    loadChildren: () => import('./pages/faq/faq.module').then(m => m.FaqModule)
+  },
+  {
+    path: 'contest',
+    loadChildren: () => import('./pages/contest/contest.module').then(m => m.ContestModule)
+  },
+  {
+    path: 'email-forms',
+    loadChildren: () => import('./pages/email-forms/email-forms.module').then(m => m.EmailFormsModule)
+  },
+  {
+    path: 'learn-and-earn',
+    loadChildren: () => import('./pages/learn-and-earn/learn-and-earn.module').then(m => m.LearnAndEarnModule)
+  },
+  {
+    path: 'social-comments',
+    loadChildren: () => import('./pages/social-comments/social-comments.module').then(m => m.SocialCommentsModule)
+  },
+  {
+    path: 'sweepstakes',
+    loadChildren: () => import('./pages/sweepstakes/sweepstakes.module').then(m => m.SweepstakesModule)
+  },
+  {
+    path: 'contact-us',
+    loadChildren: () => import('./pages/contact-us/contact-us.module').then(m => m.ContactUsModule)
+  },
+  {
+    path: 'gallery',
+    loadChildren: () => import('./pages/gallery/gallery.module').then(m => m.GalleryModule)
+  },
+  {
+    path: 'blogs',
+    loadChildren: () => import('./pages/blogs/blogs.module').then(m => m.BlogsModule)
+  },
+  {
+    path: 'blog-details/:id',
+    loadChildren: () => import('./pages/blog-details/blog-details.module').then(m => m.BlogDetailsModule)
+  },
+  {
+    path: 'testimonials',
+    loadChildren: () => import('./pages/testimonials/testimonials.module').then(m => m.TestimonialsModule)
+  },
+  {
+    path: 'my-account',
+    loadChildren: () => import('./pages/my-account/my-account.module').then(m => m.MyAccountModule)
+  },
+  {
+    path: 'campaign',
+    loadChildren: () => import('./pages/campaign/campaign.module').then(m => m.CampaignModule)
+  },
+  {
+    path: 'campaign-companies',
+    loadChildren: () => import('./pages/campaign-companies/campaign-companies.module').then(m => m.CampaignCompaniesModule)
+  },
+  {
+    path: 'campaign-full-view',
+    loadChildren: () => import('./pages/campaign-full-view/campaign-full-view.module').then(m => m.CompanyContestModule)
+  }, 
+  {
+    path: 'campaign-widget-view',
+    loadChildren: () => import('./pages/campaign-widget-view/campaign-widget-view.module').then(m => m.CampaignWidgetViewModule)
+  }, 
+  {
+    path: 'campaign-lightbox-view',
+    loadChildren: () => import('./pages/campaign-lightbox-view/campaign-lightbox-view.module').then(m => m.CampaignLightboxViewModule)
+  }, 
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

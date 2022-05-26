@@ -1,0 +1,15 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CampaignSweepStakesDetailesComponent } from './campaign-sweep-stakes-detailes.component';
+
+
+
+@NgModule({
+  declarations: [
+    CampaignSweepStakesDetailesComponent
+  ],
+  imports: [
+    CommonModule
+  ]
+})
+export class CampaignCompaniesDetailesModule { }

@@ -1,0 +1,29 @@
+.sub-menu {
+  position: absolute;
+  width: 220px;
+  background-color: #ccc;
+  top: 105%;
+  left: -20px;
+  z-index: 999;
+  background-color: #fff;
+  padding: 10px 0;
+  border-top: 2px solid #00aeef;
+  -webkit-box-shadow: 0 18px 54px -8px rgba(0,0,0,0.15);
+  box-shadow: 0 18px 54px -8px rgba(0,0,0,0.15);
+  -webkit-transition: all .3s;
+  -o-transition: all .3s;
+  transition: all .3s;
+  /* opacity: 0;
+  visibility: hidden */
+}
+
+.sub-menu li a {
+  padding: 8px 20px;
+  display: block;
+  color: #292929
+}
+
+.sub-menu li a:hover {
+      background-color: rgba(38,174,97,0.05);
+      color: #00aeef
+  }

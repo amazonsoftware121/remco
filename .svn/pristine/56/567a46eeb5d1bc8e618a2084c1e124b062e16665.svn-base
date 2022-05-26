@@ -1,0 +1,24 @@
+.company{
+text-align: center;
+}
+hr.new4 {
+border: 1px solid #00aeef;
+width:100px;
+
+}
+.align{
+    margin-top: 20px;
+}
+.profile_image{
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+}
+.text_align{
+    text-align: center;
+}
+.value{
+    font-size: 20px;
+    font-family: inherit;
+    font-weight: 500;
+}

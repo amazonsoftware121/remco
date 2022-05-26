@@ -1,0 +1,264 @@
+<div>
+  <div *ngIf="userType==='Company'">
+    <div *ngIf="!editCompany">
+      <h3>My Profile - Company</h3>
+      <div class="col-md-12">
+        <div class="row pb-3 pt-4 center">
+          <span class="col-4 tags"><b>Company Name</b></span>
+          <span class="pull-right">:</span>
+          <span class="col-7 value" *ngIf="!fetchingStatus">{{accountInfo.company_name}}</span>
+          <div *ngIf="fetchingStatus" class="col-7">
+            <ngx-skeleton-loader count="1" [theme]="loaderTheme" animation="progress"></ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="row pb-3 center">
+          <span class="col-4 tags"><b>Country</b></span>
+          <span class="pull-right">:</span>
+          <span class="col-7 value" *ngIf="!fetchingStatus">{{accountInfo.company_country_name}}</span>
+          <div *ngIf="fetchingStatus" class="col-7">
+            <ngx-skeleton-loader count="1" [theme]="loaderTheme" animation="progress"></ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="row pb-3 center">
+          <span class="col-4 tags"><b>Phone Number</b></span>
+          <span class="pull-right">:</span>
+          <span class="col-7 value" *ngIf="!fetchingStatus">{{'+' +countryCode + ' ' +accountInfo.company_phone}}</span>
+          <div *ngIf="fetchingStatus" class="col-7">
+            <ngx-skeleton-loader count="1" [theme]="loaderTheme" animation="progress"></ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="row pb-3 center">
+          <span class="col-4 tags"><b>Website URL</b></span>
+          <span class="pull-right">:</span>
+          <span class="col-7 value" *ngIf="!fetchingStatus">{{accountInfo.company_website}}</span>
+          <div *ngIf="fetchingStatus" class="col-7">
+            <ngx-skeleton-loader count="1" [theme]="loaderTheme" animation="progress"></ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="row pb-3 center">
+          <span class="col-4 tags"><b>Email</b></span>
+          <span class="pull-right">:</span>
+          <span class="col-7 value" *ngIf="!fetchingStatus">{{accountInfo.company_email}}</span>
+          <div *ngIf="fetchingStatus" class="col-7">
+            <ngx-skeleton-loader count="1" [theme]="loaderTheme" animation="progress"></ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="row pb-3 center">
+          <span class="col-4 tags"><b>Description</b></span>
+          <span class="pull-right">:</span>
+          <span class="col-7 value" *ngIf="!fetchingStatus">{{accountInfo.company_description}}</span>
+          <div *ngIf="fetchingStatus" class="col-7">
+            <ngx-skeleton-loader count="1" [theme]="loaderTheme" animation="progress"></ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="row pb-3 center">
+          <span class="col-4 tags"><b>Profile Picture</b></span>
+          <span class="align"><img src="./assets/images/download.jpg" alt="image" *ngIf="!accountInfo.profile" style="height: 150px; width: 150px;"></span>
+          <span class="col-7 value" *ngIf="!fetchingStatus"><img *ngIf="accountInfo.profile" [src]="base_url+'uploads/Profile/'+accountInfo.profile" alt="blogs" class="img"></span>
+        </div>
+        <div>
+          <button class="btn btn-primary mt-3" (click)="openEditCompany()">Edit</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="editCompany">
+      <h3>Edit Profile - Company</h3>
+      <form [formGroup]="companyForm">
+        <div class="row pt-5">
+          <div class="col-sm-6 mb-4">
+            <input type="text" placeholder="Company Name" formControlName="company_name"/>
+
+            <div *ngIf="companyForm.get('company_name').errors">
+              <span *ngIf="companyForm.get('company_name').touched && !companyForm.get('company_name').valid && !companyForm.get('company_name').value" class="validate-errors pt-3 float-left">Enter Company Name</span>
+            </div> 
+          </div>
+          <div class="col-sm-6 mb-4">
+            <mat-select placeholder="Select Country" class="form-control" panelClass="testClass" disableOptionCentering formControlName="company_country_code" (selectionChange)="selectedCode($event.value)">
+              <mat-option *ngFor="let item of countries" value="{{item.phonecode}}/{{item.name}}">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+
+            <div *ngIf="companyForm.get('company_country_code').errors">
+              <span *ngIf="companyForm.get('company_country_code').touched && !companyForm.get('company_country_code').valid && !companyForm.get('company_country_code').value" class="validate-errors pt-3 float-left">Select Country</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 mb-4 wrapper">
+            <input type="number" placeholder="Phone Number" formControlName="company_phone"/>
+            <span class="phone-code">+ {{countryCodes}}</span>
+
+            <div *ngIf="companyForm.get('company_phone').errors">
+              <span *ngIf="companyForm.get('company_phone').touched && !companyForm.get('company_phone').valid && !companyForm.get('company_phone').value" class="validate-errors pt-3 float-left">Enter Phone Number</span>
+            </div> 
+          </div>
+          <div class="col-sm-6 mb-4">
+            <input type="text" placeholder="Website URL" formControlName="company_website"/>
+
+            <div *ngIf="companyForm.get('company_website').errors">
+              <span *ngIf="companyForm.get('company_website').touched && !companyForm.get('company_website').valid && !companyForm.get('company_website').value" class="validate-errors pt-3 float-left">Enter Website URL</span>
+              <span class="validate-errors pt-3 float-left" *ngIf="companyForm.get('company_website').errors['pattern']">Enter valid Website URL</span>
+            </div> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 mb-4">
+            <textarea placeholder="Company Description" formControlName="company_description"></textarea>
+
+            <div *ngIf="companyForm.get('company_description').errors">
+              <span *ngIf="companyForm.get('company_description').touched && !companyForm.get('company_description').valid && !companyForm.get('company_description').value" class="validate-errors pt-3 float-left">Enter Description</span>
+            </div>
+          </div>
+          <div class="col-sm-6 mb-4">
+            <input type="text" placeholder="Email" formControlName="company_email" readonly/>
+
+            <div *ngIf="companyForm.get('company_email').errors">
+              <span *ngIf="companyForm.get('company_email').touched && !companyForm.get('company_email').valid && !companyForm.get('company_email').value" class="validate-errors pt-3 float-left">Enter Email </span>
+              <span class="validate-errors pt-3 float-left" *ngIf="companyForm.get('company_email').errors['pattern']">Enter valid email address</span>
+            </div> 
+          </div>
+          
+        </div>
+        <div class="row">
+          <div class="col-sm-6 mb-2">
+            <img *ngIf="accountInfo.profile" [src]="base_url+'uploads/Profile/'+accountInfo.profile" alt="logo" class="BLog-image" style="max-height: 170px;" ><br>
+            <label class="btn btn-primary mt-3 cursor-pointer" for="logo">Change Profile</label><br>
+            <input type="file" id="logo" style="visibility: hidden;" accept="image/*" (change)="onFileChanges($event)"><br>
+
+            <div *ngIf="participantsForm.get('profile').errors">
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row pt-4 pl-4">
+        <button class="btn btn-primary mr-3" (click)="editCompanyInfo()">Update</button>
+        <button class="btn btn-secondary" (click)="closeEditCompany()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="userType==='Participant'">
+    <div *ngIf="!editParticipant">
+      <h3>My Profile - Participant</h3>
+      <div class="col-md-12">
+        <div class="row pb-3 pt-4 center">
+          <span class="col-4 tags"><b>First Name</b></span>
+          <span class="pull-right">:</span>
+          <span class="col-7 value" *ngIf="!fetchingStatus">{{accountInfo.participant_fname}}</span>
+          <div *ngIf="fetchingStatus" class="col-7">
+            <ngx-skeleton-loader count="1" [theme]="loaderTheme" animation="progress"></ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="row pb-3 center">
+          <span class="col-4 tags"><b>Last Name</b></span>
+          <span class="pull-right">:</span>
+          <span class="col-7 value" *ngIf="!fetchingStatus">{{accountInfo.participant_lname}}</span>
+          <div *ngIf="fetchingStatus" class="col-7">
+            <ngx-skeleton-loader count="1" [theme]="loaderTheme" animation="progress"></ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="row pb-3 center">
+          <span class="col-4 tags"><b>Country</b></span>
+          <span class="pull-right">:</span>
+          <span class="col-7 value" *ngIf="!fetchingStatus">{{accountInfo.participant_country_name}}</span>
+          <div *ngIf="fetchingStatus" class="col-7">
+            <ngx-skeleton-loader count="1" [theme]="loaderTheme" animation="progress"></ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="row pb-3 center">
+          <span class="col-4 tags"><b>Phone Number</b></span>
+          <span class="pull-right">:</span>
+          <span class="col-7 value" *ngIf="!fetchingStatus">{{'+' +countryCode + ' ' +accountInfo.participant_phone}}</span>
+          <div *ngIf="fetchingStatus" class="col-7">
+            <ngx-skeleton-loader count="1" [theme]="loaderTheme" animation="progress"></ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="row pb-3 center">
+          <span class="col-4 tags"><b>Email</b></span>
+          <span class="pull-right">:</span>
+          <span class="col-7 value" *ngIf="!fetchingStatus">{{accountInfo.participant_email}}</span>
+          <div *ngIf="fetchingStatus" class="col-7">
+            <ngx-skeleton-loader count="1" [theme]="loaderTheme" animation="progress"></ngx-skeleton-loader>
+          </div>
+        </div>
+        <div class="row pb-3 center">
+          <span class="col-4 tags"><b>Profile Picture</b></span>
+          <span class="align"><img src="./assets/images/download.jpg" alt="image" *ngIf="!accountInfo.profile" style="height: 150px; width: 150px;"></span>
+          <span class="col-7 value" *ngIf="!fetchingStatus"><img *ngIf="accountInfo.profile" [src]="base_url+'uploads/Profile/'+accountInfo.profile" alt="blogs" class="img"></span>
+        </div>
+        <div>
+          <button class="btn btn-primary mt-3" (click)="openEditParticipant()">Edit</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="editParticipant">
+      <h3>Edit Profile - Participant</h3>
+      <form [formGroup]="participantsForm">
+        <div class="row pt-5">
+          <div class="col-sm-6 mb-4">
+            <input type="text" placeholder="First Name" formControlName="participant_fname"/>
+            <div *ngIf="participantsForm.get('participant_fname').errors">
+              <span *ngIf="participantsForm.get('participant_fname').touched && !participantsForm.get('participant_fname').valid && !participantsForm.get('participant_fname').value" class="validate-errors pt-3 float-left">Enter First Name</span>
+            </div> 
+          </div>
+          <div class="col-sm-6 mb-4">
+            <input type="text" placeholder="Last Name" formControlName="participant_lname"/>
+
+            <div *ngIf="participantsForm.get('participant_lname').errors">
+              <span *ngIf="participantsForm.get('participant_lname').touched && !participantsForm.get('participant_lname').valid && !participantsForm.get('participant_lname').value" class="validate-errors pt-3 float-left">Enter Last Name</span>
+            </div> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 mb-4">
+            <mat-select placeholder="Select Country" class="form-control" panelClass="testClass" disableOptionCentering formControlName="participant_country_code" (selectionChange)="selectedCode($event.value)">
+              <mat-option *ngFor="let item of countries" value="{{item.phonecode}}/{{item.name}}">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+ 
+            <div *ngIf="participantsForm.get('participant_country_code').errors">
+              <span *ngIf="participantsForm.get('participant_country_code').touched && !participantsForm.get('participant_country_code').valid && !participantsForm.get('participant_country_code').value" class="validate-errors pt-3 float-left">Select Country</span>
+            </div>
+          </div>
+          <div class="col-sm-6 mb-4 wrapper">
+            <input type="number" placeholder="Phone Number" formControlName="participant_phone"/>
+            <span class="phone-code">+ {{countryCodes}}</span>
+
+            <div *ngIf="participantsForm.get('participant_phone').errors">
+              <span *ngIf="participantsForm.get('participant_phone').touched && !participantsForm.get('participant_phone').valid && !participantsForm.get('participant_phone').value" class="validate-errors pt-3 float-left">Enter Phone Number</span>
+            </div> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 mb-4">
+            <input type="text" placeholder="Email" formControlName="participant_email" readonly/>
+
+            <div *ngIf="participantsForm.get('participant_email').errors">
+              <span *ngIf="participantsForm.get('participant_email').touched && !participantsForm.get('participant_email').valid && !participantsForm.get('participant_email').value" class="validate-errors pt-3 float-left">Enter Email </span>
+              <span class="validate-errors pt-3 float-left" *ngIf="participantsForm.get('participant_email').errors['pattern']">Enter valid email address</span>
+            </div> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6 mb-4">
+            <img *ngIf="accountInfo.profile" [src]="base_url+'uploads/Profile/'+accountInfo.profile" alt="logo" class="BLog-image" style="max-height: 170px;" ><br>
+            <label class="btn btn-primary mt-3 cursor-pointer" for="logo">Change Profile</label><br>
+            <input type="file" id="logo" style="visibility: hidden;" accept="image/*" (change)="onFileChange($event)"><br>
+
+            <div *ngIf="participantsForm.get('profile').errors">
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row pt-4 pl-4">
+        <button class="btn btn-primary mr-3" (click)="editParticipantInfo()">Update</button>
+        <button class="btn btn-secondary" (click)="closeEditParticipant()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

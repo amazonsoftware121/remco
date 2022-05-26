@@ -1,0 +1,44 @@
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { LoaderService } from 'src/app/providers/loader.service';
+import { CampaignLightboxViewFormComponent } from './campaign-lightbox-view-form/campaign-lightbox-view-form.component';
+
+@Component({
+  selector: 'app-campaign-lightbox-view',
+  templateUrl: './campaign-lightbox-view.component.html',
+  styleUrls: ['./campaign-lightbox-view.component.scss']
+})
+export class CampaignLightboxViewComponent implements OnInit {
+  value= "hlo";
+  label: any;
+
+  constructor(
+    
+    private loaderService: LoaderService,
+    
+    private router: Router,
+
+    private dialog: MatDialog
+
+    ) 
+    {
+    this.loaderService.stopLoader();
+   }
+
+  ngOnInit(): void {
+  }
+
+  openDialog() {
+
+    const dialogRef = this.dialog.open(CampaignLightboxViewFormComponent, {data: {ans:this.value}, disableClose: true,});
+    console.log(dialogRef.afterClosed());
+    dialogRef.afterClosed().subscribe((sub) => {
+      if (sub) {
+        this.label = "Submitted";
+      } else {
+        this.label = "Cancelled";
+      }
+    })
+  }
+}

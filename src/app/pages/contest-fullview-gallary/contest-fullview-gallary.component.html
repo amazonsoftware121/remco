@@ -1,0 +1,22 @@
+<section class="background blur" style="background-image: url('https://zerosoft.in/dev/remco/uploads/company/background/Remco_6293983794168.jpg');"> 
+    <div class="float"><span style="cursor: pointer;" (click)="gallery()" class="gallery">Close gallery</span><i style="font-size: 20px;" class="fa fa-times width2 clear" aria-hidden="true"></i></div>
+    <div class="form-row">
+        <div (click)="openDialog(item)" class="col-xl-3 col-lg-6 col-md-6 margin grid-item desigen research" *ngFor="let item of image">
+            <div class="posrt-thumb">
+                <img [src]="base_url +'uploads/contest_pictures/'+item.contest_image_video" class="image3 image-size">
+                <!-- <iframe class="image3 image-size" src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto%2F%3Ffbid%3D458906155921291%26set%3Da.284064976738744&show_text=true&width=500" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe> -->
+                <div class="overlay-content">
+                <h3 class="caption">View</h3>
+                </div>
+            </div>
+        </div>
+        <div (click)="openDialog(item)" class="col-xl-3 col-lg-6 col-md-6 margin grid-item desigen research" *ngFor="let item of social_image">
+            <div class="posrt-thumb">
+                <img [src]="base_url +'uploads/contest_pictures/'+item.contest_image_video" class="image3 image-size">
+                <div class="overlay-content">
+                <h3 class="caption">View</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

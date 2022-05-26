@@ -1,0 +1,35 @@
+<div class="text-center" *ngIf="loading">
+  <i class="fa fa-spinner loading-spinner fa-spin"></i>
+</div>
+<section>
+  <section *ngIf="plan">
+      <h3 class="sub">Subscription History</h3><br>
+      <table class="table">
+          <tr>
+            <!-- <th class="design1">Date & Time</th> -->
+            <th class="design1">Payment Method</th>
+            <th class="design1">Subscription Status</th>
+            <th class="design1">Plan Amount</th>
+          </tr>
+          <tr *ngFor="let plan of plan">
+            <!-- {{timeStampToDate(item.subscribe_date) | date: 'mediumDate'}} -->
+            <!-- <td class="design3">data</td> -->
+            <td class="design3">{{plan.subscribe_payment_type}}</td>
+            <td class="design3 color">{{plan.subscribe_status}}</td>
+            
+            <td class="design3"><h5 class="value">$ {{plan.subscribe_plan_amount}}<span style="font-size: 15px;">/participants</span></h5></td>
+          </tr>
+        </table>
+  </section>
+  <section *ngIf="!plan" class="features-section pb-120">
+    <div class="row text-center">
+      <div class="col-md-12">
+          <div class="section-mascot">
+            <img class="mascot" src="./assets/images/mascot/remco character dezine-14.jpg" alt="image">
+          <h2 class="section-title text-capitalize text_color design3">You don't have any subscription history</h2>
+          </div>
+          <span (click)="openPricing()" class="btn btn-gradient btn-radius">Upgrade Plan</span>
+      </div>
+  </div>
+  </section>
+</section>

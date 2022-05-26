@@ -1,0 +1,16 @@
+import { Component } from '@angular/core';
+
+import { LoaderService } from '../../providers/loader.service';
+
+@Component({
+  selector: 'app-faq',
+  templateUrl: './faq.component.html',
+  styleUrls: ['./faq.component.scss']
+})
+export class FaqComponent {
+
+  constructor(private loaderService: LoaderService) {
+    this.loaderService.stopLoader();
+  }
+
+}

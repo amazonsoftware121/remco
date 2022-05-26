@@ -1,0 +1,16 @@
+import { Component } from '@angular/core';
+
+import { LoaderService } from '../../providers/loader.service';
+
+@Component({
+  selector: 'app-sweepstakes',
+  templateUrl: './sweepstakes.component.html',
+  styleUrls: ['./sweepstakes.component.scss']
+})
+export class SweepstakesComponent {
+
+  constructor(private loaderService: LoaderService) {
+    this.loaderService.stopLoader();
+  }
+
+}

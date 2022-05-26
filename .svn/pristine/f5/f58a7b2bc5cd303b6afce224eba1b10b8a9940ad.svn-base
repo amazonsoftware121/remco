@@ -1,0 +1,53 @@
+:host ::ng-deep .mat-form-field{
+    width: 100% !important;
+}
+:host ::ng-deep .cmn-form, .inputs, .cmn-form textarea {
+    background-color: white;
+    border: 0px solid #d1d1d1;
+    border-radius: 5px;
+}
+:host ::ng-deep .mat-form-field-underline {
+    position: absolute;
+    width: 0px !important;
+    pointer-events: none;
+    transform: scale3d(1, 1.0001, 1);
+}
+:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+    border-radius: 4px 4px 0 0;
+    padding: 0px !important;
+}
+:host ::ng-deep .mat-select {
+    display: inline-block;
+    width: 100%;
+    outline: none;
+    // height: 50px;
+}
+:host ::ng-deep .style{
+    padding: 2px;
+}
+:host ::ng-deep .mat-form-field-flex {
+    display: inline-flex;
+    align-items: center !important;
+    box-sizing: border-box;
+    width: 100%;
+}
+:host ::ng-deep svg.mat-datepicker-toggle-default-icon.ng-star-inserted {
+    width: 2px;
+}
+:host ::ng-deep .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: inherit;
+    width: 2.5em;
+    height: 2.5em;
+    margin-top: 0.5em;
+}
+:host ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: rgb(243 238 238 / 4%) !important;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+}
+:host ::ng-deep .mat-input-element{
+    margin-left: 15px !important;
+}

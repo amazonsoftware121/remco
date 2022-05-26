@@ -1,0 +1,158 @@
+<app-header></app-header>
+
+<!-- inner-banner-section start -->
+<section class="inner-banner-section">
+  <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-banner-content text-center">
+          <h2 class="page-title">create an account</h2>
+          <ol class="page-list">
+            <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
+            <li>Register</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- inner-banner-section start -->
+<!-- registration-section start -->
+<section class="registration-section pt-120 pb-120">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="registration-block text-center">
+          <div class="registration-block-inner">
+            <h3 class="title">create your account</h3>
+
+            <!-- <mat-tab-group mat-align-tabs="center"> -->
+            <mat-tab-group>
+              <mat-tab label="Participant">
+                <form class="registration-form mt-4" [formGroup]="participantsForm">
+                  <div class="frm-group">
+                    <input type="text" name="f-name" id="f-name" placeholder="First Name" formControlName="participant_fname">
+                  </div>
+                  
+                  <div *ngIf="participantsForm.get('participant_fname').errors">
+                    <span *ngIf="participantsForm.get('participant_fname').touched && !participantsForm.get('participant_fname').valid && !participantsForm.get('participant_fname').value" class="validate-errors pb-3 float-left">Enter First Name<br></span>
+                  </div> 
+                  <div class="frm-group">
+                    <input type="text" name="l-name" id="l-name" placeholder="Last Name" formControlName="participant_lname">
+                  </div>
+
+                  <div *ngIf="participantsForm.get('participant_lname').errors">
+                    <span *ngIf="participantsForm.get('participant_lname').touched && !participantsForm.get('participant_lname').valid && !participantsForm.get('participant_lname').value" class="validate-errors pb-3 float-left">Enter Last Name<br></span>
+                  </div>
+                  <div class="frm-group">
+                    <mat-select placeholder="Select Country" class="form-control" panelClass="testClass" disableOptionCentering formControlName="participant_country_code" (selectionChange)="selectedCodePar($event.value)">
+                      <mat-option *ngFor="let item of countries" value="{{item.phonecode}}">
+                        {{item.name}}
+                      </mat-option>
+                  </mat-select>
+                  </div>
+
+                  <div *ngIf="participantsForm.get('participant_country_code').errors">
+                    <span *ngIf="participantsForm.get('participant_country_code').touched && !participantsForm.get('participant_country_code').valid && !participantsForm.get('participant_country_code').value" class="validate-errors pb-3 float-left">Select Country<br></span>
+                  </div>
+                   <div class="frm-group wrapper">
+                    <input type="number" name="name" id="name" placeholder="Phone Number" formControlName="participant_phone">
+                    <span class="phone-code">+ {{partCountryCode}}</span>
+                  </div>
+
+                  <div *ngIf="participantsForm.get('participant_phone').errors">
+                    <span *ngIf="participantsForm.get('participant_phone').touched && !participantsForm.get('participant_phone').valid && !participantsForm.get('participant_phone').value" class="validate-errors pb-3 float-left">Enter Phone Number<br></span>
+                  </div> 
+                  <div class="frm-group">
+                    <input type="email" name="name" id="name" placeholder="Email" formControlName="participant_email">
+                  </div>
+
+                  <div *ngIf="participantsForm.get('participant_email').errors">
+                    <span *ngIf="participantsForm.get('participant_email').touched && !participantsForm.get('participant_email').valid && !participantsForm.get('participant_email').value" class="validate-errors pb-3 float-left">Enter Email <br></span>
+                    <span class="validate-errors pb-3 float-left" *ngIf="participantsForm.get('participant_email').errors['pattern']">Enter valid email address</span>
+                  </div>  
+                  <div class="frm-group">
+                    <input type="password" name="pass" id="pass" placeholder="Password" formControlName="participant_password">
+                  </div>
+
+                  <div *ngIf="participantsForm.get('participant_password').errors">
+                    <span *ngIf="participantsForm.get('participant_password').touched && !participantsForm.get('participant_password').valid && !participantsForm.get('participant_password').value" class="validate-errors pb-3 float-left">Enter Password<br></span>
+                  </div> 
+                  <button class="btn" (click)="submitParticipants()">Create New Account</button>
+                </form> <br>
+                <p><a>Already have an account ? </a> &nbsp;<a [routerLink]="['/login']"> Login</a></p>
+              </mat-tab>
+
+              <mat-tab label="Company">
+                <form class="registration-form mt-4" [formGroup]="companyForm">
+                  <div class="frm-group">
+                    <input type="text" name="f-name" id="f-name" placeholder="Company Name" formControlName="company_name">
+                  </div>
+
+                  <div *ngIf="companyForm.get('company_name').errors">
+                    <span *ngIf="companyForm.get('company_name').touched && !companyForm.get('company_name').valid && !companyForm.get('company_name').value" class="validate-errors pb-3 float-left">Enter Company Name<br></span>
+                  </div> 
+                  <div class="frm-group">
+                    <textarea type="text" name="l-name" id="l-name" placeholder="Company Description" formControlName="company_description"></textarea>
+                  </div>
+
+                  <div *ngIf="companyForm.get('company_description').errors">
+                    <span *ngIf="companyForm.get('company_description').touched && !companyForm.get('company_description').valid && !companyForm.get('company_description').value" class="validate-errors pb-3 float-left">Enter Description<br></span>
+                  </div>
+                  <div class="frm-group">
+                    <mat-select placeholder="Select Country" class="form-control" panelClass="testClass" disableOptionCentering formControlName="company_country_code" (selectionChange)="selectedCodeCom($event.value)">
+                      <mat-option *ngFor="let item of countries" value="{{item.phonecode}}">
+                        {{item.name}}
+                      </mat-option>
+                  </mat-select>
+                  </div>
+
+                  <div *ngIf="companyForm.get('company_country_code').errors">
+                    <span *ngIf="companyForm.get('company_country_code').touched && !companyForm.get('company_country_code').valid && !companyForm.get('company_country_code').value" class="validate-errors pb-3 float-left">Select Country<br></span>
+                  </div>
+                  <div class="frm-group wrapper">
+                    <input type="number" name="name" id="name" placeholder="Phone Number" formControlName="company_phone" class="phone-input">
+                    <span class="phone-code">+ {{comCountryCode}}</span>
+                  </div>
+
+                  <div *ngIf="companyForm.get('company_phone').errors">
+                    <span *ngIf="companyForm.get('company_phone').touched && !companyForm.get('company_phone').valid && !companyForm.get('company_phone').value" class="validate-errors pb-3 float-left">Enter Phone Number<br></span>
+                  </div> 
+                  <div class="frm-group">
+                    <input type="url" name="website" id="website" placeholder="Website URL" formControlName="company_website">
+                    <p class="float-left">Ex. https://www.testcompany.com</p>
+                  </div> <br>
+
+                  <div *ngIf="companyForm.get('company_website').errors">
+                    <span *ngIf="companyForm.get('company_website').touched && !companyForm.get('company_website').valid && !companyForm.get('company_website').value" class="validate-errors pb-3 float-left">Enter Website URL<br></span>
+                    <span class="validate-errors pb-3 float-left" *ngIf="companyForm.get('company_website').errors['pattern']">Enter valid Website URL</span>
+                  </div> 
+                  <div class="frm-group">
+                    <input type="email" name="name" id="name" placeholder="Email" formControlName="company_email">
+                  </div>
+
+                  <div *ngIf="companyForm.get('company_email').errors">
+                    <span *ngIf="companyForm.get('company_email').touched && !companyForm.get('company_email').valid && !companyForm.get('company_email').value" class="validate-errors pb-3 float-left">Enter Email <br></span>
+                    <span class="validate-errors pb-3 float-left" *ngIf="companyForm.get('company_email').errors['pattern']">Enter valid email address</span>
+                  </div> 
+                  <div class="frm-group">
+                    <input type="password" name="pass" id="pass" placeholder="Password" formControlName="company_password">
+                  </div>
+                  <div *ngIf="companyForm.get('company_password').errors">
+                    <span *ngIf="companyForm.get('company_password').touched && !companyForm.get('company_password').valid && !companyForm.get('company_password').value" class="validate-errors pb-3 float-left">Enter Password<br></span>
+                  </div> 
+                  <button class="btn" (click)="submitCompany()">Create New Account</button>
+                </form> <br>
+                <p><a>Already have an account ? </a> &nbsp;<a [routerLink]="['/login']"> Login</a></p>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- registration-section end -->
+
+<app-footer></app-footer>

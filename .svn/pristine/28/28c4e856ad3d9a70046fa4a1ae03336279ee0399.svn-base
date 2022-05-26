@@ -1,0 +1,5 @@
+h3 {
+  border-bottom: 6px solid #016991;
+  line-height: 50px;
+  padding-bottom: 3px;
+}

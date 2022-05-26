@@ -1,0 +1,271 @@
+<section *ngIf="campaign_type=='contest'">
+<section *ngIf="section1" class="background blur" style="background-image: url('https://zerosoft.in/dev/remco/uploads/company/background/{{view.company_background_image}}');background-position: center;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;"> 
+    <section class="testimonial-section features-section pb-120 inner-banner">
+        <div class="form12">
+        <div class="center12">
+        <div class="center">
+        <ng-container>
+            <div class="form">
+                <div class="margin">
+                    <div class="text-center border">
+                <div class="form-row">
+                    <div class="col-md-6 logo-align"><a class="site-logo site-title logo-align1" [routerLink]="['/campaign-contest']"><img src="./assets/images/logo.png" alt="site-logo"><span class="logo-icon"><i class="flaticon-fire"></i></span></a></div>
+                        <!-- <span  class="gallery btn btn-gradient btn-radius" (click)="gallery()">View gallery</span> -->
+                    <div class="col-md-6 button-align"><span style="color: #fff;" class="gallery1 btn btn-gradient btn-radius button-align1" (click)="gallery()">View gallery</span></div>
+                </div>
+                    <hr>
+                    <div class="entry">
+                        <p class="entry1">You're Entered !</p>
+                        
+                        <div class="CALLUS"><i class="fa fa-trophy" style="font-size: 55px;color: #f7941e;" aria-hidden="true"></i><a class="CALLUS">Your Entries<br>1/1</a></div>
+                    </div>
+                    <hr class="entry-row">
+                    <span (click)="view_credit()" style="padding: 10px 20px 10px 20px;color: #fff;" class="gallery1 btn btn-gradient btn-radius"><i style="font-size: 14px;margin-right: 3px;" class="fa fa-eye" aria-hidden="true"></i>View Credits</span>
+                    <div *ngIf="credit_view">
+                        <div class="entryDetails1">
+                            <span class="entryFields1 col-md-10">Entering</span>
+                            <span class="entryFields1 col-md-2">+1 pts</span><hr class="dashes-row">
+                            <span class="entryFields1 col-md-10">Visit Instagram</span>
+                            <span class="entryFields1 col-md-2">+1 pts</span><hr class="dashes-row">
+                            <span class="entryFields1 col-md-10">Visit Facebook</span>
+                            <span class="entryFields1 col-md-2">+1 pts</span><hr class="dashes-row">
+                            <span class="entryFields1 col-md-10">Voting</span>
+                            <span class="entryFields1 col-md-2">+1 pts</span><hr class="dashes-row">
+                        </div>
+                        <div class="entryDetails2">
+                            <span style="font-size: 16px;" class="entryFields1 col-md-10">Your Credits</span>
+                            <span class="entryFields1 col-md-2"><i style="margin-right: 5px;" class="fa fa-credit-card" aria-hidden="true"></i>{{total_credit}} pts</span><hr class="dashes-row">
+                        </div>
+                    </div>
+                    <div class="entry">
+                        <p style="color: #16c1f3;" class="entry1">Be sure to share this contest with your friends.</p>
+                    </div>
+                    <div style="margin-bottom: 15px;" class="entryDetails">
+                        <span (click)="testClick0()" class="entryFields col-md-12"><i class="fa fa-picture-o icon" style="font-size: 30px;" aria-hidden="true"></i>Share Your Submission</span>
+                        <div *ngIf="test0">
+                            <p class="entry3">Share your submission with your friends.</p>
+                            <div class="form-row">
+                                <p class="referLink col-md-10">{{submissionUrl}}</p>
+                                <i class="fa fa-copy col-md-2" (click)="copy()" [cdkCopyToClipboard]="this.submissionUrl" [cdkCopyToClipboardAttempts]="7" style="cursor:pointer;"></i>
+                                <hr class="referLinkLine">
+                            </div>
+                            <div class="social-padding">
+                                <p class="entry1">Share to:</p>
+                                <div class="social-media-links form-row-social">
+                                    <share-buttons [theme]="'material-dark'"
+                                    [include]="['facebook','','twitter','','linkedin','','whatsapp']"
+                                    [show]="7"
+                                    [size]="17"
+                                    [url]="this.submission_url"
+                                    [autoSetMeta]="false"
+                                   ></share-buttons>
+                                </div>
+                            </div>
+                        </div><hr class="entry-row1">
+                        <span (click)="testClick()" class="entryFields col-md-12"><i class="fa fa-volume-up icon" style="font-size: 30px;" aria-hidden="true"></i>Refer your friends</span>
+                        <div *ngIf="test">
+                            <p class="entry3">Think your friends workout just as hard? Share this contest with them.</p>
+                            <div class="form-row">
+                                <p class="referLink col-md-10">{{referel_url}}</p>
+                                <i class="fa fa-copy col-md-2" (click)="copy()" [cdkCopyToClipboard]="this.referel_url" [cdkCopyToClipboardAttempts]="7" style="cursor:pointer;"></i>
+                                <hr class="referLinkLine">
+                            </div>
+                            <div class="social-padding">
+                                <p class="entry1">Share to:</p>
+                                <div class="social-media-links form-row-social">
+                                    <share-buttons [theme]="'material-dark'"
+                                    [include]="['facebook','','twitter','','linkedin','','whatsapp']"
+                                    [show]="7"
+                                    [size]="17"
+                                    [url]="this.referel_url"
+                                    [autoSetMeta]="false"
+                                   ></share-buttons>
+                                </div>
+                            </div>
+                        </div><hr class="entry-row1">
+                        <a (click)="instacredit()" href="{{insta_url}} "target="_blank" class="entryFields col-md-12"><i class="fa fa-instagram icon" style="font-size: 30px;" aria-hidden="true"></i>Visit on Instagram</a>
+                        <hr class="entry-row1">
+                        <a (click)="facecredit()" href="{{fb_url}}" target="_blank" class="entryFields col-md-12"><i class="fa fa-facebook-square icon" style="font-size: 30px;" aria-hidden="true"></i>Visit on Facebook</a>
+                    </div>
+                    <hr class="new4">
+                    <div class="form1">
+                        <div class="form-row" *ngIf="view">
+                            <div class="col-md-3">
+                                <i class="fa fa-calendar-o" style="font-size: 25px;"></i><br><span class="text">Ends {{view.company_end_date | date:'MMM d y'}}</span>
+                            </div>
+                            <div class="col-md-3" (click)="openDialog(view)">
+                                <i class="fa fa-newspaper-o" style="font-size: 25px;"></i><br><span class="text">View Rules</span>
+                            </div>
+                            <div class="col-md-3">
+                                <i class="fa fa-user" style="font-size: 25px;"></i><br><span class="text">Winners {{view.company_winners_number}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <i class="fa fa-clock-o" style="font-size: 25px;"></i><br><span class="text">{{demo}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </ng-container>
+        </div>
+    </div>
+    </div>
+    </section>
+</section>
+<section *ngIf="section2" class="background blur" style="background-image: url('https://zerosoft.in/dev/remco/uploads/company/background/{{view.company_background_image}}');background-position: center;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;"> 
+    <div class="float"><span style="cursor: pointer;margin-right: 10px;" (click)="close_gallery()" class="gallery btn btn-gradient btn-radius">Close gallery<i style="font-size: 20px;" class="fa fa-times width2 clear" aria-hidden="true"></i></span></div>
+    <div class="form-row">
+        <div style="text-align: center;"><p class="title font-weight-semibold description_bg" style="font-family: Roboto;font-size: 35px; color: black;">How intense is your workout? Vote on your favorite submission below.</p></div>
+    </div>
+    <div class="form-row">
+        <div (click)="openVoting(item)" class="col-xl-3 col-lg-6 col-md-6 grid-item desigen research" *ngFor="let item of image">
+            <div class="posrt-thumb">
+                <img [src]="base_url +'uploads/contest_pictures/'+item.contest_image_video" class="image3 image-size">
+                <div class="overlay-content">
+                <h3 class="caption">View</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</section>
+
+<section *ngIf="campaign_type=='learn'">
+    <section *ngIf="section1" class="background blur" style="background-image: url('https://zerosoft.in/dev/remco/uploads/company/background/{{view.company_background_image}}');background-position: center;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;"> 
+        <section class="testimonial-section features-section pb-120 inner-banner">
+            <div class="form12">
+            <div class="center12">
+            <div class="center">
+            <ng-container>
+                <div class="form">
+                    <div class="margin">
+                        <div class="text-center border">
+                    <div class="form-row">
+                        <div class="col-md-6 logo-align"><a class="site-logo site-title logo-align1" [routerLink]="['/campaign-learn-and-earn']"><img src="./assets/images/logo.png" alt="site-logo"><span class="logo-icon"><i class="flaticon-fire"></i></span></a></div>
+                            <!-- <span  class="gallery btn btn-gradient btn-radius" (click)="gallery()">View gallery</span> -->
+                        <!-- <div class="col-md-6 button-align"><span style="color: #fff;" class="gallery1 btn btn-gradient btn-radius button-align1" (click)="gallery()">View Answers</span></div> -->
+                    </div>
+                        <hr>
+                        <div class="entry">
+                            <p class="entry1">Completed Successfully !</p>
+                            
+                            <div class="CALLUS"><i class="fa fa-trophy" style="font-size: 55px;color: #f7941e;" aria-hidden="true"></i><a class="CALLUS">Your Entries<br>1/1</a></div>
+                        </div>
+                        <hr class="entry-row">
+                        <span (click)="view_credit()" style="padding: 10px 20px 10px 20px;color: #fff;" class="gallery1 btn btn-gradient btn-radius"><i style="font-size: 14px;margin-right: 3px;" class="fa fa-eye" aria-hidden="true"></i>View Credits</span>
+                        <div *ngIf="credit_view">
+                            <div class="entryDetails1">
+                                <span class="entryFields1 col-md-10">Entering</span>
+                                <span class="entryFields1 col-md-2">+1 pts</span><hr class="dashes-row">
+                                <span class="entryFields1 col-md-10">Visit Instagram</span>
+                                <span class="entryFields1 col-md-2">+1 pts</span><hr class="dashes-row">
+                                <span class="entryFields1 col-md-10">Visit Facebook</span>
+                                <span class="entryFields1 col-md-2">+1 pts</span><hr class="dashes-row">
+                            </div>
+                            <div class="entryDetails2">
+                                <span style="font-size: 16px;" class="entryFields1 col-md-10">Your Credits</span>
+                                <span class="entryFields1 col-md-2"><i style="margin-right: 5px;" class="fa fa-credit-card" aria-hidden="true"></i>{{total_credit}} pts</span><hr class="dashes-row">
+                            </div>
+                        </div>
+                        <div class="entry">
+                            <p style="color: #16c1f3;" class="entry1">Risk everything, Fear Nothing, Live with no regrets</p>
+                        </div>
+                        <div style="margin-bottom: 15px;" class="entryDetails">
+                            <!-- <span (click)="testClick0()" class="entryFields col-md-12"><i class="fa fa-picture-o icon" style="font-size: 30px;" aria-hidden="true"></i>Share Your Submission</span>
+                            <div *ngIf="test0">
+                                <p class="entry3">Share your submission with your friends.</p>
+                                <div class="form-row">
+                                    <p class="referLink col-md-10">{{submissionUrl}}</p>
+                                    <i class="fa fa-copy col-md-2" (click)="copy()" [cdkCopyToClipboard]="this.submissionUrl" [cdkCopyToClipboardAttempts]="7" style="cursor:pointer;"></i>
+                                    <hr class="referLinkLine">
+                                </div>
+                                <div class="social-padding">
+                                    <p class="entry1">Share to:</p>
+                                    <div class="social-media-links form-row-social">
+                                        <share-buttons [theme]="'material-dark'"
+                                        [include]="['facebook','','twitter','','linkedin','','whatsapp']"
+                                        [show]="7"
+                                        [size]="17"
+                                        [url]="this.submission_url"
+                                        [autoSetMeta]="false"
+                                       ></share-buttons>
+                                    </div>
+                                </div>
+                            </div><hr class="entry-row1"> -->
+                            <span (click)="testClick()" class="entryFields col-md-12"><i class="fa fa-volume-up icon" style="font-size: 30px;" aria-hidden="true"></i>Refer your friends</span>
+                            <div *ngIf="test">
+                                <p class="entry3">Think your friends workout just as hard? Share this contest with them.</p>
+                                <div class="form-row">
+                                    <p class="referLink col-md-10">{{referel_url}}</p>
+                                    <i class="fa fa-copy col-md-2" (click)="copy()" [cdkCopyToClipboard]="this.referel_url" [cdkCopyToClipboardAttempts]="7" style="cursor:pointer;"></i>
+                                    <hr class="referLinkLine">
+                                </div>
+                                <div class="social-padding">
+                                    <p class="entry1">Share to:</p>
+                                    <div class="social-media-links form-row-social">
+                                        <share-buttons [theme]="'material-dark'"
+                                        [include]="['facebook','','twitter','','linkedin','','whatsapp']"
+                                        [show]="7"
+                                        [size]="17"
+                                        [url]="this.referel_url"
+                                        [autoSetMeta]="false"
+                                       ></share-buttons>
+                                    </div>
+                                </div>
+                            </div><hr class="entry-row1">
+                            <a (click)="instacredit()" href="{{insta_url}}" target="_blank" class="entryFields col-md-12"><i class="fa fa-instagram icon" style="font-size: 30px;" aria-hidden="true"></i>Visit on Instagram</a>
+                            <hr class="entry-row1">
+                            <a (click)="facecredit()" href="{{fb_url}}" target="_blank" class="entryFields col-md-12"><i class="fa fa-facebook-square icon" style="font-size: 30px;" aria-hidden="true"></i>Visit on Facebook</a>
+                        </div>
+                        <hr class="new4">
+                        <div class="form1">
+                            <div class="form-row" *ngIf="view">
+                                <div class="col-md-3">
+                                    <i class="fa fa-calendar-o" style="font-size: 25px;"></i><br><span class="text">Ends {{view.company_end_date | date:'MMM d y'}}</span>
+                                </div>
+                                <div class="col-md-3" (click)="openDialog(view)">
+                                    <i class="fa fa-newspaper-o" style="font-size: 25px;"></i><br><span class="text">View Rules</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <i class="fa fa-user" style="font-size: 25px;"></i><br><span class="text">Winners {{view.company_winners_number}}</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <i class="fa fa-clock-o" style="font-size: 25px;"></i><br><span class="text">{{demo}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </ng-container>
+            </div>
+        </div>
+        </div>
+        </section>
+    </section>
+    <section *ngIf="section2" class="background blur" style="background-image: url('https://zerosoft.in/dev/remco/uploads/company/background/{{view.company_background_image}}');background-position: center;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;"> 
+        <div class="float"><span style="cursor: pointer;margin-right: 10px;" (click)="close_gallery()" class="gallery btn btn-gradient btn-radius">Close Answer<i style="font-size: 20px;" class="fa fa-times width2 clear" aria-hidden="true"></i></span></div>
+        <div class="form-row">
+            <div style="text-align: center;"><p class="title font-weight-semibold description_bg" style="font-family: Roboto;font-size: 35px; color: #fff;">How intense is your workout? Vote on your favorite submission below.</p></div>
+        </div>
+        <div>
+            <div class="container mt-sm-5 my-1">
+                <div class="question ml-sm-5 pl-sm-5 pt-2" *ngFor="let item of Array">
+                    <div class="py-2 h5"><b>{{item.learn_question}}</b></div>
+                    <div class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3 form-row">
+                        <a class="cursor-pointer col-md-3" style="font-size: 24px;">Your Answer :{{item.faq_answer}}</a>
+                        <!-- <a class="cursor-pointer col-md-3" style="font-size: 24px;">{{item.learn_question_option2}}</a>
+                        <a class="cursor-pointer col-md-3" style="font-size: 24px;">{{item.learn_question_option3}}</a>
+                        <a class="cursor-pointer col-md-3" style="font-size: 24px;">{{item.learn_question_option4}}</a> -->
+                        <!-- <label class="options col-md-6"><p class="p">{{item.learn_question_option1}}</p><input *ngIf="item.learn_question_option1 === item.faq_answer ? 'color:#fff' : '#000'"></label>
+                        <label class="options col-md-6"><p class="p">{{item.learn_question_option2}}</p><input *ngIf="item.learn_question_option2 === item.faq_answer ? 'color:#fff' : '#000'"></label>
+                        <label class="options col-md-6"><p class="p">{{item.learn_question_option3}}</p><input *ngIf="item.learn_question_option3 === item.faq_answer ? 'color:#fff' : '#000'"></label>
+                        <label class="options col-md-6"><p class="p">{{item.learn_question_option4}}</p><input *ngIf="item.learn_question_option4 === item.faq_answer ? 'color:#fff' : '#000'"></label> -->
+                    </div>
+                    <hr class="entry-row-">
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

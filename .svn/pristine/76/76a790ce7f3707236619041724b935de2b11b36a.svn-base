@@ -1,0 +1,11 @@
+.image{
+    padding: 20px;
+}
+.margin{
+    margin-top: 50px;
+    cursor: pointer;
+}
+.col-md-6{
+    padding-left: 25px;
+    padding-right: 25px;
+}

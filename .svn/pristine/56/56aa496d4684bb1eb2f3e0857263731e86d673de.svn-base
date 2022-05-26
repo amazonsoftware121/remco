@@ -1,0 +1,220 @@
+import { Component } from '@angular/core';
+import { OwlOptions } from "ngx-owl-carousel-o";
+
+import { LoaderService } from '../../providers/loader.service';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
+})
+export class HomeComponent {
+
+  products = [
+    {
+      id: '1',
+      image: 'contests.jpg',
+      name: 'Contests',
+      desc: 'Collect UGC, Grow email & SMS lists, Unlock new audiences...'
+    },
+    {
+      id: '2',
+      image: 'emailforms.jpg',
+      name: 'Email Forms',
+      desc: 'Grow email & SMS lists, Integrate into any ESP, Generate...'
+    },
+    {
+      id: '3',
+      image: 'earn.jpg',
+      name: 'Learn And Earn',
+      desc: 'Accumulate crypto ./assets risk free while having fun by...'
+    },
+    {
+      id: '4',
+      image: 'comments.jpg',
+      name: 'Social Comments',
+      desc: 'Create beautiful social comments request, allowing web...'
+    },
+    {
+      id: '5',
+      image: '/sweep.jpg',
+      name: 'Sweepstakes',
+      desc: 'Increase engagement and reward fans instantly with...'
+    }
+  ];
+
+  comments = [
+    {
+      id: '1',
+      image: 'testi.png',
+      name: 'John Rasking',
+      desg: 'Co-Founder, Blocknomi',
+      title: '1000% ROI.',
+      desc: "Remco has been a key tool in growing our social following and our email lists. We've seen ROI's of over 1000% from revenue generated directly from our Remco managed giveaways."
+    },
+    {
+      id: '2',
+      image: 'testi.png',
+      name: 'Faith Johnson',
+      desg: 'CEO, Softhook',
+      title: 'Build and execute.',
+      desc: "There is no better way to build and execute promotions than Remco. Period. I’m consistently amazed at the ease with which they make complicated processes a breeze."
+    },
+    {
+      id: '3',
+      image: 'testi.png',
+      name: 'Brian Lakey',
+      desg: 'vp, vtnglobal',
+      title: 'Easy to use.',
+      desc: "Remco is easy-to-use and the fastest, most cost-effective way to set up a full-service, compliant promotion.The team are incredibly responsive and helpful when working through custom requests."
+    },
+    {
+      id: '4',
+      image: 'testi.png',
+      name: 'Brian Lucas',
+      desg: 'CEO, Sweetaccessories',
+      title: 'Above the rest.',
+      desc: "As an agency, we tried several sweepstakes applications for our clients. Remco is head and shoulders above the rest."
+    },
+    {
+      id: '5',
+      image: 'testi.png',
+      name: 'Martha Viera',
+      desg: 'Project Director, Humanim',
+      title: 'One of the best.',
+      desc: "Remco is one of the best tools we use for running sweepstakes and giveaways."
+    }
+  ];
+
+  projects = [
+    {
+      id: '1',
+      image: 'binancecoin.jpg'
+    },
+    {
+      id: '2',
+      image: 'bitcoin.jpg'
+    },
+    {
+      id: '3',
+      image: 'bitcoincash.jpg'
+    },
+    {
+      id: '4',
+      image: 'cardano.jpg'
+    },
+    {
+      id: '5',
+      image: 'chainlink.jpg'
+    },
+    {
+      id: '6',
+      image: 'dogecoin.jpg'
+    },
+    {
+      id: '7',
+      image: 'ethereum.jpg'
+    },
+    {
+      id: '8',
+      image: 'litecoin.jpg'
+    },
+    {
+      id: '9',
+      image: 'polkadot.jpg'
+    },
+    {
+      id: '10',
+      image: 'shishiswap.jpg'
+    },
+    {
+      id: '11',
+      image: 'solana.jpg'
+    },
+    {
+      id: '12',
+      image: 'stellar.jpg'
+    },
+    {
+      id: '13',
+      image: 'uniswap.jpg'
+    }
+  ]
+
+  constructor(private loaderService: LoaderService) {
+    this.loaderService.stopLoader();
+  }
+
+  productOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    navText: [
+      '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+      '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+    ],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      }
+    },
+    nav: true
+  }
+
+  commentOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: true,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      }
+    },
+    nav: true
+  }
+
+  projectOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    navText: [
+      '<i class="fa fa-angle-left" aria-hidden="true"></i>',
+      '<i class="fa fa-angle-right" aria-hidden="true"></i>'
+    ],
+    responsive: {
+      0: {
+        items: 2
+      },
+      400: {
+        items: 3
+      },
+      600: {
+        items: 4
+      },
+      1000: {
+        items: 6
+      }
+    },
+    nav: true
+  }
+  
+}

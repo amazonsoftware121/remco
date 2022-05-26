@@ -1,0 +1,37 @@
+<div>
+    <div><h3>Company Details</h3>
+    <hr class="new4"></div>
+    <div class="col-md-12">
+      <!-- <div class="row pb-3 center align">
+        <span *ngIf="valid_profile">
+           <img [src]="base_url +'uploads/Profile/'+ value.profile" alt="image" class="profile_image">
+        </span>
+      
+      </div> -->
+      <div class="row pb-2 center align">
+        <span class="col-4 tags"><b>Company Name</b></span>
+        <span class="pull-right">:</span>
+        <span class="col-lg-6 value">{{value.company_name}}</span>
+      </div>
+
+      <div class="row pb-2 center">
+        <span class="col-4 tags"><b>Email</b></span>
+        <span class="pull-right">:</span>
+        <span class="col-lg-6 value">{{value.company_email}}</span>
+
+      </div>
+      <div class="row pb-2 center">
+        <span class="col-4 tags"><b>Web Site URL</b></span>
+        <span class="pull-right">:</span>
+        <span class="col-lg-6 value">{{value.company_website}}</span>
+
+      </div>
+      <div class="row pb-2 center">
+        <span class="col-4 tags"><b>Description</b></span>
+        <span class="pull-right">:</span>
+        <span class="col-lg-6 value">{{value.company_description}}</span>
+
+      </div>
+    </div>
+    <button class="btn btn-primary mr-3 size" (click)="close()">Close</button>
+  </div>

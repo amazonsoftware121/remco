@@ -1,0 +1,50 @@
+<app-header></app-header>
+
+<!-- inner-banner-section start -->
+<section class="inner-banner-section">
+  <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-banner-content text-center">
+          <h2 class="page-title">Campaign </h2>
+          <ol class="page-list">
+            <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- inner-banner-section start -->
+<!-- blog-section start -->
+<section class="features-section pb-120 inner-banner">
+    <div class="contents">
+        <div class="title">
+            <h5 class="title1 text-capitalize font-weight-semibold">Lightbox Example</h5>
+            </div>
+            <div class="description">
+            <p class="contentss">This is an example of a sweepstakes using our lightbox.</p>
+            </div>
+    </div>
+
+    <div class="container">
+        <div class="form-row">
+            <div class="col-xl-4 col-lg-6 col-md-6 margin">
+                <div class="icon-item text-center mb-30 border" >
+                    <div class="item-header">
+                    <h5 class="title text-capitalize font-weight-semibold">Try it to</h5>
+                    </div>
+                    <div class="content">
+                    <p class="content">The lightbox will pop up on any page you install it on. You can control how and when the lightbox displays, and you can even trigger the lightbox to appear when a button is clicked.</p>
+                    </div>
+                    <button (click)="openDialog(view)" class="btn btn-primary mr-3">Trigger lightbox</button>
+                    
+                </div>
+            </div><!-- icon-item end -->
+    </div>
+    </div>
+</section>
+<!-- blog-section end -->
+
+<app-footer></app-footer>

@@ -1,0 +1,16 @@
+import { Component } from '@angular/core';
+
+import { LoaderService } from '../../providers/loader.service';
+
+@Component({
+  selector: 'app-social-comments',
+  templateUrl: './social-comments.component.html',
+  styleUrls: ['./social-comments.component.scss']
+})
+export class SocialCommentsComponent {
+
+  constructor(private loaderService: LoaderService) {
+    this.loaderService.stopLoader();
+  }
+
+}

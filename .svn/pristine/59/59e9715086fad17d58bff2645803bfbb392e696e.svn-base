@@ -1,0 +1,16 @@
+import { Component } from '@angular/core';
+
+import { LoaderService } from '../../providers/loader.service';
+
+@Component({
+  selector: 'app-testimonials',
+  templateUrl: './testimonials.component.html',
+  styleUrls: ['./testimonials.component.scss']
+})
+export class TestimonialsComponent {
+
+  constructor(private loaderService: LoaderService) {
+    this.loaderService.stopLoader();
+  }
+
+}

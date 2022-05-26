@@ -1,0 +1,111 @@
+<app-header></app-header>
+
+<!-- inner-banner-section start -->
+<section class="inner-banner-section">
+  <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-banner-content text-center">
+          <h2 class="page-title">Testimonials</h2>
+          <ol class="page-list">
+            <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
+            <li>What People Are Sayings</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- inner-banner-section start -->
+<!-- login-section start -->
+<section class="login-section pt-120 pb-120">
+  <div class="container">
+    <div class="row mb-30" *ngFor="let item of plans">
+      <div class="login-block">
+        <div class="row">
+          <div class="col-lg-1">
+            <img src="./assets/images/testi.png" alt="image">
+          </div>
+          <div class="col-lg-11">
+            <h5>{{item.testimonial_name}}<span class="designation">({{item.testimonial_designation}})</span></h5>
+            <p>
+              <b>{{item.testimonial_title}}</b><br />
+              {{item.testimonial_message}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row mb-30">
+      <div class="login-block">
+        <div class="row">
+          <div class="col-lg-1">
+            <img src="./assets/images/testi.png" alt="image">
+          </div>
+          <div class="col-lg-11">
+            <h5>Faith Johnson<span class="designation">(Founder & CEO, BTCRUS.COM)</span></h5>
+            <p>
+              <b>Build and execute.</b><br />
+              There is no better way to build and execute promotions than Remco. Period. I’m consistently amazed at the
+              ease with which they make complicated processes a breeze.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-30">
+      <div class="login-block">
+        <div class="row">
+          <div class="col-lg-1">
+            <img src="./assets/images/testi.png" alt="image">
+          </div>
+          <div class="col-lg-11">
+            <h5>John Rasking<span class="designation">(Co-Founder, Blocknomi)</span></h5>
+            <p>
+              <b>1000% ROI.</b><br />
+              Remco has been a key tool in growing our social following and our email lists. We've seen ROI's of over
+              1000% from revenue generated directly from our Remco managed giveaways.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-30">
+      <div class="login-block">
+        <div class="row">
+          <div class="col-lg-1">
+            <img src="./assets/images/testi.png" alt="image">
+          </div>
+          <div class="col-lg-11">
+            <h5>Brian Lucas<span class="designation">(CEO, Sweetaccessories)</span></h5>
+            <p>
+              <b>Above the rest.</b><br />
+              As an agency, we tried several sweepstakes applications for our clients. Remco is head and shoulders above
+              the rest.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-30">
+      <div class="login-block">
+        <div class="row">
+          <div class="col-lg-1">
+            <img src="./assets/images/testi.png" alt="image">
+          </div>
+          <div class="col-lg-11">
+            <h5>Martha Viera<span class="designation">(Project Director, Humanim)</span></h5>
+            <p>
+              <b>One of the best.</b><br />
+              Remco is one of the best tools we use for running sweepstakes and giveaways.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</section>
+<!-- login-section end -->
+
+<app-footer></app-footer>

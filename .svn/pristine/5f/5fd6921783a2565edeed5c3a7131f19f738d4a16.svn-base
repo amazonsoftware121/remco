@@ -1,0 +1,28 @@
+::ng-deep .mat-tab-label .mat-tab-label-content {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #006991 !important;
+}
+
+// ::ng-deep .mat-tab-header {
+//   border-bottom: none !important;
+// }
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #006991;
+}
+
+.btn {
+  font-weight: 600;
+  color: #fff;
+  background-color: #00aeef;
+  border: 0;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .3s;
+  width: 100%;
+  
+  &:hover {
+    background-color: #006991
+  }
+}

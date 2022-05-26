@@ -1,0 +1,21 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+
+import { PricingComponent } from './pricing.component';
+import { PricingRoutingModule } from './pricing-routing.module';
+import { ComponentsModule } from '../../components/components.module';
+
+@NgModule({
+  declarations: [
+    PricingComponent
+  ],
+  imports: [
+    PricingRoutingModule,
+    CommonModule,
+    FormsModule,
+    ComponentsModule
+  ],
+})
+  // @ts-ignore
+export class PricingModule { }

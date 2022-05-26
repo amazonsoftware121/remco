@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CampaignLearnAndEarnComponent } from './campaign-learn-and-earn.component';
+import { FormsModule } from '@angular/forms';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { campaignLearnAndEarnRoutingModule } from './campaign-learn-and-earn-routing.module';
+import { CampaignLearnAndEarnDetailesComponent } from './campaign-learn-and-earn-detailes/campaign-learn-and-earn-detailes.component';
+
+@NgModule({
+  declarations: [
+    CampaignLearnAndEarnComponent,CampaignLearnAndEarnDetailesComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ComponentsModule,
+    campaignLearnAndEarnRoutingModule 
+  ]
+})
+export class CampaignLearnAndEarnModule { }

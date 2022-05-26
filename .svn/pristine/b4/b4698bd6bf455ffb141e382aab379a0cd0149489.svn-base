@@ -1,0 +1,23 @@
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+@Component({
+  selector: 'app-campaign-social-comments-detailes',
+  templateUrl: './campaign-social-comments-detailes.component.html',
+  styleUrls: ['./campaign-social-comments-detailes.component.scss']
+})
+export class CampaignSocialCommentsDetailesComponent implements OnInit {
+
+  value;
+
+  constructor(private dialog: MatDialogRef<CampaignSocialCommentsDetailesComponent>,
+    @Inject(MAT_DIALOG_DATA) public data:any) { this.value = data.ans }
+  
+    close() {
+      this.dialog.close();
+    }
+
+  ngOnInit(): void {
+  }
+
+}

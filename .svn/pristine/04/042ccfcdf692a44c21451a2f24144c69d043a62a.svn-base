@@ -1,0 +1,18 @@
+import { Component } from '@angular/core';
+
+declare let $:any;
+
+@Component({
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.scss']
+})
+export class FooterComponent {
+
+  constructor() {}
+
+  onTop(event: any) {
+    event.preventDefault(), $("html, body").animate({ scrollTop: 0 }, 300);
+  }
+
+}

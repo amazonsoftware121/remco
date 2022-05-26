@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CampaignSocialCommentsComponent } from './campaign-social-comments.component';
+import { FormsModule } from '@angular/forms';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { campaignSocialCommentsRoutingModule } from './campaign-social-comments-routing.module';
+import { CampaignSocialCommentsDetailesComponent } from './campaign-social-comments-detailes/campaign-social-comments-detailes.component';
+
+@NgModule({
+  declarations: [
+    CampaignSocialCommentsComponent,CampaignSocialCommentsDetailesComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ComponentsModule,
+    campaignSocialCommentsRoutingModule 
+  ]
+})
+export class CampaignSocialCommentsModule { }

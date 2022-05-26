@@ -1,0 +1,53 @@
+<!-- preloader start -->
+<div id="preloader"></div>
+<!-- preloader end -->
+<header class="header-section" [ngClass]="section=='home' ? 'header-style-two' : ''">
+  <div class="header-bottom">
+    <div class="container">
+      <nav class="navbar navbar-expand-xl p-0 align-items-start">
+        <a class="site-logo site-title" [routerLink]="['/']"><img src="./assets/images/logo.png" alt="site-logo">
+          <span class="logo-icon"><i class="flaticon-fire"></i></span>
+        </a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="menu-toggle"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav main-menu ml-auto">
+            <li class="menu_has_children" *ngIf="!isLogin">
+              <a class="nav-link cursor-pointer" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="!isLogin">Products</a>
+              <ul class="sub-menu dropdown-menu" *ngIf="!isLogin">
+                <!-- <div class="dropdown-item" [routerLink]="['/contest']">Contest</div>
+                <div class="dropdown-item" [routerLink]="['/email-forms']">Email Forms</div>
+                <div class="dropdown-item" [routerLink]="['/learn-and-earn']">Learn And Earn</div>
+                <div class="dropdown-item" [routerLink]="['/social-comments']">Social Comments</div>
+                <div class="dropdown-item" [routerLink]="['/sweepstakes']">Sweepstakes</div> -->
+                <li><a [routerLink]="['/contest']">Contest</a></li>
+                <li><a [routerLink]="['/email-forms']">Email Forms</a></li>
+                <li><a [routerLink]="['/learn-and-earn']">Learn and Earn</a></li>
+                <li><a [routerLink]="['/social-comments']">Social Comments</a></li>
+                <li><a [routerLink]="['/sweepstakes']">Sweepstakes</a></li>
+              </ul>
+            </li>
+            <li><a [routerLink]="['/pricing']" *ngIf="!isLogin">Pricing</a>
+            <li><a [routerLink]="['/faq']" *ngIf="!isLogin">Faq's</a>
+            <li><a [routerLink]="['/video-resources']" *ngIf="!isLogin">Video Resources</a>
+              <li><a [routerLink]="['/campaign']" *ngIf="isLogin">Campaigns</a>
+
+            <li class="menu_has_children" *ngIf="isLogin">
+              <a class="nav-link cursor-pointer" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Account</a>
+              <ul class="sub-menu dropdown-menu">
+                <li><a [routerLink]="['/my-account']">My Profile</a></li>
+                <li><a class="cursor-pointer" (click)="onLogout()">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+          <div class="nav-right">
+            <a [routerLink]="['/login']" class="header-serch-btn toggle-close" *ngIf="!isLogin"><i class="fa fa-user"></i></a>
+            <a [routerLink]="['/register']" class="btn btn-gradient text-white btn-radius" *ngIf="!isLogin">Register</a>
+            <!-- <a class="btn btn-gradient text-white btn-radius" *ngIf="isLogin" (click)="onLogout()">Logout</a> -->
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div><!-- header-bottom end -->
+</header>

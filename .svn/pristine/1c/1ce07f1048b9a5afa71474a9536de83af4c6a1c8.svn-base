@@ -1,0 +1,19 @@
+import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/providers/loader.service';
+
+@Component({
+  selector: 'app-campaign-companies',
+  templateUrl: './campaign-companies.component.html',
+  styleUrls: ['./campaign-companies.component.scss']
+})
+export class CampaignCompaniesComponent implements OnInit {
+
+
+  constructor(private loaderService: LoaderService) {
+    this.loaderService.stopLoader();
+   }
+
+  ngOnInit(): void {
+  }
+
+}

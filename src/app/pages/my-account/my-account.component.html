@@ -1,0 +1,45 @@
+<app-header></app-header>
+<section class="inner-banner-section">
+  <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-banner-content text-center"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white pt-5 pb-5">
+  <div class="container pad-container">
+    <div class="row padmain">
+      <div class="col-md-3 boxpad">
+        <app-sidebar (notifyParent)="sideBarChange($event)"></app-sidebar>
+      </div>
+      <div class="col-md-9 boxpad">
+        <div class="mainbox">
+          <app-my-profile *ngIf="selectedSection=='my-profile'"></app-my-profile>
+          <app-change-password *ngIf="selectedSection=='change-password'"></app-change-password>
+          <app-subscription-status *ngIf="selectedSection=='subscription-status'"></app-subscription-status>
+          <app-subscription-history *ngIf="selectedSection=='subscription-history'"></app-subscription-history>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <app-sidebar></app-sidebar>
+    </div>
+  <div class="col-md-9">
+  <div class="tab-content" id="v-pills-tabContent">
+      <span>hi</span>
+    </div>
+  </div>
+  </div>
+</div> -->
+
+<app-footer></app-footer>
+

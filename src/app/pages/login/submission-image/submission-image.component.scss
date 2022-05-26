@@ -1,0 +1,88 @@
+.company{
+text-align: center;
+}
+hr.new4 {
+border: 1px solid #00aeef;
+width:100px;
+
+}
+.align{
+    margin-top: 20px;
+    overflow: auto;
+}
+.profile_image{
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+}
+.text_align{
+    text-align: center;
+}
+.value{
+    font-size: 20px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    color: #000;
+}
+.closer{
+    margin-top: 5px;
+}
+.login-form-row{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -5px;
+    margin-left: -5px;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.btns {
+    padding: 7px 28px;
+    text-transform: capitalize;
+    border: 0;
+    font-family: 'Open Sans';
+    font-weight: 500;
+    text-align: center;
+}
+.register_color{
+    color: #fff;
+}
+.image3{
+    height: 250px;
+    width: 250px;
+    border-radius: 25%;
+}
+.image-size{
+    border-radius: 10px;
+    border: 5px solid #000 !important;
+}
+:host ::ng-deep .grid-item .posrt-thumb::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: 1px;
+    -webkit-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s;
+}
+.posrt-thumb{
+    border-radius: 10px;
+}.grid-item {
+    width: 100%;
+}
+.close1 {
+    text-align: end;
+    /* float: right; */
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    cursor: pointer;
+}

@@ -1,0 +1,45 @@
+<app-header></app-header>
+
+<!-- inner-banner-section start -->
+<section class="inner-banner-section">
+  <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-banner-content text-center">
+          <h2 class="page-title">Testimonials</h2>
+          <ol class="page-list">
+            <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
+            <li>What People Are Sayings</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- inner-banner-section start -->
+<!-- login-section start -->
+<section class="login-section pt-120 pb-120">
+  <div class="container">
+    <div class="row mb-30" *ngFor="let item of Testimonials">
+      <div class="login-block">
+        <div class="row">
+          <div class="col-lg-1">
+            <img *ngIf="item.testimonial_image" [src]="base_url+'uploads/testimonials/'+item.testimonial_image" style="border-radius: 50px;">
+            <img src="./assets/images/testi.png" alt="image" *ngIf="!item.testimonial_image">
+          </div>
+          <div class="col-lg-11">
+            <h5>{{item.testimonial_name}}<span class="designation">({{item.testimonial_designation}})</span></h5>
+            <p>
+              <b>{{item.testimonial_title}}</b><br />
+              {{item.testimonial_message}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- login-section end -->
+
+<app-footer></app-footer>

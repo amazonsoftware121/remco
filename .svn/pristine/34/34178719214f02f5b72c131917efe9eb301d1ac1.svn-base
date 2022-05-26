@@ -1,0 +1,25 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { CampaignSocialCommentsDetailesComponent } from './campaign-social-comments-detailes.component';
+
+describe('CampaignCompaniesDetailesComponent', () => {
+  let component: CampaignSocialCommentsDetailesComponent;
+  let fixture: ComponentFixture<CampaignSocialCommentsDetailesComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ CampaignSocialCommentsDetailesComponent ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CampaignSocialCommentsDetailesComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

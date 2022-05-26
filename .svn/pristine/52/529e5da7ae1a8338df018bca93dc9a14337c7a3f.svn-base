@@ -1,0 +1,15 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CampaignLightboxViewComponent } from './campaign-lightbox-view.component';
+
+
+
+@NgModule({
+  declarations: [
+    CampaignLightboxViewComponent
+  ],
+  imports: [
+    CommonModule
+  ]
+})
+export class CampaignLightboxViewModule { }

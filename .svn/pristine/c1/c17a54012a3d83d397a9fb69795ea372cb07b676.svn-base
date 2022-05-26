@@ -1,0 +1,23 @@
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+@Component({
+  selector: 'app-campaign-learn-and-earn-detailes',
+  templateUrl: './campaign-learn-and-earn-detailes.component.html',
+  styleUrls: ['./campaign-learn-and-earn-detailes.component.scss']
+})
+export class CampaignLearnAndEarnDetailesComponent implements OnInit {
+
+  value;
+
+  constructor(private dialog: MatDialogRef<CampaignLearnAndEarnDetailesComponent>,
+    @Inject(MAT_DIALOG_DATA) public data:any) { this.value = data.ans }
+  
+    close() {
+      this.dialog.close();
+    }
+
+  ngOnInit(): void {
+  }
+
+}

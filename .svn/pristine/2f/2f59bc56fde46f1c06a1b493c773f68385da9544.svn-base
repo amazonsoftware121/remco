@@ -1,0 +1,71 @@
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlertService } from 'src/app/providers/alertService';
+import { LoaderService } from 'src/app/providers/loader.service';
+import { WebService } from 'src/app/providers/web.serivce';
+import { CampaignLightboxViewFormComponent } from './campaign-lightbox-view-form/campaign-lightbox-view-form.component';
+
+@Component({
+  selector: 'app-campaign-lightbox-view',
+  templateUrl: './campaign-lightbox-view.component.html',
+  styleUrls: ['./campaign-lightbox-view.component.scss']
+})
+export class CampaignLightboxViewComponent implements OnInit {
+  value= "hlo";
+
+  label: any;
+
+  view :any
+
+  constructor(
+    
+    private loaderService: LoaderService,
+    
+    private router: Router,
+
+    private dialog: MatDialog,
+
+    private activateRoute : ActivatedRoute,
+
+    private web :WebService,
+
+    private alert : AlertService
+    ) 
+    {
+    this.loaderService.stopLoader();
+   }
+
+   formVisiblity(id,id1) {
+    this.web.getData('getAllCompaniesId?web_id='+ id + '&campaign_type='+ id1 ).then((res) => {
+      if (res.status == '200') {
+        this.view = res.data[0];
+        console.log('>>>>>>>>>>', this.view);
+      } else {
+        this.alert.errorMsg(res.error, '');
+      }
+    }, err => {
+      console.log(err);
+      this.alert.errorMsg('Connection Error', '');
+    });
+  }
+
+  ngOnInit(): void {
+    this.openDialog(this.view);
+    this.formVisiblity(this.activateRoute.params['_value'].id,this.activateRoute.params['_value'].id1);
+    console.log('data getted',this.activateRoute.params['_value'].id);
+  }
+
+  openDialog(view) {
+
+    const dialogRef = this.dialog.open(CampaignLightboxViewFormComponent, {data: view, disableClose: true,height:'700px',width:'800px'});
+    console.log(dialogRef.afterClosed());
+    dialogRef.afterClosed().subscribe((sub) => {
+      if (sub) {
+        this.label = "Submitted";
+      } else {
+        this.label = "Cancelled";
+      }
+    })
+  }
+}

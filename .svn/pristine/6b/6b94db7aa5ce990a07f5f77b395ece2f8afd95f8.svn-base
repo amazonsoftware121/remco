@@ -1,0 +1,15 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CampaignLearnAndEarnDetailesComponent } from './campaign-learn-and-earn-detailes.component';
+
+
+
+@NgModule({
+  declarations: [
+    CampaignLearnAndEarnDetailesComponent
+  ],
+  imports: [
+    CommonModule
+  ]
+})
+export class CampaignCompaniesDetailesModule { }

@@ -1,0 +1,48 @@
+import { Component } from '@angular/core';
+import { AlertService } from 'src/app/providers/alertService';
+import { WebService } from 'src/app/providers/web.serivce';
+
+import { ActivatedRoute } from '@angular/router';
+import { LoaderService } from '../../providers/loader.service';
+import { environment } from 'src/environments/environment';
+
+@Component(
+  {
+    selector: 'app-blog-details',
+    templateUrl: './blog-details.component.html',
+    styleUrls: ['./blog-details.component.scss']
+  }
+)
+export class BlogDetailsComponent {
+  plans: any;
+
+  base_url: string = environment.base_url;
+
+  constructor(
+    private loaderService: LoaderService,
+    private web: WebService,
+    private alert: AlertService,
+    private activateRoute: ActivatedRoute
+  ) {
+    this.loaderService.stopLoader();
+  }
+
+  ngOnInit() {
+    console.log(this.activateRoute.params['_value'].id);
+    this.blogsDetails(this.activateRoute.params['_value'].id);
+  }
+
+  blogsDetails(id) {
+    this.web.getData('blogsDetails?web_id='+ id).then((res) => {
+      if (res.status == '200') {
+        this.plans = res.data;
+        console.log('plan is', this.plans);
+      } else {
+        this.alert.errorMsg(res.error, '');
+      }
+    }, err => {
+      console.log(err);
+      this.alert.errorMsg('Connection Error', '');
+    });
+  }
+}

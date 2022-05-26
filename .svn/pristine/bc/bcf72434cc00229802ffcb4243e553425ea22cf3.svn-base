@@ -1,0 +1,15 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CampaignSocialCommentsDetailesComponent } from './campaign-social-comments-detailes.component';
+
+
+
+@NgModule({
+  declarations: [
+    CampaignSocialCommentsDetailesComponent
+  ],
+  imports: [
+    CommonModule
+  ]
+})
+export class CampaignCompaniesDetailesModule { }

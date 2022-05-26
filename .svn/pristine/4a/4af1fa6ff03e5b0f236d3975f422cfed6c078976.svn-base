@@ -1,0 +1,47 @@
+<section class="background blur" style="background-image: url('https://zerosoft.in/dev/remco/uploads/company/background/{{view.company_background_image}}');background-position: center;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;height: 100%;">
+    <section class="testimonial-section features-section pb-120 inner-banner">
+        <div class="team-slider">
+            <owl-carousel-o [options]="productOptions">
+                <ng-container *ngFor="let item of faq_question">
+                <ng-template carouselSlide [id]="item.web_id">
+                    <div class="container mt-sm-5 my-1">
+                        <form [formGroup]="participantsForms" class="question ml-sm-5 pl-sm-5 pt-2">
+                            <div class="form-row"><div class="py-2 h5 col-md-11"><b>{{item.learn_question}}</b></div></div>
+                            <mat-radio-group id="faq_answer" [(ngModel)]="participantsForms.faq_answer" formControlName="faq_answer" class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3 form-row">    
+                                <mat-radio-button class="options col-md-12 design" value="{{item.learn_question_option1}}"><p class="design">{{item.learn_question_option1}}</p></mat-radio-button>
+                                <mat-radio-button class="options col-md-12 design" value="{{item.learn_question_option2}}"><p class="design">{{item.learn_question_option2}}</p></mat-radio-button>
+                                <mat-radio-button class="options col-md-12 design" value="{{item.learn_question_option3}}"><p class="design">{{item.learn_question_option3}}</p></mat-radio-button>
+                                <mat-radio-button class="options col-md-12 design" value="{{item.learn_question_option4}}"><p class="design">{{item.learn_question_option4}}</p></mat-radio-button>
+                            </mat-radio-group>
+                        </form>
+                        <div class="style">
+                            <!-- <div id="prev"><i class="fa fa-arrow-left btn11 btn-gradient btn-radius" aria-hidden="true"></i></div> -->
+                            <div class="ml-auto mr-sm-5">
+                                <!-- <button (click)="next_quiz(item.web_id)" *ngIf="last_value!==item.web_id" class="btn btn-gradient btn-radius">Add Answer</button> -->
+                                <div class="form-row" *ngIf="last_value!==item.web_id"><label class="col-md-12"></label><button (click)="next_quiz(item.web_id)" class="col-md-4 btn btn-gradient btn-radius">Add Answer</button></div>
+                                <div class="form-row" *ngIf="last_value==item.web_id"><label class="col-md-12">(Once you submitted it can't be editted)</label><button (click)="onSubmit(item.web_id)" class="col-md-4 btn btn-gradient btn-radius">Submit</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+        </div>
+    </section>
+</section>
+<!-- <div *ngFor="let item of faq_question" class="container mt-sm-5 my-1">
+    <form [formGroup]="participantsForms" *ngIf="faq_question" class="question ml-sm-5 pl-sm-5 pt-2">
+        <div class="py-2 h5"><b>{{item.learn_question}}</b></div>
+        <mat-radio-group id="faq_answer" [(ngModel)]="participantsForms.faq_answer" formControlName="faq_answer" class="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3 form-row">
+            <mat-radio-button class="options col-md-12" value="{{item.learn_question_option1}}">{{item.learn_question_option1}}</mat-radio-button>
+            <mat-radio-button class="options col-md-12" value="{{item.learn_question_option2}}">{{item.learn_question_option2}}</mat-radio-button>
+            <mat-radio-button class="options col-md-12" value="{{item.learn_question_option3}}">{{item.learn_question_option3}}</mat-radio-button>
+            <mat-radio-button class="options col-md-12" value="{{item.learn_question_option4}}">{{item.learn_question_option4}}</mat-radio-button>
+        </mat-radio-group>
+    </form>
+    <div class="d-flex align-items-center pt-3">
+        <div id="prev"><i class="fa fa-arrow-left btn11 btn-gradient btn-radius" aria-hidden="true"></i></div>
+        <div class="ml-auto mr-sm-5"><button (click)="next_quiz(item)" class="btn btn-gradient btn-radius">Next</button></div> -->
+        <!-- <div *ngIf="!last_value" class="ml-auto mr-sm-5"><button (click)="next_quiz(item)" id="faq_question.web_id" class="btn btn-gradient btn-radius">Submit</button> </div> -->
+    <!-- </div>
+</div> -->

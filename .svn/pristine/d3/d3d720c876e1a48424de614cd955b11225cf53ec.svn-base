@@ -1,0 +1,25 @@
+.form-row{
+    justify-content: center;
+}
+.contents{
+    width: 100%;
+    text-align: center;
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+.title1{
+    font-size: 35px;
+    padding: 20px;
+}
+.contentss{
+    font-size: 25px;
+}
+.mr-3, .mx-3 {
+    margin-right: 0px !important;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+.form-row > .col, .form-row > [class*=col-] {
+    padding-left: 40px;
+    padding-right: 40px;
+}

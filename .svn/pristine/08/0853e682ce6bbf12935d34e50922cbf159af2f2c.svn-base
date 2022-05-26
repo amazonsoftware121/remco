@@ -1,0 +1,31 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CampaignLightboxViewComponent } from './campaign-lightbox-view.component';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+
+import { CampaignLightboxViewFormComponent } from './campaign-lightbox-view-form/campaign-lightbox-view-form.component';
+import { campaignlightboxRoutingModule } from './campaign-lightbox-view-routing.module';
+
+
+
+
+@NgModule({
+  declarations: [
+    CampaignLightboxViewComponent,CampaignLightboxViewFormComponent
+  ],
+  imports: [
+    CommonModule,
+    ComponentsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CarouselModule,
+    campaignlightboxRoutingModule,
+    
+  ],
+  entryComponents: [
+    CampaignLightboxViewFormComponent
+  ],
+})
+export class CampaignLightboxViewModule { }

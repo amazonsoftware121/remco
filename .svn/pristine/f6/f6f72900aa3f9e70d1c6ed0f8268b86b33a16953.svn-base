@@ -1,0 +1,40 @@
+<div class="form-row">
+    <div class="col-md-9" style="padding-right: 10px;">
+        <!-- <img style="width: 100%; height: 100%;" src="./assets/images/gallery/6.jpg"> -->
+        <img *ngIf="!fetchingStatus" class="image_size" (click)="check(img_id)" [src]="base_url+'uploads/contest_pictures/'+img_id.contest_image_video" alt="blogs" style="width: 100%; height: 100%;">
+        <div *ngIf="fetchingStatus" class="col-7">
+            <ngx-skeleton-loader count="1" [animation]="animation" [theme]="{
+                'border-radius': '10px',
+                height: '20px',
+                width: '20px',
+                align:'center',
+                'background-color': '#006991',
+                border: '1px solid #006991',
+                'animation-duration': '2s'
+              }">   
+                    </ngx-skeleton-loader>
+          </div>
+    </div>
+    
+    <div class="col-md-3 vertical-line">
+        <div class="vote_block">
+            <p class="name">Name.s</p>
+            <hr class="referLinkLine">
+            <p class="name1">Exhausted after one of my workouts. I leave everything in the gym. I go 100% every day and leave no stone unturned.</p>
+            <form class="cmn-form contact-form" [formGroup]="contactUsForm">
+                <div class="field" *ngIf="email">
+                    <input type="email" name="email" id="email" formControlName="email" placeholder="Enter your Email*" required>
+                </div>
+            </form> 
+            <form class="cmn-form contact-form" [formGroup]="varifyForm">
+                <div class="field" *ngIf="varify_email">
+                    <input type="text" name="verification_code" id="verification_code" formControlName="verification_code" placeholder="Enter Verification Code*">
+                </div>
+            </form>
+            <button *ngIf="btn" (click)="getEmail()" style="margin-left: 5px; width: 98%; padding: 10px;background-color:#00a651;font-family: 'Open Sans', sans-serif;font-size: 22px; margin-top: 10px;" class="btn btn-primary mr-3">Vote</button>
+            <button *ngIf="btn1" (click)="getEmail1()" style="margin-left: 5px; width: 98%; padding: 10px;background-color:#00a651;font-family: 'Open Sans', sans-serif;font-size: 22px; margin-top: 10px;" class="btn btn-primary mr-3">Send Code</button>
+            <button *ngIf="btn2" (click)="getEmail2()" style="margin-left: 5px; width: 98%; padding: 10px;background-color:#00a651;font-family: 'Open Sans', sans-serif;font-size: 22px; margin-top: 10px;" class="btn btn-primary mr-3">Vote Now</button>
+        </div>
+        <button style="margin-left: 18px; width: 92%; padding: 10px;font-family: 'Open Sans', sans-serif;font-size: 22px; margin-top: 10px;" class="btn btn-primary mr-3 size" (click)="close()">Close</button>
+    </div>
+</div>

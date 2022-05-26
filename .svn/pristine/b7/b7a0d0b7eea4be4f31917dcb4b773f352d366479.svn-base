@@ -1,0 +1,15 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-campaign-lightbox-view',
+  templateUrl: './campaign-lightbox-view.component.html',
+  styleUrls: ['./campaign-lightbox-view.component.scss']
+})
+export class CampaignLightboxViewComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}

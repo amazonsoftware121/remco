@@ -1,0 +1,17 @@
+<div class="dashboard">
+  <!-- <span  class="radius" *ngIf="!fetchingStatus"><img *ngIf="accountInfo.participant_profile" [src]="base_url+'uploads/Profile/'+accountInfo.participant_profile" alt="blogs"></span> -->
+  <div class="radius" *ngIf="!fetchingStatus"><img src="./assets/images/download.jpg" alt="image" *ngIf="!accountInfo.profile" style="height: 150px; width: 150px;"></div>
+  <div class="radius" *ngIf="!fetchingStatus"><img *ngIf="accountInfo.profile" [src]="base_url+'uploads/Profile/'+accountInfo.profile" alt="blogs">
+
+  </div>
+  
+  <hr>
+  <ul class="sidebar-categories">
+    
+    <li><i class="fa fa-id-card"></i> &nbsp; <a [ngStyle]="{'color': selectedMenu=='my-profile' ? '#006991' : ''}" class="cursor-pointer " (click)="changeSideMenu('my-profile')">My Profile</a></li>
+    <li><i class="fa fa-unlock"></i> &nbsp; <a [ngStyle]="{'color': selectedMenu=='change-password' ? '#006991' : ''}" class="cursor-pointer" (click)="changeSideMenu('change-password')">Change Password</a></li>
+    <li *ngIf="userType=='Company'"><i class="fa fa-user-plus"></i> &nbsp; <a [ngStyle]="{'color': selectedMenu=='subscription-status' ? '#006991' : ''}" class="cursor-pointer" (click)="changeSideMenu('subscription-status')">Plan Details</a></li>
+    <li *ngIf="userType=='Company'"><i class="fa fa-history"></i> &nbsp; <a [ngStyle]="{'color': selectedMenu=='subscription-history' ? '#006991' : ''}" class="cursor-pointer" (click)="changeSideMenu('subscription-history')">Subscription History</a></li>
+    <li *ngIf="userType=='Company'"><i class="fa fa-star"></i> &nbsp; <a [ngStyle]="{'color': selectedMenu=='upgrade-plan' ? '#006991' : ''}" class="cursor-pointer" (click)="changeplan()">Upgrade Plan</a></li>
+  </ul>
+</div>

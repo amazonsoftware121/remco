@@ -1,0 +1,35 @@
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ToastrModule } from 'ngx-toastr';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { CommonService } from './providers/common.service';
+import { LoaderService } from './providers/loader.service';
+import { AlertService } from './providers/alertService';
+import { WebService } from './providers/web.serivce';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule,
+    ToastrModule.forRoot(),
+    HttpClientModule
+  ],
+  providers: [
+    LoaderService,
+    CommonService,
+    AlertService,
+    WebService
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}

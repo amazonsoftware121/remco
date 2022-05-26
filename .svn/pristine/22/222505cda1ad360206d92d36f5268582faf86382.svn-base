@@ -1,0 +1,261 @@
+<app-header></app-header>
+
+<!-- inner-banner-section start -->
+<section class="inner-banner-section">
+  <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-banner-content text-center">
+          <h2 class="page-title">Social Comments</h2>
+          <ol class="page-list">
+            <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
+            <li>Social Comments</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- inner-banner-section start -->
+<section class="blog-section pt-120 pb-120">
+  <div class="container">
+    <div class="row mb-none-45">
+      <div class="col-lg-12 col-sm-12 text-center">
+        <p><img src="./assets/images/comments1.jpg" alt="image"></p>
+        <p class="text-center"><br />Create beautiful social comments request, allowing web audience to talk about your
+          product and offer their opinions. This can be shared on your social media platform or ours to gain followers
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- features-section start -->
+<section class="features-section pb-120">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <div class="section-header">
+          <h2 class="section-title text-capitalize border-bottom-right">Why run Social Comments?</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-none-30">
+      <div class="col-xl-4 col-lg-6 col-md-6">
+        <div class="icon-item text-center mb-30">
+          <div class="item-header">
+            <div class="icon">
+              <div class="icon-inner">
+                <i class="fa fa-star" aria-hidden="true"></i>
+              </div>
+            </div>
+            <h5 class="title text-capitalize font-weight-semibold">Title</h5>
+          </div>
+          <div class="content">
+            <p>Participants submit entries via social media (Facebook, Instagram, or YouTube, Twitter). You can leverage
+              the audience you already have to run promotions on social networks</p>
+          </div>
+        </div>
+      </div><!-- icon-item end -->
+      <div class="col-xl-4 col-lg-6 col-md-6">
+        <div class="icon-item text-center mb-30">
+          <div class="item-header">
+            <div class="icon">
+              <div class="icon-inner">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+              </div>
+            </div>
+            <h5 class="title text-capitalize font-weight-semibold">Grow email & SMS lists</h5>
+          </div>
+          <div class="content">
+            <p>Invite social comments from web audience gain follows on Twitter, Facebook, Instagram, Whatsapp, YouTube
+              etc</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-lg-6 col-md-6">
+        <div class="icon-item text-center mb-30">
+          <div class="item-header">
+            <div class="icon">
+              <div class="icon-inner">
+                <i class="fa fa-star" aria-hidden="true"></i>
+              </div>
+            </div>
+            <h5 class="title text-capitalize font-weight-semibold">Title</h5>
+          </div>
+          <div class="content">
+            <p>Increase engagement and reward fans instantly with prizes. Grow email & SMS lists</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- features-section end -->
+<!-- faq-section start -->
+<section class="faq-section pb-120">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-12">
+        <div class="section-header">
+          <h2 class="section-title text-capitalize border-bottom-right">Social Comments Features</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="faq-content">
+          <div class="accordion" id="marever-accordio-one">
+            <div class="card">
+              <div class="card-header" id="heading-01">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapse-01" aria-expanded="false" aria-controls="collapse-01">
+                  <span class="caption">Unlimited promotions</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+
+              <div id="collapse-01" class="collapse" aria-labelledby="heading-01" data-parent="#marever-accordio-one">
+                <div class="card-body">
+                  <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for
+                    previewing layouts.</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="heading-02">
+                <button class="accordion-title" type="button" data-toggle="collapse" data-target="#collapse-02"
+                  aria-expanded="true" aria-controls="collapse-02">
+                  <span class="caption">Unlimited entries</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-02" class="collapse show" aria-labelledby="heading-02"
+                data-parent="#marever-accordio-one">
+                <div class="card-body">
+                  <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for
+                    previewing layouts.</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="heading-03">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapse-03" aria-expanded="false" aria-controls="collapse-03">
+                  <span class="caption">Form builder</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-03" class="collapse" aria-labelledby="heading-03" data-parent="#marever-accordio-one">
+                <div class="card-body">
+                  <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for
+                    previewing layouts.</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="heading-04">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapse-04" aria-expanded="false" aria-controls="collapse-04">
+                  <span class="caption">Social actions</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-04" class="collapse" aria-labelledby="heading-04" data-parent="#marever-accordio-one">
+                <div class="card-body">
+                  <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for
+                    previewing layouts.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="faq-content">
+          <div class="accordion" id="marever-accordio-two">
+            <div class="card">
+              <div class="card-header" id="heading-05">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapse-05" aria-expanded="false" aria-controls="collapse-05">
+                  <span class="caption">Access to all entry data</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-05" class="collapse" aria-labelledby="heading-05" data-parent="#marever-accordio-two">
+                <div class="card-body">
+                  <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for
+                    previewing layouts.</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="heading-06">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapse-06" aria-expanded="false" aria-controls="collapse-06">
+                  <span class="caption">Draw winners</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-06" class="collapse" aria-labelledby="heading-06" data-parent="#marever-accordio-two">
+                <div class="card-body">
+                  <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for
+                    previewing layouts.</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="heading-07">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapse-07" aria-expanded="false" aria-controls="collapse-07">
+                  <span class="caption">Mobile optimized</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-07" class="collapse" aria-labelledby="heading-07" data-parent="#marever-accordio-two">
+                <div class="card-body">
+                  <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for
+                    previewing layouts.</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="heading-08">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapse-08" aria-expanded="false" aria-controls="collapse-08">
+                  <span class="caption">Leaderboards</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-08" class="collapse" aria-labelledby="heading-08" data-parent="#marever-accordio-two">
+                <div class="card-body">
+                  <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for
+                    previewing layouts.</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="heading-09">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapse-09" aria-expanded="false" aria-controls="collapse-09">
+                  <span class="caption">Events mode</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-09" class="collapse" aria-labelledby="heading-09" data-parent="#marever-accordio-two">
+                <div class="card-body">
+                  <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for
+                    previewing layouts.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- faq-section end -->
+
+<app-footer></app-footer>

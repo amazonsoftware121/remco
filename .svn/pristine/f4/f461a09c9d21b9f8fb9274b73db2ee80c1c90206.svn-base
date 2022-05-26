@@ -1,0 +1,88 @@
+<app-header></app-header>
+
+<!-- inner-banner-section start -->
+<section class="inner-banner-section">
+  <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-banner-content text-center">
+          <h2 class="page-title">Campaigns </h2>
+          <ol class="page-list">
+            <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- inner-banner-section start -->
+<!-- blog-section start -->
+<section class="features-section pb-120 inner-banner">
+    <div class="container">
+        <div class="form-row">
+            <div class="col-xl-4 col-lg-6 col-md-6 margin" (click)="openContest()">
+                <div class="icon-item text-center mb-30 border" >
+                    <div class="item-header">
+                    <div class="circle"><img [src]="base_url +'uploads/products/'+ products[0].product_image" alt="image" class="image"></div>
+                    <h5 class="title text-capitalize font-weight-semibold">{{products[0].product_title}}</h5>
+                    </div>
+                    <div class="content">
+                    <p class="content">{{products[0].product_description}}</p>
+                    </div>
+                    <!-- <animated-digit [digit]="251" [duration]="3000" class="digit"></animated-digit><span class="product">{{products[0].product_title}}</span> -->
+                </div>
+            </div><!-- icon-item end -->
+            <div class="col-xl-4 col-lg-6 col-md-6 margin" (click)="openEmailForms()">
+              <div class="icon-item text-center mb-30 border" >
+                  <div class="item-header">
+                  <div class="circle"><img [src]="base_url +'uploads/products/'+ products[1].product_image" alt="image" class="image"></div>
+                  <h5 class="title text-capitalize font-weight-semibold">{{products[1].product_title}}</h5>
+                  </div>
+                  <div class="content">
+                  <p class="content">{{products[1].product_description}}</p>
+                  </div>
+                  <!-- <animated-digit [digit]="251" [duration]="3000" class="digit"></animated-digit><span class="product">{{products[1].product_title}}</span> -->
+              </div>
+          </div><!-- icon-item end -->
+          <div class="col-xl-4 col-lg-6 col-md-6 margin" (click)="openLearnAndEarn()">
+            <div class="icon-item text-center mb-30 border" >
+                <div class="item-header">
+                <div class="circle"><img [src]="base_url +'uploads/products/'+ products[2].product_image" alt="image" class="image"></div>
+                <h5 class="title text-capitalize font-weight-semibold">{{products[2].product_title}}</h5>
+                </div>
+                <div class="content">
+                <p class="content">{{products[2].product_description}}</p>
+                </div>
+                <!-- <animated-digit [digit]="251" [duration]="3000" class="digit"></animated-digit><span class="product">{{products[2].product_title}}</span> -->
+            </div>
+        </div><!-- icon-item end -->
+        <div class="col-xl-4 col-lg-6 col-md-6 margin" (click)="openSocialComments()">
+          <div class="icon-item text-center mb-30 border" >
+              <div class="item-header">
+              <div class="circle"><img [src]="base_url +'uploads/products/'+ products[3].product_image" alt="image" class="image"></div>
+              <h5 class="title text-capitalize font-weight-semibold">{{products[3].product_title}}</h5>
+              </div>
+              <div class="content">
+              <p class="content">{{products[3].product_description}}</p>
+              </div>
+              <!-- <animated-digit [digit]="251" [duration]="3000" class="digit"></animated-digit><span class="product">{{products[3].product_title}}</span> -->
+          </div>
+      </div><!-- icon-item end -->
+      <div class="col-xl-4 col-lg-6 col-md-6 margin" (click)="openSweepStakes()">
+        <div class="icon-item text-center mb-30 border" >
+            <div class="item-header">
+            <div class="circle"><img [src]="base_url +'uploads/products/'+ products[4].product_image" alt="image" class="image"></div>
+            <h5 class="title text-capitalize font-weight-semibold">{{products[4].product_title}}</h5>
+            </div>
+            <div class="content">
+            <p class="content">{{products[4].product_description}}</p>
+            </div>
+            <!-- <animated-digit [digit]="251" [duration]="3000" class="digit"></animated-digit><span class="product">{{products[4].product_title}}</span> -->
+        </div>
+    </div><!-- icon-item end -->
+        </div>
+    </div>
+</section>
+<!-- blog-section end -->
+<app-footer></app-footer>

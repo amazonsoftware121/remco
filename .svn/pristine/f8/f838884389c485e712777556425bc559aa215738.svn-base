@@ -1,0 +1,179 @@
+<app-header></app-header>
+
+
+<section class="inner-banner-section">
+    <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="inner-banner-content text-center">
+            <h2 class="page-title">Campaign </h2>
+            <ol class="page-list">
+              <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- <section class="testimonial-section features-section pb-120 inner-banner"> -->
+    <section class="features-section inner-banner">
+    <div class="container">
+    <div class="form-row1">
+        <div class="col-md-8">
+            <div class="overall">
+    <div class="center">
+        <!-- <ng-container> -->
+            <div class="form2">
+            <div class="testimonial-slider">
+                <owl-carousel-o [options]="testimonialOptions">
+                    <ng-container *ngFor="let item of view1">
+                        <ng-template carouselSlide [id]="item.id">
+                            <div class="testimonial-item">
+                                <div>
+                                    <div class="thumb">
+                                        <img [src]="base_url +'uploads/company/product_sliders/'+item.image" class="image1">
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+            </div>
+        </div>
+        <!-- </ng-container> -->
+    </div>
+    <div class="center">
+    <!-- <ng-container> -->
+        <div class="form">
+            <div class="margin">
+                <div class="text-center border" >
+                    <div class="item-header">
+                        <img [src]="base_url +'uploads/company/logo/'+view.company_gallery_logo" class="image3">
+                    <!-- <img src="./assets/images/mascot/mascot3.png" alt="image" class="image"> -->
+                    <h5 class="title text-capitalize font-weight-semibold">{{view.company_campaign_title}}</h5>
+                    </div>
+                    <div>
+                    <p class="content2">{{view.company_campaign_description}}</p>
+                    </div>
+
+            <div class="col-lg-12">
+                <div class="contact-form-area">
+                    <h3 class="block-title">This is a demo sweepstakes to show you an example of what you can do with ViralSweep. Simply enter this sweepstakes to see the next page.</h3>
+                    <form class="cmn-form contact-form" *ngIf="fields" [formGroup]="participantsForms">
+                        <div class="form-row">
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_email==1">
+                            <div class="form-group">
+                                <input type="email" name="pre_entry_form_email" [(ngModel)]="participantsForms.pre_entry_form_email" id="pre_entry_form_email" formControlName="pre_entry_form_email" placeholder="Email*" required>
+                            </div>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_name==1">
+                                <div class="form-group">
+                                    <input type="text" name="pre_entry_form_name" id="pre_entry_form_name" [(ngModel)]="participantsForms.pre_entry_form_name" formControlName="pre_entry_form_name" placeholder="Name*">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_city==1">
+                                <div class="form-group">
+                                    <input type="text" name="pre_entry_form_city" id="pre_entry_form_city" [(ngModel)]="participantsForms.pre_entry_form_city" formControlName="pre_entry_form_city" placeholder="City*">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 wrapper" *ngIf="fields.pre_entry_form_state==1">
+                                <div class="form-group">
+                                    <input type="text" name="pre_entry_form_state" id="pre_entry_form_state" [(ngModel)]="participantsForms.pre_entry_form_state" formControlName="pre_entry_form_state" placeholder="State*">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_country==1">
+                                <div class="form-group">
+                                    <mat-select placeholder="Select Country" class="form-control" panelClass="testClass" disableOptionCentering formControlName="pre_entry_form_country" [(ngModel)]="participantsForms.pre_entry_form_country" (selectionChange)="selectedCode($event.value)">
+                                        <mat-option *ngFor="let item of countries" value="{{item.phonecode}}">
+                                          {{item.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_phone==1">
+                                <div class="form-group wrapper">
+                                    <input class="phone" type="number" [(ngModel)]="participantsForms.pre_entry_form_phone" formControlName="pre_entry_form_phone" placeholder="Phone*"/>
+                                    <span class="phone-code">+ {{countryCode}}</span>
+                                
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_birthday==1">
+                                <div class="form-group">
+                                    <mat-form-field appearance="fill">
+                                        <input class="inputs" placeholder="Choode a date" matInput [matDatepicker]="picker" name="pre_entry_form_birthday" id="pre_entry_form_birthday" formControlName="pre_entry_form_birthday" [(ngModel)]="participantsForms.pre_entry_form_birthday">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                    <!-- <input type="text" name="pre_entry_form_birthday" id="pre_entry_form_birthday" [(ngModel)]="participantsForms.pre_entry_form_birthday" formControlName="pre_entry_form_birthday" placeholder="Birthday*"> -->
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_entry_code==1">
+                                <div class="form-group">
+                                    <input type="text" name="pre_entry_form_entry_code" id="pre_entry_form_entry_code" [(ngModel)]="participantsForms.pre_entry_form_entry_code" formControlName="pre_entry_form_entry_code" placeholder="Form Entry Code*">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="fields.pre_entry_form_address==1"><div class="form-group padding">
+                            <textarea class="area" placeholder="Address*" formControlName="pre_entry_form_address" [(ngModel)]="participantsForms.pre_entry_form_address" spellcheck="false"></textarea>
+                        </div>
+                    </div> 
+                    <br><button type="submit" class="btn btn-primary mr-3" (click)="onSubmit()">Enter</button>
+                </form>
+                </div>
+                </div>
+                <hr class="new4">
+                <div class="form1">
+                    <div class="form-row" *ngIf="view">
+                        <div class="col-md-3">
+                            <i class="fa fa-calendar-o" style="font-size: 25px;"></i><br><span class="text">Ends {{view.company_start_date | date:'MMM d y'}}</span>
+                        </div>
+                        <div class="col-md-3" (click)="openDialog(view)">
+                            <i class="fa fa-newspaper-o" style="font-size: 25px;"></i><br><span class="text">View Rules</span>
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fa fa-user" style="font-size: 25px;"></i><br><span class="text">Winners {{view.company_winners_number}}</span>
+                        </div>
+                        <div class="col-md-3">
+                            <i class="fa fa-clock-o" style="font-size: 25px;"></i><br><span class="text">{{demo}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- icon-item end -->
+    </div>
+    <!-- </ng-container> -->
+    </div>
+</div>
+</div>
+    <div class="col-md-4">
+        <div class="widget">
+            <div class="item-header">
+                <h2 class="title text-capitalize font-weight-semibold">widget</h2>
+            </div>
+            <div class="content">
+                <p>With the ViralSweep widget, you can build your own landing page and then simply embed our widget into that page and the sweepstakes will show up.</p><br>
+                <p>Want to try it yourself? Just embed the code snippet below on your site and the widget will appear.</p><br>
+                <p>This allows you the most flexibility, as you can build any type of landing page you want, and then you can style the sweepstakes widget to match your landing page.</p><br>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+<!-- blog-section end -->
+
+
+<app-footer></app-footer>
+
+
+

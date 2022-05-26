@@ -1,0 +1,12 @@
+<div class="text_align">
+    <div><h3>Official Rules</h3>
+    <hr class="new4"></div>
+    <div class="col-md-12">
+      <div class="row pb-3 center align">
+        <div class="row pb-2 center">
+          <span class="col-lg-6 value">{{value}}</span>
+        </div>
+      </div>
+      <button class="btn btn-primary mr-3 size" (click)="close()">Close</button>
+    </div>
+  </div>

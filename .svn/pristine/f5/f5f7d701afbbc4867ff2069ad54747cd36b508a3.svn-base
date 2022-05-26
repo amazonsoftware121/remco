@@ -1,0 +1,12 @@
+.container {
+  width: 250px;
+  padding: 0 5px;
+}
+
+.msg {
+  font-size: 20px;
+  text-align: center;
+}
+:host ::ng-deep .float-rights{
+  text-align: center !important;
+}

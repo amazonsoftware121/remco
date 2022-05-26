@@ -1,0 +1,96 @@
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { AlertService } from 'src/app/providers/alertService';
+import { LoaderService } from 'src/app/providers/loader.service';
+import { WebService } from 'src/app/providers/web.serivce';
+import { environment } from 'src/environments/environment';
+
+@Component({
+  selector: 'app-campaign-full-view',
+  templateUrl: './campaign-full-view.component.html',
+  styleUrls: ['./campaign-full-view.component.scss']
+})
+export class CompanyContestComponent implements OnInit {
+
+  participantsForm:any;
+  contactUsForm: any;
+  view :any
+
+  base_url:string = environment.base_url;
+  
+  projects = [
+    {
+      id: '1',
+      image: 'background3.jpg'
+    },
+    {
+      id: '2',
+      image: 'background3.jpg'
+    },
+    {
+      id: '3',
+      image: 'background4.jpg'
+    }
+  ]
+
+  testimonialOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: true,
+    pullDrag: false,
+    dots: true,
+    autoplay:true,
+    autoplayTimeout:1800,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 1
+      }
+    },
+  }
+
+  constructor(private loaderService: LoaderService,
+    private activateRoute:ActivatedRoute,
+    private web:WebService,
+    private alert:AlertService
+    ) {
+    this.loaderService.stopLoader();
+   }
+
+  ngOnInit(): void {
+    console.log(this.activateRoute.params['_value'].id);
+    this.formVisiblity(this.activateRoute.params['_value'].id);
+    this.buildcontactUsForm()
+  }
+
+  formVisiblity(id) {
+    this.web.getData('getAllCompaniesId?web_id='+ id).then((res) => {
+      if (res.status == '200') {
+        this.view = res.data;
+        console.log('>>>>>>>>>>', this.view);
+      } else {
+        this.alert.errorMsg(res.error, '');
+      }
+    }, err => {
+      console.log(err);
+      this.alert.errorMsg('Connection Error', '');
+    });
+  }
+
+  buildcontactUsForm() {
+    this.contactUsForm = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.pattern(
+        /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
+      ),]),
+      message: new FormControl('', [Validators.required])
+    });
+  }
+  
+
+}

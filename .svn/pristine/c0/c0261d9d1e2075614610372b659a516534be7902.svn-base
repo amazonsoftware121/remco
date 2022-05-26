@@ -1,0 +1,7 @@
+.validate-errors{
+    color: red;
+}
+.description{
+    color: #fff;
+    font-family: "Open Sans",sans-serif;
+}

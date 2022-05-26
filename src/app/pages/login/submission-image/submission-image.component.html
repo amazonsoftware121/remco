@@ -1,0 +1,40 @@
+<!-- <div class="wrapper">
+  <owl-carousel-o [options]="customOptions">
+
+    <ng-container *ngFor="let slide of submission_image">
+      <ng-template class="slide" carouselSlide [id]="slide.id">
+        <img [src]="base_url+'uploads/contest_pictures/'+slide.contest_image_video" alt="submission_image" height="380" width="680">
+      </ng-template>
+    </ng-container>
+
+  </owl-carousel-o>  
+</div> -->
+<!-- <div class="blocklogos">
+  <owl-carousel-o [options]="blockChainOptions">
+    <ng-container *ngFor="let item of submission_image">
+      <ng-template carouselSlide [id]="item">
+        <div class="team-item" >
+          <div class="thumb logoborder">
+            <img [src]="base_url+'uploads/contest_pictures/'+item" alt="submission_image">
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+  <p>s</p>
+</div> -->
+<div (click)="close()" class="close1">
+  <i class="fa fa-window-close" aria-hidden="true"></i>
+</div>
+<div>
+  <div class="form-row">
+    <div (click)="openVoting(item)" class="col-xl-4 col-lg-6 col-md-6 grid-item desigen research" *ngFor="let item of submission_image">
+        <div class="posrt-thumb">
+            <img [src]="base_url +'uploads/contest_pictures/'+item.contest_image_video" class="image3 image-size">
+            <div class="overlay-content">
+            <h3 class="caption">View</h3>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

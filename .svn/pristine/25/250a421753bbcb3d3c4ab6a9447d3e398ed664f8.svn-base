@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CampaignEmailFormsComponent } from './campaign-email-forms.component';
+import { FormsModule } from '@angular/forms';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { campaignEmailFormsRoutingModule } from './campaign-email-forms-routing.module';
+import { CampaignEmailFormsDetailesComponent } from './campaign-email-forms-detailes/campaign-email-forms-detailes.component';
+
+@NgModule({
+  declarations: [
+    CampaignEmailFormsComponent,CampaignEmailFormsDetailesComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ComponentsModule,
+    campaignEmailFormsRoutingModule 
+  ]
+})
+export class CampaignEmailFormsModule { }

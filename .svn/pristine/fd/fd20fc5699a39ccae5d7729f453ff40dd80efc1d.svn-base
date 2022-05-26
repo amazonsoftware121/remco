@@ -1,0 +1,48 @@
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { AlertService } from 'src/app/providers/alertService';
+import { WebService } from 'src/app/providers/web.serivce';
+
+@Component({
+  selector: 'app-campaign-contest-detailes',
+  templateUrl: './campaign-contest-detailes.component.html',
+  styleUrls: ['./campaign-contest-detailes.component.scss']
+})
+export class CampaignCompaniesDetailesComponent implements OnInit {
+
+  value;
+  AllCompanies: any;
+  allCompaniesDetailes: any;
+
+  constructor(private dialog: MatDialogRef<CampaignCompaniesDetailesComponent>,
+    @Inject(MAT_DIALOG_DATA) public data:any,private web:WebService,private alert:AlertService,private activateRoute: ActivatedRoute) { this.value = data.ans }
+
+    @HostListener('document:keyup.escape') onClose() {
+      this.close();
+    }
+  
+    close() {
+      this.dialog.close();
+    }
+
+  ngOnInit(): void {
+    console.log('activate params',this.activateRoute.params['_value'].id);
+    this.companiesDetails(this.activateRoute.params['_value'].id);
+  }
+
+  companiesDetails(id) {
+    this.web.getData('getAllCompanies?web_id='+ id).then((res) => {
+      if (res.status == '200') {
+        this.allCompaniesDetailes = res.data;
+        console.log('-------------->', this.allCompaniesDetailes);
+      } else {
+        this.alert.errorMsg(res.error, '');
+      }
+    }, err => {
+      console.log(err);
+      this.alert.errorMsg('Connection Error', '');
+    });
+  }
+
+}

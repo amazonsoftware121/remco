@@ -1,0 +1,259 @@
+<section class="background blur" style="background-image: url('https://zerosoft.in/dev/remco/uploads/company/background/{{view.company_background_image}}');background-position: center;background-repeat: no-repeat;background-attachment: fixed;background-size: cover;"> 
+    <section class="testimonial-section features-section pb-120 inner-banner">
+        <div class="form12">
+            <div class="center12">
+        <div class="center">
+            <ng-container>
+                <div class="form2">
+                <div class="testimonial-slider" *ngIf="view1">
+                    <owl-carousel-o [options]="testimonialOptions">
+                        <ng-container *ngFor="let item of view1">
+                            <ng-template carouselSlide [id]="item.id">
+                                <div class="testimonial-item">
+                                    <div>
+                                        <div class="thumb">
+                                        <img [src]="base_url +'uploads/company/product_sliders/'+item.image" class="image1">
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </ng-container>
+                    </owl-carousel-o>
+                </div>
+            </div>
+            </ng-container>
+        </div>
+        <div class="center">
+        <ng-container>
+            <div class="form">
+                <div class="margin">
+                    <div class="text-center border" >
+                    <!-- <span class="gallery" (click)="gallery()">View gallery</span>
+                    <hr> -->
+                        <div class="item-header" *ngIf="view">
+                        <img  [src]="base_url +'uploads/company/logo/'+view.company_gallery_logo" class="image3">
+                        <!-- <img src="./assets/images/mascot/mascot3.png" alt="image" class="image"> -->
+                        <p class="title text-capitalize font-weight-semibold" style="font-family: Roboto;font-size: 25px;">{{view.company_campaign_title}}</p>
+                        <div class="content1">
+                        <p class="content2 font">{{view.company_campaign_description}}</p>
+                        </div>
+                    </div>
+                <div class="col-lg-12">
+                    <div class="contact-form-area">
+                        <!-- <p class="block-title font">This is a demo sweepstakes to show you an example of what you can do with ViralSweep. Simply enter this sweepstakes to see the next page.</p> -->
+                        <form class="cmn-form contact-form" *ngIf="fields" [formGroup]="participantsForms">
+                        <div class="form-row">
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_email==1">
+                            <div class="form-group">
+                                <input type="email" name="pre_entry_form_email" [(ngModel)]="participantsForms.pre_entry_form_email" id="pre_entry_form_email" formControlName="pre_entry_form_email" placeholder="Email*" required>
+                            </div>
+                            <!-- <div *ngIf="participantsForms.get('pre_entry_form_email').errors">
+                                <span *ngIf="participantsForms.get('pre_entry_form_email').touched && !participantsForms.get('pre_entry_form_email').valid && !participantsForms.get('pre_entry_form_email').value" class="validate-errors pb-3 float-left">Enter Email<br></span>
+                                <span class="validate-errors pb-3 float-left" *ngIf="participantsForms.get('pre_entry_form_email').errors['pattern']">Enter valid email address</span>
+                            </div>  -->
+                            </div>
+
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_name==1">
+                                <div class="form-group">
+                                    <input type="text" name="pre_entry_form_name" id="pre_entry_form_name" [(ngModel)]="participantsForms.pre_entry_form_name" formControlName="pre_entry_form_name" placeholder="Name*">
+                                </div>
+                                <!-- <div *ngIf="participantsForms.get('pre_entry_form_name').errors">
+                                    <span *ngIf="participantsForms.get('pre_entry_form_name').touched && !participantsForms.get('pre_entry_form_name').valid && !participantsForms.get('pre_entry_form_name').value" class="validate-errors pb-3 float-left">Enter Name<br></span>
+                                </div> -->
+                            </div>
+
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_city==1">
+                                <div class="form-group">
+                                    <input type="text" name="pre_entry_form_city" id="pre_entry_form_city" [(ngModel)]="participantsForms.pre_entry_form_city" formControlName="pre_entry_form_city" placeholder="City*">
+                                </div>
+                                <!-- <div *ngIf="participantsForms.get('pre_entry_form_city').errors">
+                                    <span *ngIf="participantsForms.get('pre_entry_form_city').touched && !participantsForms.get('pre_entry_form_city').valid && !participantsForms.get('pre_entry_form_city').value" class="validate-errors pb-3 float-left">Enter City<br></span>
+                                </div> -->
+                            </div>
+
+                            <div class="col-md-6 wrapper" *ngIf="fields.pre_entry_form_state==1">
+                                <div class="form-group">
+                                    <input type="text" name="pre_entry_form_state" id="pre_entry_form_state" [(ngModel)]="participantsForms.pre_entry_form_state" formControlName="pre_entry_form_state" placeholder="State*">
+                                </div>
+                                <!-- <div *ngIf="participantsForms.get('pre_entry_form_state').errors">
+                                    <span *ngIf="participantsForms.get('pre_entry_form_state').touched && !participantsForms.get('pre_entry_form_state').valid && !participantsForms.get('pre_entry_form_state').value" class="validate-errors pb-3 float-left">Enter State<br></span>
+                                </div> -->
+                            </div>
+
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_country==1">
+                                <div class="form-group">
+                                    <mat-select placeholder="Select Country" class="form-control" panelClass="testClass" disableOptionCentering formControlName="pre_entry_form_country" [(ngModel)]="participantsForms.pre_entry_form_country" (selectionChange)="selectedCode($event.value)">
+                                        <mat-option *ngFor="let item of countries" value="{{item.phonecode}}">
+                                          {{item.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <!-- <input type="text" name="pre_entry_form_country" id="pre_entry_form_country" [(ngModel)]="participantsForms.pre_entry_form_country" formControlName="pre_entry_form_country" placeholder="Country*"> -->
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_phone==1">
+                                <div class="form-group wrapper">
+                                    <input class="phone" type="number" [(ngModel)]="participantsForms.pre_entry_form_phone" formControlName="pre_entry_form_phone" placeholder="Phone*"/>
+                                    <span class="phone-code">+ {{countryCode}}</span>
+                                    <!-- <input type="text" name="pre_entry_form_phone" id="pre_entry_form_phone" [(ngModel)]="participantsForms.pre_entry_form_phone" formControlName="pre_entry_form_phone" placeholder="Phone*"> -->
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_birthday==1">
+                                <div class="form-group">
+                                    <mat-form-field appearance="fill">
+                                        <input class="inputs" placeholder="Choode a date" matInput [matDatepicker]="picker" name="pre_entry_form_birthday" id="pre_entry_form_birthday" formControlName="pre_entry_form_birthday" [(ngModel)]="participantsForms.pre_entry_form_birthday">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                    <!-- <input type="text" name="pre_entry_form_birthday" id="pre_entry_form_birthday" [(ngModel)]="participantsForms.pre_entry_form_birthday" formControlName="pre_entry_form_birthday" placeholder="Birthday*"> -->
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="fields.pre_entry_form_entry_code==1">
+                                <div class="form-group">
+                                    <input type="text" name="pre_entry_form_entry_code" id="pre_entry_form_entry_code" [(ngModel)]="participantsForms.pre_entry_form_entry_code" formControlName="pre_entry_form_entry_code" placeholder="Form Entry Code*">
+                                </div>
+                                <!-- <div *ngIf="participantsForms.get('pre_entry_form_entry_code').errors">
+                                    <span *ngIf="participantsForms.get('pre_entry_form_entry_code').touched && !participantsForms.get('pre_entry_form_entry_code').valid && !participantsForms.get('pre_entry_form_entry_code').value" class="validate-errors pb-3 float-left">Enter Entry Code<br></span>
+                                </div> -->
+                            </div>
+                        </div>
+
+                        <div *ngIf="fields.pre_entry_form_address==1"><div class="form-group padding">
+                            <textarea class="area" placeholder="Address*" formControlName="pre_entry_form_address" [(ngModel)]="participantsForms.pre_entry_form_address" spellcheck="false"></textarea>
+                        </div>
+                        <!-- <div *ngIf="participantsForms.get('pre_entry_form_address').errors">
+                            <span *ngIf="participantsForms.get('pre_entry_form_address').touched && !participantsForms.get('pre_entry_form_address').valid && !participantsForms.get('pre_entry_form_address').value" class="validate-errors pb-3 float-left">Enter Address</span><br>
+                        </div> -->
+                    </div> 
+                    <hr>
+                    <div *ngIf="live=='contest'">
+                    <div style="margin-bottom: 15px;" class="photoUpload" *ngIf="div1">
+                        <span (click)="div2Function()" class="photo col-md-12">Choose a photo</span>
+                        <!-- <span (click)="div3Function()" class="video col-md-6">Video</span> -->
+                    </div>
+                    <div class="photoUpload1" *ngIf="div2">
+                        <div class="widths clear">
+                        <p class="width1">Upload a photo</p><i (click)="div1Function()" class="fa fa-times width2 clear" aria-hidden="true"></i><br></div>
+                        <div class="form-rows clear clear1">
+                            <label class="btn btn-gradient text-white btn-radius mt-6 cursor-pointer buttonAlign col-md-5" for="btn1">Choose a File</label><hr>
+                            <span class="phone-code imageView col-md-7">{{participantsForms.contest_photo_video_name1}}</span>
+                            <input id="btn1" type="file" style="visibility: hidden;" accept="image/*" (change)="onFileChanges($event,'btn1')">
+                        </div>
+                    </div>
+                    <!-- <div class="photoUpload1" *ngIf="div3">
+                        <div class="widths clear">
+                        <p class="width1">Video URL</p><i (click)="div1Function()" class="fa fa-times width2 clear" aria-hidden="true"></i><br></div>
+                        <div class="form-rowss clear clear2">
+                        <mat-select [(ngModel)]="participantsForms.contest_photo_video_url1" formControlName="contest_photo_video_url1" placeholder="Choose media type" (selectionChange)="selectedCodes($event.value)" panelClass="testClass" disableOptionCentering class="form-control solid col-md-5" panelClass="testClass">
+                            <mat-option *ngFor="let item of socialLink" value="{{item.name}}">
+                              {{item.name}}
+                            </mat-option>
+                          </mat-select>
+                          <input formControlName="contest_photo_video_name1" [(ngModel)]="participantsForms.contest_photo_video_name1" class="col-md-7 solid" type="text" placeholder="Entet video URL">
+                        </div>
+                    </div> -->
+                    <div class="photoUpload2 form-group" *ngIf="div4">
+                        <textarea formControlName="contest_photo_video_comments1" class="area1" placeholder="Explain the photo or video your shared?"></textarea>
+                        <hr>
+                        <button class="btn btn-primary1 mr-3 dotted" *ngIf="div5" (click)="createDiv()">Add More</button>
+                    </div>
+                    <div *ngFor="let div of divs" id="div{{div}}">
+                        <div style="margin-bottom: 15px;" class="photoUpload" *ngIf="div11">
+                            <span (click)="div12Function()" class="photo col-md-12">Choose a photo</span>
+                            <!-- <span (click)="div13Function()" class="video col-md-6">Video</span> -->
+                        </div>
+                    </div>
+                    <div class="photoUpload1" *ngIf="div12">
+                        <div class="widths clear">
+                        <p class="width1">Upload a photo</p><i (click)="div11Function()" class="fa fa-times width2 clear" aria-hidden="true"></i><br></div>
+                        <div class="form-rows clear clear1">
+                            <label class="btn btn-gradient text-white btn-radius mt-6 cursor-pointer buttonAlign col-md-5" for="btn2">Choose a File</label><hr>
+                            <span class="phone-code imageView col-md-7">{{participantsForms.contest_photo_video_name2}}</span>
+                            <input id="btn2" type="file" style="visibility: hidden;" accept="image/*" (change)="onFileChanges($event,'btn2')">
+                        </div>
+                    </div>
+                    <!-- <div class="photoUpload1" *ngIf="div13">
+                        <div class="widths clear">
+                        <p class="width1">Video URL</p><i (click)="div11Function()" class="fa fa-times width2 clear" aria-hidden="true"></i><br></div>
+                        <div class="form-rowss clear clear2">
+                        <mat-select [(ngModel)]="participantsForms.contest_photo_video_url2" formControlName="contest_photo_video_url2" placeholder="Choose media type" (selectionChange)="selectedCode($event.value)" panelClass="testClass" disableOptionCentering class="form-control solid col-md-5" panelClass="testClass">
+                            <mat-option *ngFor="let item of socialLink" value="{{item.name}}">
+                              {{item.name}}
+                            </mat-option>
+                          </mat-select>
+                          <input formControlName="contest_photo_video_name2" [(ngModel)]="participantsForms.contest_photo_video_name2" class="col-md-7 solid" type="text" placeholder="Entet video URL">
+                        </div>
+                    </div> -->
+                    <div class="photoUpload2 form-group" *ngIf="div14">
+                        <textarea formControlName="contest_photo_video_comments2" class="area1" placeholder="Explain the photo or video your shared?"></textarea>
+                        <hr>
+                        <button class="btn btn-primary1 mr-3 dotted" *ngIf="div6" (click)="createDivv()">Add More</button>
+                    </div>
+                    <div *ngFor="let div of divss" id="div{{div}}">
+                        <div style="margin-bottom: 15px;" class="photoUpload" *ngIf="div21">
+                            <span (click)="div22Function()" class="photo col-md-6">Choose a photo</span>
+                            <!-- <span (click)="div23Function()" class="video col-md-6">Video</span> -->
+                        </div>
+                    </div>
+                    <div class="photoUpload1" *ngIf="div22">
+                        <div class="widths clear">
+                        <p class="width1">Upload a photo</p><i (click)="div21Function()" class="fa fa-times width2 clear" aria-hidden="true"></i><br></div>
+                        <div class="form-rows clear clear1">
+                            <label class="btn btn-gradient text-white btn-radius mt-6 cursor-pointer buttonAlign col-md-5" for="btn3">Choose a File</label><hr>
+                            <span class="phone-code imageView col-md-7">{{participantsForms.contest_photo_video_name3}}</span>
+                            <input id="btn3" type="file" style="visibility: hidden;" accept="image/*" (change)="onFileChanges($event,'btn3')">
+                        </div>
+                    </div>
+                    <!-- <div class="photoUpload1" *ngIf="div23">
+                        <div class="widths clear">
+                        <p class="width1">Video URL</p><i (click)="div12Function()" class="fa fa-times width2 clear" aria-hidden="true"></i><br></div>
+                        <div class="form-rowss clear clear2">
+                        <mat-select [(ngModel)]="participantsForms.contest_photo_video_url3" formControlName="contest_photo_video_url3" placeholder="Choose media type" (selectionChange)="selectedCode($event.value)" panelClass="testClass" disableOptionCentering class="form-control solid col-md-5" panelClass="testClass">
+                            <mat-option *ngFor="let item of socialLink" value="{{item.name}}">
+                              {{item.name}}
+                            </mat-option>
+                          </mat-select>
+                          <input formControlName="contest_photo_video_name3" [(ngModel)]="participantsForms.contest_photo_video_name3" class="col-md-7 solid" type="text" placeholder="Entet video URL">
+                        </div>
+                    </div> -->
+                    <div class="photoUpload2 form-group" *ngIf="div24">
+                        <textarea formControlName="contest_photo_video_comments3" class="area1" placeholder="Explain the photo or video your shared?"></textarea>
+                        <hr>
+                    </div>
+                </div>
+                        <br><button type="submit" class="btn btn-primary mr-3" (click)="onSubmit()">Enter</button>
+                        </form>
+                    </div>
+                    </div>
+                    <hr class="new4">
+                    <div class="form1">
+                        <div class="form-row" *ngIf="view">
+                            <div class="col-md-3">
+                                <i class="fa fa-calendar-o" style="font-size: 25px;"></i><br><span class="text">Ends {{view.company_end_date | date:'MMM d y'}}</span>
+                            </div>
+                            <div class="col-md-3" (click)="openDialog(view)">
+                                <i class="fa fa-newspaper-o" style="font-size: 25px;"></i><br><span class="text">View Rules</span>
+                            </div>
+                            <div class="col-md-3">
+                                <i class="fa fa-user" style="font-size: 25px;"></i><br><span class="text">Winners {{view.company_winners_number}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <i class="fa fa-clock-o" style="font-size: 25px;"></i><br><span class="text">{{demo}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- icon-item end -->
+        </div>
+        </ng-container>
+        </div>
+    </div>
+    </div>
+    </section>
+</section>
+<!-- blog-section end -->
+
+
+

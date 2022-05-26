@@ -1,0 +1,55 @@
+import { Component, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AlertService } from 'src/app/providers/alertService';
+import { WebService } from 'src/app/providers/web.serivce';
+
+@Component({
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss']
+})
+export class SidebarComponent {
+
+  selectedMenu: string;
+
+  @Output() notifyParent: EventEmitter<any> = new EventEmitter();
+  Blogs: any;
+
+  constructor(
+    
+  private web: WebService,
+ 
+  private alert: AlertService,
+
+  private activateRoute: ActivatedRoute
+  ) { }
+
+  changeSideMenu(menu: string) {
+    this.selectedMenu = menu;
+    this.notifyParent.emit(menu);
+  }
+
+  // ngOnInit() {
+
+  //   console.log(this.activateRoute.params['_value'].id);
+  //   this.blogsDetails(this.activateRoute.params['_value'].id);
+  // }
+
+  // blogsDetails(id) {
+  //   this.web.getData('blogsDetails?web_id='+ id).then((res) => {
+  //     if (res.status == '200') {
+  //       this.Blogs = res.data[0];
+  //       console.log(this.Blogs.blog_created_time);
+  //       this.Blogs.blog_created_time = this.Blogs.blog_created_time *1000;
+  //       console.log('plan is', this.Blogs);
+  //     } else {
+  //       this.alert.errorMsg(res.error, '');
+  //     }
+  //   }, err => {
+  //     console.log(err);
+  //     this.alert.errorMsg('Connection Error', '');
+  //   });
+  // }
+
+
+}

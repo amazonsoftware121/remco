@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="32928b70-6581-41f6-b533-b1d711a070ca" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="ProjectId" id="20BCpdHUKDUSVc2yPZD7kdFDefJ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../sdb1/htdocs/img/selva.php" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="sshConsole" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Controllers/Admin" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="32928b70-6581-41f6-b533-b1d711a070ca" name="Default Changelist" comment="" />
+      <created>1635508777596</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1635508777596</updated>
+      <workItem from="1635508778802" duration="952000" />
+      <workItem from="1635571861161" duration="2115000" />
+      <workItem from="1635589919933" duration="1462000" />
+      <workItem from="1635749617567" duration="7122000" />
+      <workItem from="1635852423422" duration="348000" />
+      <workItem from="1635926087849" duration="7000" />
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="555" y="194" width="800" height="684" key="#Deployment" timestamp="1635572890104">
+      <screen x="0" y="27" width="1920" height="1011" />
+    </state>
+    <state x="555" y="194" width="800" height="684" key="#Deployment/0.27.1920.1011@0.27.1920.1011" timestamp="1635572890104" />
+    <state x="555" y="217" width="800" height="637" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1635852422887">
+      <screen x="0" y="27" width="1920" height="1011" />
+    </state>
+    <state x="555" y="217" width="800" height="637" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.27.1920.1011@0.27.1920.1011" timestamp="1635852422887" />
+    <state x="236" y="27" width="1429" height="1011" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1635754851134">
+      <screen x="0" y="27" width="1920" height="1011" />
+    </state>
+    <state x="236" y="27" width="1429" height="1011" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1920.1011@0.27.1920.1011" timestamp="1635754851134" />
+    <state x="743" y="290" width="424" height="491" key="FileChooserDialogImpl" timestamp="1635852439716">
+      <screen x="0" y="27" width="1920" height="1011" />
+    </state>
+    <state x="743" y="290" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1011@0.27.1920.1011" timestamp="1635852439716" />
+    <state x="1279" y="220" width="572" height="580" key="ftp.server.browser" timestamp="1635508857634">
+      <screen x="0" y="27" width="1920" height="1011" />
+    </state>
+    <state x="1279" y="220" width="572" height="580" key="ftp.server.browser/0.27.1920.1011@0.27.1920.1011" timestamp="1635508857634" />
+  </component>
+</project>

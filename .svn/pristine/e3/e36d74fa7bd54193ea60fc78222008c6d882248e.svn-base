@@ -1,0 +1,12 @@
+.mat-dialog-content{
+    display: block;
+    margin: 0 -24px;
+    padding: 0 24px;
+    max-height: 65vh;
+    overflow: auto;
+  }
+  .cdk-overlay-pane{
+    max-width: 500px!important;
+    width: 100%!important;
+  }
+  

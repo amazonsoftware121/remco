@@ -1,0 +1,126 @@
+<app-header></app-header>
+
+<!-- inner-banner-section start -->
+<section class="inner-banner-section">
+  <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-banner-content text-center">
+          <h2 class="page-title">Faq</h2>
+          <ol class="page-list">
+            <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
+            <li>Getting started and Faq’s</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- inner-banner-section start -->
+<!-- faq-section start -->
+<section class="faq-section pt-120 pb-120">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="faq-thumb">
+          <img src="./assets/images/faq.png" alt="image">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="faq-content">
+          <div class="accordion mt-30" id="marever-accordio-one">
+            <div class="card">
+              <div class="card-header" id="heading-01">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapse-01" aria-expanded="false" aria-controls="collapse-01">
+                  <span class="caption">Planning ?</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-01" class="collapse" aria-labelledby="heading-01" data-parent="#marever-accordio-one">
+                <div class="card-body">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
+                    leap into electronic typesetting, remaining essentially unchanged.</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="heading-02">
+                <button class="accordion-title" type="button" data-toggle="collapse" data-target="#collapse-02"
+                  aria-expanded="true" aria-controls="collapse-02">
+                  <span class="caption">Setup ?</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-02" class="collapse show" aria-labelledby="heading-02"
+                data-parent="#marever-accordio-one">
+                <div class="card-body">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    and scrambled it to make a type specimen book. </p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="heading-03">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapse-03" aria-expanded="false" aria-controls="collapse-03">
+                  <span class="caption">Launch ?</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-03" class="collapse" aria-labelledby="heading-03" data-parent="#marever-accordio-one">
+                <div class="card-body">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
+                    leap into electronic typesetting, remaining essentially unchanged.</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="heading-04">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapse-04" aria-expanded="false" aria-controls="collapse-04">
+                  <span class="caption">Monitor ?</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-04" class="collapse" aria-labelledby="heading-04" data-parent="#marever-accordio-one">
+                <div class="card-body">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
+                    leap into electronic typesetting, remaining essentially unchanged.</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="heading-05">
+                <button class="accordion-title collapsed" type="button" data-toggle="collapse"
+                  data-target="#collapse-05" aria-expanded="false" aria-controls="collapse-05">
+                  <span class="caption">Distribute Rewards ?</span>
+                  <span class="icon"></span>
+                </button>
+              </div>
+              <div id="collapse-05" class="collapse" aria-labelledby="heading-05" data-parent="#marever-accordio-one">
+                <div class="card-body">
+                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    and scrambled it to make a type specimen book. It has survived not only five centuries, but also the
+                    leap into electronic typesetting, remaining essentially unchanged.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- faq-section end -->
+
+<app-footer></app-footer>

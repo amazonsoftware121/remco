@@ -1,0 +1,38 @@
+.dashboard {
+  // box-shadow: 0 0 17.85px 3.15px rgb(0 0 0 / 17%);
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #FFF;
+  margin-bottom: 40px;
+  box-shadow: 0 0 9px 1px rgb(0 0 0 / 30%);
+}
+
+.sidebar-categories {
+  list-style: outside none none;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+
+  & > li {
+    padding-bottom: 15px;
+    font-size: 15px;
+    font-weight: 400;
+    color: black
+  }
+}
+
+i {
+  color: #006991;
+}
+.radius img{
+  border-radius: 50% !important;
+  height: 150px;
+  width: 150px;
+}
+.radius{
+  text-align: center;
+}
+.active{
+  color: #E56119;
+}

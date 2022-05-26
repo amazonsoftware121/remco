@@ -1,0 +1,202 @@
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { AlertService } from '../../../providers/alertService';
+import { WebService } from '../../../providers/web.serivce';
+import countriesCode from "../../../../assets/countries.json";
+
+@Component({
+  selector: 'app-my-profile',
+  templateUrl: './my-profile.component.html',
+  styleUrls: ['./my-profile.component.scss']
+})
+export class MyProfileComponent implements OnInit {
+
+  userType: any;
+
+  userId: any;
+
+  editCompany: boolean = false;
+
+  editParticipant: boolean = false;
+
+  accountInfo: any;
+
+  country: any;
+
+  companyForm: any;
+
+  participantsForm: any;
+
+  countries: any = countriesCode;
+
+  countryCode: any;
+
+  fetchingStatus: boolean = true;
+  
+  loaderTheme = {
+    'background-color': '#E5E5E5',
+    'margin-bottom':0,
+    'display':'flex'
+  }
+
+  constructor(
+    private web: WebService,
+    private alert: AlertService
+  ) {
+    this.userId = localStorage.getItem('UserId');
+    this.userType = localStorage.getItem('Role');
+  }
+
+  ngOnInit() {
+    this.getAccountDetails();
+    this.buildCompanyForm();
+    this.buildParticipantsForm();
+  }
+
+  buildCompanyForm() {
+    this.companyForm = new FormGroup({
+      company_id: new FormControl(''),
+      company_name: new FormControl('', [Validators.required]),
+      company_description: new FormControl('', [Validators.required]),
+      company_country_code: new FormControl('', [Validators.required]),
+      company_phone: new FormControl('', [Validators.required]),
+      company_website: new FormControl('', [Validators.required, Validators.pattern(/^(http(s)?:\/\/)[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/)]),
+      company_email: new FormControl('', [Validators.required, Validators.pattern(
+        /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
+      ),])
+    });
+  }
+
+  buildParticipantsForm() {
+    this.participantsForm = new FormGroup({
+      participant_id: new FormControl(''),
+      participant_fname: new FormControl('', [Validators.required]),
+      participant_lname: new FormControl('', [Validators.required]),
+      participant_country_code: new FormControl('', [Validators.required]),
+      participant_phone: new FormControl('', [Validators.required]),
+      participant_email: new FormControl('', [Validators.required, Validators.pattern(
+        /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i
+      ),])
+    });
+  }
+
+  getAccountDetails() {
+    let data = {
+      userId: this.userId,
+      role: this.userType
+    }
+    this.fetchingStatus = true;
+    this.web.postData('getAccountDetails', data).then((res) => {
+      if (res.status == '200') {
+        this.accountInfo = res.data;
+        this.getCountry(res.data.company_country_code || res.data.participant_country_code);
+        this.selectedCode(res.data.company_country_code || res.data.participant_country_code);
+        setTimeout(() => {
+          this.fetchingStatus = false;
+        }, Math.random() * 2000 + 2000);
+        console.log('account details is', res);
+      } else {
+        this.alert.errorMsg(res.error, '');
+      }
+    }, err => {
+      console.log(err);
+      this.alert.errorMsg('Connection Error', '');
+    });
+  }
+
+  getCountry(code) {
+    countriesCode.find((obj) => {
+      if (obj.phonecode === code) {
+        this.country = obj.name;
+      }
+    });
+  }
+
+  selectedCode(data) {
+    console.log('value is', data);
+    this.countryCode = data;
+  }
+
+  patchCompanyForm() {
+    this.companyForm.patchValue({
+      company_name: this.accountInfo.company_name,
+      company_country_code: this.accountInfo.company_country_code,
+      company_phone: this.accountInfo.company_phone,
+      company_website: this.accountInfo.company_website,
+      company_email: this.accountInfo.company_email,
+      company_description: this.accountInfo.company_description
+    });
+  }
+
+  pathParticipantsForm() {
+    this.participantsForm.patchValue({
+      participant_fname: this.accountInfo.participant_fname,
+      participant_lname: this.accountInfo.participant_lname,
+      participant_country_code: this.accountInfo.participant_country_code,
+      participant_phone: this.accountInfo.participant_phone,
+      participant_email: this.accountInfo.participant_email,
+    });
+  }
+
+  openEditCompany() {
+    this.editCompany = true;
+    this.patchCompanyForm();
+  }
+
+  closeEditCompany() {
+    this.editCompany = false;
+  }
+
+  openEditParticipant() {
+    this.editParticipant = true;
+    this.pathParticipantsForm();
+  }
+
+  closeEditParticipant() {
+    this.editParticipant = false;
+  }
+
+  editCompanyInfo() {
+    this.companyForm.get('company_id').setValue(this.userId);
+    if (this.companyForm.valid) {
+      console.log(this.companyForm.value);
+      this.web.postData('editCompanyInfo', this.companyForm.value).then((res) => {
+        if (res.status == '200') {
+          this.alert.successMsg(res.error, '');
+          this.editCompany = false;
+          this.ngOnInit();
+        } else {
+          this.alert.errorMsg(res.error, '');
+        }
+      }, err => {
+        console.log(err);
+        this.alert.errorMsg('Connection Error', '');
+      });
+    } else {
+      this.alert.warningMsg('Check if all fields are filled properly and then try', '')
+    }
+  }
+
+  editParticipantInfo() {
+    this.participantsForm.get('participant_id').setValue(this.userId);
+    if (this.participantsForm.valid) {
+      console.log(this.participantsForm.value);
+      this.web.postData('editParticipantInfo', this.participantsForm.value).then((res) => {
+        if (res.status == '200') {
+          this.alert.successMsg(res.error, '');
+          this.editParticipant = false;
+          this.ngOnInit();
+        } else {
+          this.alert.errorMsg(res.error, '');
+        }
+      }, err => {
+        console.log(err);
+        this.alert.errorMsg('Connection Error', '');
+      });
+    } else {
+      this.alert.warningMsg('Check if all fields are filled properly and then try', '')
+    }
+  }
+
+}

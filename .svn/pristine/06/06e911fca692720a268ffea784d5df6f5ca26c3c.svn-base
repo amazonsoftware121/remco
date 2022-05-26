@@ -1,0 +1,16 @@
+import { Component } from '@angular/core';
+
+import { LoaderService } from '../../providers/loader.service';
+
+@Component({
+  selector: 'app-video-resources',
+  templateUrl: './video-resources.component.html',
+  styleUrls: ['./video-resources.component.scss']
+})
+export class VideoResourcesComponent {
+
+  constructor(private loaderService: LoaderService) {
+    this.loaderService.stopLoader();
+  }
+
+}

@@ -1,0 +1,30 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoaderService } from 'src/app/providers/loader.service';
+
+@Component({
+  selector: 'app-campaign',
+  templateUrl: './campaign.component.html',
+  styleUrls: ['./campaign.component.scss']
+})
+export class CampaignComponent implements OnInit {
+
+  constructor(
+    
+    private loaderService: LoaderService,
+    
+    private router: Router,
+    ) 
+    {
+    this.loaderService.stopLoader();
+   }
+
+   openCompanies() 
+   { 
+      this.router.navigate(['/campaign-companies']); 
+   }
+
+  ngOnInit(): void {
+  }
+
+}

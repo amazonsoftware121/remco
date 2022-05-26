@@ -1,0 +1,93 @@
+<app-header></app-header>
+
+<!-- inner-banner-section start -->
+<section class="inner-banner-section">
+  <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="inner-banner-content text-center">
+          <h2 class="page-title">blogs</h2>
+          <ol class="page-list">
+            <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
+            <li>blog details</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- inner-banner-section start -->
+<!-- blog-details-section start -->
+<section class="blog-details-section pt-120 pb-120">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="blog-details-wrapper">
+          <div class="blog-details-thumb">
+            <img [src]="base_url+'uploads/blogs/'+Blogs.blog_image" alt="blogs" class="img1"  width=730px height=300px>
+          </div>
+          <div class="post-details-content">
+            <div class="post-header">
+              <a href="javascript:void(0);" class="post-date">{{Blogs.blog_created_time | date:'MMM d'}}</a>
+              <h3 class="post-title">{{Blogs.blog_title}}</h3>
+            </div>
+            <p>{{Blogs.blog_description}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <aside class="sidebar">
+          <div class="widget widget-popular-news">
+            <h4 class="widget-title">related news</h4>
+            <div class="widget-body">
+              <ul class="small-post-list">
+                <li class="small-post-item" *ngFor="let item of highlight_Blogs">
+                  <div class="thumb">
+                    <img [src]="base_url+'uploads/blogs/'+item.blog_image" alt="blogs" class="img2">
+                  </div>
+                  <div class="content">
+                    <h6 class="post-title"><a (click)="check(item)">{{item.blog_title}}</a>
+                    </h6>
+                    <ul class="post-meta">
+                      <li><a href="javascript:void(0);" class="post-date">{{Blogs.blog_created_time | date:'MMM d'}}</a></li>
+                      <li><a href="javascript:void(0);" class="post-author">By - Admin</a></li>
+                    </ul>
+                  </div>
+                </li>
+                <!-- <li class="small-post-item">
+                  <div class="thumb">
+                    <img src="./assets/images/blog/s2.jpg" alt="image">
+                  </div>
+                  <div class="content">
+                    <h6 class="post-title"><a href="blog-details.html">maecenas torquent pede venenatis</a></h6>
+                    <ul class="post-meta">
+                      <li><a href="javascript:void(0);" class="post-date">25 Jun 2019</a></li>
+                      <li><a href="javascript:void(0);" class="post-author">By - Admin</a></li>
+                    </ul>
+                  </div>
+                </li>
+                <li class="small-post-item">
+                  <div class="thumb">
+                    <img src="./assets/images/blog/s3.jpg" alt="image">
+                  </div>
+                  <div class="content">
+                    <h6 class="post-title"><a href="blog-details.html">Duis ut justo wisi non justo diam A vitae.</a>
+                    </h6>
+                    <ul class="post-meta">
+                      <li><a href="javascript:void(0);" class="post-date">25 Jun 2019</a></li>
+                      <li><a href="javascript:void(0);" class="post-author">By - Admin</a></li>
+                    </ul>
+                  </div>
+                </li> -->
+              </ul>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- blog-details-section end -->
+
+<app-footer></app-footer>

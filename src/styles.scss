@@ -1,0 +1,149 @@
+@use '~@angular/material' as mat;
+
+@include mat.core();
+
+$contest-web-primary: mat.define-palette(mat.$indigo-palette);
+$contest-web-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+$contest-web-warn: mat.define-palette(mat.$red-palette);
+
+$contest-web-theme: mat.define-light-theme((
+  color: (
+    primary: $contest-web-primary,
+    accent: $contest-web-accent,
+    warn: $contest-web-warn,
+  )
+));
+
+@include mat.all-component-themes($contest-web-theme);
+
+@import '~ngx-toastr/toastr';
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.owl-prev {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  font-size: 18px;
+  color: #787878;
+  display: inline-block;
+  margin-right: 15px;
+  text-align: center;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #00aeef;
+    color: #fff
+  }
+}
+
+.owl-next {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  font-size: 18px;
+  color: #787878;
+  display: inline-block;
+  text-align: center;
+  font-weight: bold;
+
+  &:hover {
+    background-color: #00aeef;
+    color: #fff
+  }
+}
+
+.owl-dots {
+ margin-top: 0;
+}
+
+.owl-dot span {
+  width: 15px;
+  height: 15px;
+  background-color: #7fd5e1;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  margin: 0 7px
+}
+
+.owl-dot.active span {
+  background-color: #00acc4
+}
+
+.validate-errors {
+  color: #cc2c2d;
+  font-size: 14px;
+  padding-bottom: 4px;
+
+  &::before {
+    content: "\f071";
+    font-family: FontAwesome;
+    text-decoration: inherit;
+    font-size: 16px;
+    padding-right: 7px;
+  }
+}
+
+.cdk-overlay-container .cdk-overlay-pane .testClass {
+  margin-top: 50px !important;
+}
+
+.toaster-msg-default {
+  color: white;
+  background-color: #00A651;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.toaster-msg-danger {
+  color: #fff;
+  background: #f00;
+}
+
+.toaster-msg-warning {
+  color: #fff;
+  background: #056C93;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.toast-custom {
+  top: 100px;
+  left: 0px;
+}  
+
+.btn-primary {
+  background-color: #00aeef;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  
+  &:hover {
+    background-color: #006991
+  }
+}
+
+.btn-secondary {
+  background-color: #71787c;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  
+  &:hover {
+    background-color: #3a4144
+  }
+}

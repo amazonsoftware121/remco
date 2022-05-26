@@ -1,0 +1,64 @@
+.image{
+    padding: 20px;
+}
+.margin{
+    margin-top: 50px;
+    cursor: pointer;
+}
+    .col-md-6{
+        padding-left: 35px;
+        padding-right: 35px;
+    }
+
+// @media only screen and (max-width: 400) {
+//     .col-xl-6{
+//         max-width: 100%;
+//     }
+// }
+// .inner-banner {
+//     // background-color: #006991;
+//     position: relative;
+//     overflow: hidden;
+//     background-image: url('/assets/images/How-Staffing-Firms-Can-Tackle-Top-Compliance-Considerations-in-the-Wake-of-COVID-19.jpg');
+//     background-size:cover;
+//     background-position:left top;
+// }
+.heading-decoration {
+    position: relative;
+    margin-top: 20px;
+    width: 170px;
+    height: 2px;
+    max-width: 100%;
+    display: inline-block;
+}
+.form-row{
+    justify-content: center;
+}
+.border{
+background-color: #09465d;
+    height: 100%;
+    box-shadow: 0 0 9px 1px rgb(0 0 0 / 10%);
+}
+.title{
+    color: #ffffff;
+}
+.content{
+    color: #ffffff;
+height: 90px;
+}
+.icon-item{
+    padding-top: 30px !important;
+    padding-right: 15px !important;
+    padding-bottom: 10px !important;
+    padding-left: 15px !important;
+}
+.product{
+    margin-top: 25px !important;
+    margin-bottom: 15px !important;
+    text-align: left !important;
+    margin-left: 10px;
+    float: left;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 300;
+}

@@ -1,0 +1,35 @@
+<div>
+    <h3>Company Detailes</h3>
+    <div class="col-md-12">
+      <div class="row pb-3 pt-4 center">
+        <span class="col-4 tags"><b>Company Name</b></span>
+        <span class="pull-right">:</span>
+        <span class="col-7 value">{{value.company_name}}</span>
+      </div>
+
+      <div class="row pb-3 center">
+        <span class="col-4 tags"><b>Email</b></span>
+        <span class="pull-right">:</span>
+        <span class="col-7 value">{{value.company_email}}</span>
+
+      </div>
+      <div class="row pb-3 center">
+        <span class="col-4 tags"><b>Web Site URL</b></span>
+        <span class="pull-right">:</span>
+        <span class="col-7 value">{{value.company_website}}</span>
+
+      </div>
+      <div class="row pb-3 center">
+        <span class="col-4 tags"><b>Description</b></span>
+        <span class="pull-right">:</span>
+        <span class="col-7 value">{{value.company_description}}</span>
+
+      </div>
+      <div class="row pb-3 center">
+        <span class="col-4 tags"><b>Profile Picture</b></span>
+        <!-- <img *ngIf="item.profile" [src]="base_url +'uploads/Profile/'+ item.profile" alt="image" class="imagee"> -->
+        <img src="./assets/images/download.jpg" alt="image">
+      </div>
+      <button class="btn btn-primary mr-3 size" (click)="close()">Close</button>
+    </div>
+  </div>

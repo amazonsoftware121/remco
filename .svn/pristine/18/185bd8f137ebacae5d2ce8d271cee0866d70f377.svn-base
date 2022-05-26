@@ -1,0 +1,151 @@
+import { Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlertService } from 'src/app/providers/alertService';
+import { LoaderService } from 'src/app/providers/loader.service';
+import { WebService } from 'src/app/providers/web.serivce';
+import { environment } from 'src/environments/environment';
+import { CampaignCompaniesDetailesComponent } from '../campaign-contest-detailes/campaign-contest-detailes.component';
+import referralCodeGenerator from 'referral-code-generator'
+
+
+@Component({
+  selector: 'app-campaign-contest',
+  templateUrl: './campaign-contest.component.html',
+  styleUrls: ['./campaign-contest.component.scss']
+})
+export class CampaignCompaniesComponent implements OnInit {
+
+  base_url: string = environment.base_url;
+
+  title = "Animated Count";
+
+  nums: Array<number> = [25, 76, 48];
+
+  @ViewChild("oneItem") oneItem: any;
+  @ViewChildren("count") count: QueryList<any>;
+
+  Companies: any;
+
+  label: any;
+
+  value = "hlo";
+
+  type= "campaign";
+
+  fields:any
+
+  CompaniesView: any;
+  allCompaniesDetailes: any;
+  CompaniesContest: any;
+  refer: any;
+  user_id: any;
+  CurrentUsedPageUrl: string;
+  SubmissionUsedUrl: string;
+  url: any;
+  existUserRef: any;
+  existUsersub: string;
+
+  constructor(private loaderService: LoaderService, private elRef: ElementRef, private web: WebService,
+    private alert: AlertService, private router: Router, private dialog: MatDialog,private activateRoute:ActivatedRoute) {
+    this.loaderService.stopLoader();
+  }
+
+
+  ngOnInit(): void {
+    this.getCompanies();
+    this.companiesDetails();
+    this.getactiveId();
+    this.winnerAnnounce();
+  }
+
+  getCompanies() {
+    this.web.getData('getAllCompanyContests').then((res) => {
+      if (res.status == '200') {
+        this.Companies = res.data;
+        console.log(this.Companies);
+        
+      } else {
+        this.alert.errorMsg(res.error, '');
+      }
+    }, err => {
+      this.alert.errorMsg('Connection Error', '');
+    });
+  }
+
+  getactiveId() {
+    let user_id=localStorage.getItem('UserId')
+    this.web.getData('getActiveId?company_id='+ user_id).then((res) => {
+      if (res.status == '200') {
+        this.user_id = res.data[0];
+        localStorage.setItem('user_idss',this.user_id.campaign_participant_id);
+        localStorage.setItem('user_random_key',this.user_id.user_random_key);
+      } else {
+        // this.alert.errorMsg(res.error, '');
+      }
+    }, err => {
+      this.alert.errorMsg('Connection Error', '');
+    });
+  }
+
+  openPageView(data:any){
+    this.refer=referralCodeGenerator.custom('alphanumeric',4, 6,'reference');
+    localStorage.setItem('reference',this.refer);
+    let refer=localStorage.getItem('reference');
+    if(data.company_contest_form_visibility == 'Fullpage'){
+      let user_id=localStorage.getItem('UserId')
+      let user_id1=localStorage.getItem('user_idss')
+      let user_random_key=localStorage.getItem('user_random_key')
+      if(user_id===user_id1){
+        this.existUserRef = ('https://remco.zerosoft.in/web/login/'+ user_random_key);
+        this.existUsersub = ('https://remco.zerosoft.in/web/login/'+ user_id);
+        localStorage.setItem('existUserRef',this.existUserRef);
+        localStorage.setItem('existUsersub',this.existUsersub);
+        this.router.navigate(['/contest-view-entry', data.web_id,data.campaign_type,data.company_contest_id,user_random_key]);
+      }else{
+      this.router.navigate(['/campaign-full-view', data.web_id,data.campaign_type,data.company_contest_id,refer]);
+      }
+    }else if(data.company_contest_form_visibility == 'Widget'){
+      this.router.navigate(['/campaign-widget-view', data.web_id,data.campaign_type,data.company_contest_id]);
+    }else{
+      this.router.navigate(['/campaign-lightbox-view', data.web_id,data.campaign_type,data.company_contest_id]);
+    }
+  }
+
+  companiesDetails() {
+    this.web.getData('getAllCompanies?web_id').then((res) => {
+      if (res.status == '200') {
+        this.allCompaniesDetailes = res.data;
+      } else {
+        this.alert.errorMsg(res.error, '');
+      }
+    }, err => {
+      this.alert.errorMsg('Connection Error', '');
+    });
+  }
+
+  winnerAnnounce(){
+    let userId = localStorage.getItem('UserId');
+    this.web.getData('winnerAnnounce?web_id='+ userId).then((res) => {
+      if (res.status == '200') {
+        this.url = res.data;
+      } else {
+        this.alert.errorMsg(res.error, '');
+      }
+    }, err => {
+    });
+  }
+
+  openDialog(data1:any) {
+    data1.companiesDetailes = this.allCompaniesDetailes;
+    const dialogRef = this.dialog.open(CampaignCompaniesDetailesComponent, { data: data1, disableClose: true, height: '310px', width: '800px' });
+    console.log(dialogRef.afterClosed());
+    dialogRef.afterClosed().subscribe((sub) => {
+      if (sub) {
+        this.label = "Submitted";
+      } else {
+        this.label = "Cancelled";
+      }
+    })
+  }
+}

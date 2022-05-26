@@ -1,0 +1,140 @@
+<app-header></app-header>
+
+
+<section class="inner-banner-section">
+    <div class="inner-banner-el"><img src="./assets/images/banner-line-el2.png" alt="image"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="inner-banner-content text-center">
+            <h2 class="page-title">Campaign </h2>
+            <ol class="page-list">
+              <li><a [routerLink]="['/']"><i class="fa fa-home"></i> Home</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- <section class="testimonial-section features-section pb-120 inner-banner"> -->
+    <section class="features-section inner-banner">
+    
+    <div class="form-row1">
+        <div class="col-md-8">
+            <div class="overall">
+    <div class="center">
+        <!-- <ng-container> -->
+            <div class="form2">
+            <div class="testimonial-slider">
+                <owl-carousel-o [options]="testimonialOptions">
+                    <ng-container *ngFor="let item of projects">
+                        <ng-template carouselSlide [id]="item.id">
+                            <div class="testimonial-item">
+                                <div>
+                                    <div class="thumb">
+                                        
+                                    <img [src]="base_url +'uploads/mascot/'+item.image" class="image1">
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+            </div>
+        </div>
+        <!-- </ng-container> -->
+    </div>
+    <div class="center">
+    <!-- <ng-container> -->
+        <div class="form">
+            <div class="margin">
+                <div class="text-center border" >
+                    <div class="item-header">
+                    <img src="./assets/images/mascot/mascot3.png" alt="image" class="image">
+                    <h5 class="title text-capitalize font-weight-semibold">Contest</h5>
+                    </div>
+                    <div class="content">
+                    <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts.</p>
+                    </div>
+
+            <div class="col-lg-12">
+                <div class="contact-form-area">
+                    <h3 class="block-title">This is a demo sweepstakes to show you an example of what you can do with ViralSweep. Simply enter this sweepstakes to see the next page.</h3>
+                    <form class="cmn-form contact-form" [formGroup]="contactUsForm">
+                    <div class="form-row">
+                        <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="text" name="name" id="name" formControlName="name" placeholder="Name*">
+                        </div>
+                        <div *ngIf="contactUsForm.get('name').errors">
+                            <span *ngIf="contactUsForm.get('name').touched && !contactUsForm.get('name').valid && !contactUsForm.get('name').value" class="validate-errors pb-3 float-left">Enter Name<br></span>
+                        </div>
+                        </div>
+        
+                        <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="email" name="email" id="email" formControlName="email" placeholder="Email*" required>
+                        </div>
+                        <div *ngIf="contactUsForm.get('email').errors">
+                            <span *ngIf="contactUsForm.get('email').touched && !contactUsForm.get('email').valid && !contactUsForm.get('email').value" class="validate-errors pb-3 float-left">Enter Email<br></span>
+                            <span class="validate-errors pb-3 float-left" *ngIf="contactUsForm.get('email').errors['pattern']">Enter valid email address</span>
+                        </div> 
+                        </div>
+                    </div>
+                    
+                    <div class="form-group padding">
+                        <textarea placeholder="Write Messages*" formControlName="message" spellcheck="false"></textarea>
+                    </div>
+                    <div *ngIf="contactUsForm.get('message').errors">
+                        <span *ngIf="contactUsForm.get('message').touched && !contactUsForm.get('message').valid && !contactUsForm.get('message').value" class="validate-errors pb-3 float-left">Enter Message</span><br>
+                    </div> 
+                    <button type="submit" class="btn btn-primary mr-3">send message</button>
+                    </form>
+                </div>
+                </div>
+                <hr class="new4">
+                <div class="form1">
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <i class="fa fa-calendar-o" aria-hidden="true"></i><br><span class="text">Ends 1-1-2023</span>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="fa fa-newspaper-o"></i><br><span class="text">View Rules</span>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="fa fa-user"></i><br><span class="text">Winners</span>
+                    </div>
+                    <div class="col-md-3">
+                        <i class="fa fa-clock-o"></i><br><span class="text">346D 16H 41M 36S</span>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div><!-- icon-item end -->
+    </div>
+    <!-- </ng-container> -->
+    </div>
+</div>
+</div>
+    <div class="col-md-4">
+        <div class="widget">
+            <div class="item-header">
+                <h2 class="title text-capitalize font-weight-semibold">widget</h2>
+            </div>
+            <div class="content">
+                <p>With the ViralSweep widget, you can build your own landing page and then simply embed our widget into that page and the sweepstakes will show up.</p><br>
+                <p>Want to try it yourself? Just embed the code snippet below on your site and the widget will appear.</p><br>
+                <p>This allows you the most flexibility, as you can build any type of landing page you want, and then you can style the sweepstakes widget to match your landing page.</p><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+</section>
+<!-- blog-section end -->
+
+
+<app-footer></app-footer>
+
+
+

@@ -1,0 +1,24 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CampaignWidgetViewComponent } from '../campaign-widget-view/campaign-widget-view.component';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { campaignWidgetRoutingModule } from './campaign-widget-view-routing.module';
+
+
+
+@NgModule({
+  declarations: [
+    CampaignWidgetViewComponent
+  ],
+  imports: [
+    CommonModule,
+    ComponentsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CarouselModule,
+    campaignWidgetRoutingModule
+  ]
+})
+export class CampaignWidgetViewModule { }

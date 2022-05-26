@@ -1,0 +1,25 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CompanyContestComponent } from './company-contest.component';
+import { companyContestRoutingModule } from './company-contest-routing.module';
+import { ComponentsModule } from 'src/app/components/components.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+
+
+
+@NgModule({
+  declarations: [
+    CompanyContestComponent
+  ],
+  imports: [
+    CommonModule,
+    companyContestRoutingModule,
+    ComponentsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CarouselModule
+
+  ]
+})
+export class CompanyContestModule {}

@@ -1,0 +1,6 @@
+.height
+{height: 100px;}
+.imgs
+{max-width: 100%; height: auto;}
+
+
